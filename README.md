@@ -1,1 +1,1 @@
-"# PhotographyApi" 
+# PhotographyApi
