@@ -1,8 +1,6 @@
 name: .NET
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -23,3 +21,12 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Publish
+      run: dotnet publish PhotographyApi/PhotographyApi.csproj -c Release -o dist
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: PhotographyApi
+        path: PhotographyApi/dist/**
+        if-no-files-found: error
+
