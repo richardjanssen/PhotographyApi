@@ -27,6 +27,6 @@ jobs:
       uses: actions/upload-artifact@v2.2.2
       with:
         name: PhotographyApi
-        path: PhotographyApi/PhotographyApi/dist/**
+        path: dist/**
         if-no-files-found: error
 
