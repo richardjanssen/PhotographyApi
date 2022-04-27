@@ -8,7 +8,7 @@ namespace PhotographyApi.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-        "It", "Fucking", "Works"
+        "Bla", "Bloe", "Sta"
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
