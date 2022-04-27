@@ -1,4 +1,4 @@
-name: .NET
+name: PhotographyApi-ci-pipeline
 
 on:
   pull_request:
