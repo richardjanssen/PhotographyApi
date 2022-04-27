@@ -22,7 +22,6 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
         key: ${{ secrets.SSHKEY }}
         passphrase: ${{ secrets.SSHPASSPHRASE }}
         rm: false
@@ -34,7 +33,6 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
         key: ${{ secrets.SSHKEY }}
         passphrase: ${{ secrets.SSHPASSPHRASE }}
         script: | 
