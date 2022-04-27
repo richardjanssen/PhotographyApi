@@ -7,3 +7,5 @@ on:
 jobs:
   build-test-publish:
     uses: ./.github/workflows/dotnet-api-build-test-publish.yml
+    with:
+      api-name: PhotographyApi
