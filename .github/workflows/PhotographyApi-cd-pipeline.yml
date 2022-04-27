@@ -1,0 +1,42 @@
+name: PhotographyApi-cd-pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-test-publish:
+    uses: ./.github/workflows/dotnet-api-build-test-publish.yml
+    with:
+      api-name: PhotographyApi
+      
+  deploy-run:
+    needs: build-test-publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Copy file via scp
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        key: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.SSHPASSPHRASE }}
+        rm: false
+        source: "/dist"
+        target: "var/www/PhotographyApi --overwrite"
+
+    - name: Executing remote command
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        key: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.SSHPASSPHRASE }}
+        script: | 
+          sudo systemctl start kestrel-photographyapi.service
+          sudo systemctl status kestrel-photographyapi.service
