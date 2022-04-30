@@ -12,9 +12,15 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger(c => c.RouteTemplate = "PhotographyApi/swagger/{documentname}/swagger.json");
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("v1/swagger.json", "Blabla Swagger");
+    c.RoutePrefix = "PhotographyApi/swagger";
+});
 //}
+//app.UseSwagger();
+//app.UseSwaggerUI();
 
 //app.UseHttpsRedirection();
 
