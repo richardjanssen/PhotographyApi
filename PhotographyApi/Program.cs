@@ -1,3 +1,5 @@
+using Infrastructure.Ioc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,20 +9,23 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddPhotographyDatabase(builder.Configuration);
+builder.Services.AddDataBindings();
+builder.Services.AddBusinessBindings();
+builder.Services.AddCommonBindings();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-app.UseSwagger(c => c.RouteTemplate = "PhotographyApi/swagger/{documentname}/swagger.json");
-app.UseSwaggerUI(c =>
+if (app.Environment.IsDevelopment())
 {
-    c.SwaggerEndpoint("v1/swagger.json", "Blabla Swagger");
-    c.RoutePrefix = "PhotographyApi/swagger";
-});
-//}
-//app.UseSwagger();
-//app.UseSwaggerUI();
+    app.UseSwagger(c => c.RouteTemplate = "api/swagger/{documentname}/swagger.json");
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("v1/swagger.json", "v1 Swagger");
+        c.RoutePrefix = "api/swagger";
+    });
+}
 
 //app.UseHttpsRedirection();
 
