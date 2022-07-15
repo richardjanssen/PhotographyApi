@@ -9,11 +9,11 @@ public class PhotoTestBuilder
     private readonly IReadOnlyCollection<Image> _images = new List<Image>();
     private PhotoTestBuilder() { }
 
-    public static PhotoTestBuilder ATestBuilder() => new PhotoTestBuilder();
+    public static PhotoTestBuilder ATestBuilder() => new();
 
     public PhotoTestBuilder WithId(int id) => this.With(() => _id = id);
 
     public PhotoTestBuilder WithDate(DateTime date) => this.With(() => _date = date);
 
-    public Photo Build() => new Photo(_id, _date, _images);
+    public Photo Build() => new(_id, _date, _images);
 }
