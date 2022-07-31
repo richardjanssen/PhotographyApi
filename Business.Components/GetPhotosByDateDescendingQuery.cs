@@ -11,6 +11,8 @@ public class GetPhotosByDateDescendingQuery : IGetPhotosByDateDescendingQuery
     public GetPhotosByDateDescendingQuery(IPhotographyRepository photographyRepository) => 
         _photographyRepository = photographyRepository;
 
-    public IReadOnlyCollection<Photo> Execute() => 
-        _photographyRepository.GetPhotos().OrderByDescending(photo => photo.Date).ToList();
+    public async Task<IReadOnlyCollection<Photo>> Execute()
+    {
+        return (await _photographyRepository.GetPhotos()).OrderByDescending(photo => photo.Date).ToList();
+    }
 }
