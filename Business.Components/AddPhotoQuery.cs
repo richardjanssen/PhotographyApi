@@ -18,6 +18,6 @@ public class AddPhotoQuery : IAddPhotoQuery
 
     public Photo Execute(AddPhoto photo)
     {
-        return _photographyRepository.AddPhoto(new Photo(null, _dateTimeProvider.UtcNow(), photo.Images));
+        return _photographyRepository.AddPhoto(new Photo(null, _dateTimeProvider.UtcNow, photo.Images));
     }
 }
