@@ -4,5 +4,5 @@ namespace Business.Interfaces;
 
 public interface IGetPhotosByDateDescendingQuery
 {
-    IReadOnlyCollection<Photo> Execute();
+    Task<IReadOnlyCollection<Photo>> Execute();
 }
