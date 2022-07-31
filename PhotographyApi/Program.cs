@@ -34,3 +34,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+#pragma warning disable CA1050 // Declare types in namespaces
+// Required for integration tests
+public partial class Program { }
+#pragma warning restore CA1050 // Declare types in namespaces
