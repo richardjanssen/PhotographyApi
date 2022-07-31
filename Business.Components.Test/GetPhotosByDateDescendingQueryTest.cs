@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Test.Helpers;
 using Test.Helpers.Builders;
 
@@ -19,9 +20,9 @@ public class GetPhotosByDateDescendingQueryTest
     private readonly DateTime _someLaterDate = TestConstants.SomeDateTime.AddDays(1);
 
     [TestMethod]
-    public void Execute_ShouldSortResultsByDescendingDate()
+    public async Task Execute_ShouldSortResultsByDescendingDate()
     {
-        _photographyRepository.Setup(mock => mock.GetPhotos()).Returns(new List<Photo>()
+        _photographyRepository.Setup(mock => mock.GetPhotos()).ReturnsAsync(new List<Photo>()
         {
             PhotoTestBuilder.ATestBuilder().WithId(1).WithDate(_someDate).Build(),
             PhotoTestBuilder.ATestBuilder().WithId(2).WithDate(_someLaterDate).Build(),
@@ -29,7 +30,7 @@ public class GetPhotosByDateDescendingQueryTest
 
         var sut = new GetPhotosByDateDescendingQuery(_photographyRepository.Object);
 
-        sut.Execute().Should().SatisfyRespectively(
+        (await sut.Execute()).Should().SatisfyRespectively(
             first => first.Date.Should().Be(_someLaterDate),
             second => second.Date.Should().Be(_someDate));
     }
