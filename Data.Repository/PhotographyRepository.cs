@@ -5,14 +5,14 @@ namespace Data.Repository;
 
 public class PhotographyRepository : IPhotographyRepository
 {
-    public PhotographyRepository(PhotographyContext photographyContext) => _photographyContext = photographyContext;
+    public PhotographyRepository(PhotographyDbContext photographyContext) => _photographyContext = photographyContext;
 
-    private readonly PhotographyContext _photographyContext;
+    private readonly PhotographyDbContext _photographyContext;
 
-    public IEnumerable<Business.Entities.Photo> GetPhotos() => _photographyContext.Photos
+    public async Task<IEnumerable<Business.Entities.Photo>> GetPhotos() => await _photographyContext.Photos
         .Include(photo => photo.Images)
         .Select(photo => photo.Map())
-        .ToList();
+        .ToListAsync();
 
     public Business.Entities.Photo AddPhoto(Business.Entities.Photo photo)
     {

@@ -6,7 +6,7 @@ using PhotographyApi.ViewModels;
 namespace PhotographyApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]/[action]")]
+[Route("api/v1/[controller]/[action]")]
 public class PhotosController : ControllerBase
 {
     private readonly IGetPhotosByDateDescendingQuery _getPhotosByDateDescendingQuery;
@@ -19,7 +19,8 @@ public class PhotosController : ControllerBase
     }
 
     [HttpGet]
-    public IReadOnlyCollection<PhotoViewModel> Get() => _getPhotosByDateDescendingQuery.Execute().Select(photo => photo.Map()).ToList();
+    public async Task<IReadOnlyCollection<PhotoViewModel>> Get() =>
+        (await _getPhotosByDateDescendingQuery.Execute()).Select(photo => photo.Map()).ToList();
 
     [HttpPost]
     public PhotoViewModel AddPhoto(AddPhotoViewModel photo) => _addPhotoQuery.Execute(photo.Map()).Map();
