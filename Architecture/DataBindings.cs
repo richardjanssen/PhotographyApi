@@ -10,7 +10,7 @@ public static class DataBindings
 {
 
     public static IServiceCollection AddPhotographyDatabase(this IServiceCollection services, IConfiguration configuration) => services
-        .AddDbContext<PhotographyDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("PhotographyDatabase")));
+        .AddDbContext<PhotographyDbContext>(options => options.UseSqlite(configuration.GetConnectionString("PhotographyDatabase")));
 
     public static IServiceCollection AddDataBindings(this IServiceCollection services) => services
         .AddScoped<IPhotographyRepository, PhotographyRepository>();
