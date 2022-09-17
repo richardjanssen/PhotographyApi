@@ -7,5 +7,5 @@ namespace PhotographyApi.Controllers;
 public class HealthController : ControllerBase
 {
     [HttpGet]
-    public string Check() => "Ok";
+    public string Check() => "Ok!";
 }
