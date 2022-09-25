@@ -7,10 +7,14 @@ logger.Debug("init main");
 
 try
 {
-    var builder = WebApplication.CreateBuilder(args);
+    var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+    {
+        Args = args,
+        ContentRootPath = Directory.GetCurrentDirectory()
+    }); ;
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
-
+    
     // Add services to the container.
     builder.Services.AddCors(opt =>
     {
