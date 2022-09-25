@@ -51,6 +51,8 @@ try
     }
 
     //app.UseHttpsRedirection();
+
+    app.UsePathBase("/api");
     app.UseStaticFiles();
     app.UseCors("PhotographyClient");
     app.UseAuthorization();
