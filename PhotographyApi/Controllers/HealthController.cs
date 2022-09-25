@@ -17,6 +17,6 @@ public class HealthController : ControllerBase
     public string Check()
     {
         _logger.LogInformation("Call to HealthController - Check");
-        return "Ok!";
+        return "Ok";
     }
 }
