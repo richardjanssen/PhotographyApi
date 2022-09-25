@@ -12,7 +12,17 @@ try
     builder.Host.UseNLog();
 
     // Add services to the container.
-
+    builder.Services.AddCors(opt =>
+    {
+        opt.AddPolicy("PhotographyClient", builder =>
+        {
+            builder
+                .WithOrigins("https://localhost:4200")
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .AllowAnyHeader();
+        });
+    });
     builder.Services.AddControllers();
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
@@ -37,7 +47,8 @@ try
     }
 
     //app.UseHttpsRedirection();
-
+    app.UseStaticFiles();
+    app.UseCors("PhotographyClient");
     app.UseAuthorization();
 
     app.MapControllers();
