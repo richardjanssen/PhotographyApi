@@ -9,7 +9,7 @@ public static class PhotographyRepositoryMapExtensions
         new(photo.Id, photo.Date, photo.Images.Select(image => image.Map()).ToList());
 
     public static Business.Entities.Image Map(this Image image) =>
-        new(image.WidthPx, image.HeightPx, image.Path);
+        new(image.WidthPx, image.HeightPx, image.Guid, image.Extension);
 
     public static Photo Map(this Business.Entities.Photo photo) =>
         new()
@@ -23,6 +23,7 @@ public static class PhotographyRepositoryMapExtensions
         {
             WidthPx = image.WidthPx,
             HeightPx = image.HeightPx,
-            Path = image.Path
+            Guid = image.Guid,
+            Extension = image.Extension
         };
 }
