@@ -1,4 +1,5 @@
 ﻿using Business.Components;
+using Business.Components.Internal;
 using Business.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,5 +9,6 @@ public static class BusinessBindings
 {
     public static IServiceCollection AddBusinessBindings(this IServiceCollection services) => services
         .AddScoped<IGetPhotosByDateDescendingQuery, GetPhotosByDateDescendingQuery>()
+        .AddScoped<ISaveImageToFolderQuery, SaveImageToFolderQuery>()
         .AddScoped<IAddPhotoQuery, AddPhotoQuery>();
 }
