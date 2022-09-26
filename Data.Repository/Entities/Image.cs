@@ -8,5 +8,6 @@ public class Image
     public int Id { get; set; }
     public int WidthPx { get; set; }
     public int HeightPx { get; set; }
-    public string Path { get; set; } = null!;
+    public Guid Guid { get; set; }
+    public string Extension { get; set; } = null!;
 }

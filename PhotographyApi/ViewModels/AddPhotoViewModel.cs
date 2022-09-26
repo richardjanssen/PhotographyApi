@@ -2,9 +2,9 @@
 
 public class AddPhotoViewModel
 {
-    public AddPhotoViewModel(IReadOnlyCollection<ImageViewModel> images)
+    public AddPhotoViewModel(IReadOnlyCollection<ImageWithPathViewModel> images)
     {
         Images = images;
     }
-    public IReadOnlyCollection<ImageViewModel> Images { get; set; }
+    public IReadOnlyCollection<ImageWithPathViewModel> Images { get; set; }
 }
