@@ -1,10 +1,15 @@
 ﻿namespace Business.Entities;
 
-public class AddPhoto
-{
-    public AddPhoto(IReadOnlyCollection<Image> images)
-    {
-        Images = images;
-    }
-    public IReadOnlyCollection<Image> Images { get; }
-}
+//public class AddPhoto
+//{
+//    public AddPhoto(int? id, DateTime date, IReadOnlyCollection<Image> images)
+//    {
+//        Id = id;
+//        Date = date;
+//        Images = images;
+//    }
+
+//    public int? Id { get; }
+//    public DateTime Date { get; }
+//    public IReadOnlyCollection<Image> Images { get; }
+//}
