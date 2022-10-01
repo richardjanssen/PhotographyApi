@@ -1,3 +1,4 @@
+using Common.Common;
 using Infrastructure.Ioc;
 using NLog;
 using NLog.Web;
@@ -11,7 +12,9 @@ try
     {
         Args = args,
         ContentRootPath = Directory.GetCurrentDirectory()
-    }); ;
+    });
+    var configuration = builder.Configuration;
+
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
     
@@ -32,7 +35,8 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-    builder.Services.AddPhotographyDatabase(builder.Configuration);
+    builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
+    builder.Services.AddPhotographyDatabase(configuration);
     builder.Services.AddDataBindings();
     builder.Services.AddBusinessBindings();
     builder.Services.AddCommonBindings();
