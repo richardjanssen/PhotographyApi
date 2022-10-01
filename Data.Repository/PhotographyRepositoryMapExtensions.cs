@@ -4,21 +4,26 @@ namespace Data.Repository;
 
 public static class PhotographyRepositoryMapExtensions
 {
-
     public static Business.Entities.Photo Map(this Photo photo) =>
         new(photo.Id, photo.Date, photo.Images.Select(image => image.Map()).ToList());
 
-    public static Business.Entities.Image Map(this Image image) =>
+    public static Photo Map(this Business.Entities.Photo photo) =>
+    new()
+    {
+        Date = photo.Date,
+        Images = photo.Images.Select(image => image.Map()).ToList()
+    };
+
+    public static Business.Entities.Account Map(this Account account) =>
+        new(account.UserName, account.PasswordHash, account.Salt);
+
+    public static Account Map(this Business.Entities.Account account) =>
+        new(account.UserName, account.PasswordHash, account.Salt);
+
+    private static Business.Entities.Image Map(this Image image) =>
         new(image.WidthPx, image.HeightPx, image.Guid, image.Extension);
 
-    public static Photo Map(this Business.Entities.Photo photo) =>
-        new()
-        {
-            Date = photo.Date,
-            Images = photo.Images.Select(image => image.Map()).ToList()
-        };
-
-    public static Image Map(this Business.Entities.Image image) =>
+    private static Image Map(this Business.Entities.Image image) =>
         new()
         {
             WidthPx = image.WidthPx,
