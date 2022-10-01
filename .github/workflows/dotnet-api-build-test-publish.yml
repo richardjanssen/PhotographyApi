@@ -6,6 +6,9 @@ on:
       api-name:
         required: true
         type: string
+    secrets:
+      database-connection-string:
+        required: true
 
 jobs:
   build-test-publish:
@@ -20,7 +23,7 @@ jobs:
       with:
         files: 'PhotographyApi/appsettings.Production.json'
       env:
-        ConnectionStrings.PhotographyDatabase: ${{ secrets.DATABASE_CONNECTION_STRING }}
+        ConnectionStrings.PhotographyDatabase: ${{ secrets.database-connection-string }}
         Test: "Iets anders"
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
