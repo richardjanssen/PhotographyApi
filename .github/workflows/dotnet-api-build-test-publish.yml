@@ -14,6 +14,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: microsoft/variable-substitution@v1 
+      with:
+        files: 'PhotographyApi/appsettings.Production.json'
+      env:
+        ConnectionStrings.PhotographyDatabase: ${{ secrets.DATABASE_CONNECTION_STRING }}
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
