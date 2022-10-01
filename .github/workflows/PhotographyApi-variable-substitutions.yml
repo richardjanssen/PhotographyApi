@@ -1,0 +1,15 @@
+name: PhotographyApi-variable-substitutions
+
+on:
+  workflow_call
+  
+jobs:
+  variable-substitutions:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - uses: microsoft/variable-substitution@v1 
+      with:
+        files: 'PhotographyApi/appsettings.Production.json'
+      env:
+        ConnectionStrings.PhotographyDatabase: ${{ secrets.DATABASE_CONNECTION_STRING }}
