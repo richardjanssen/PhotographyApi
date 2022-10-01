@@ -9,6 +9,7 @@ jobs:
     uses: ./.github/workflows/PhotographyApi-variable-substitutions.yml
     
   build-test-publish:
+    needs: checkout-substitute
     uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-api-build-test-publish-no-checkout.yml@main
     with:
       api-name: PhotographyApi
