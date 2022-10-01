@@ -68,11 +68,10 @@ public class AuthenticationComponent : IAuthenticationComponent
 
     private static string GenerateSalt()
     {
-        var bytes = new byte[128 / 8];
-        using var generator = RandomNumberGenerator.Create();
         var salt = new byte[128 / 8];
+        using var generator = RandomNumberGenerator.Create();
         generator.GetBytes(salt);
-        return Convert.ToBase64String(bytes);
+        return Convert.ToBase64String(salt);
     }
 
     private static string ComputeHash(string password, string salt)
