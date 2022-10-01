@@ -19,6 +19,7 @@ jobs:
         files: 'PhotographyApi/appsettings.Production.json'
       env:
         ConnectionStrings.PhotographyDatabase: ${{ secrets.DATABASE_CONNECTION_STRING }}
+        Test: "Iets anders"
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
