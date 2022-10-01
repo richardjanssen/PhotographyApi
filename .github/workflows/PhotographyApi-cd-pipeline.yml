@@ -5,16 +5,14 @@ on:
     branches: [ main ]
 
 jobs:
+  checkout-substitute:
+    uses: ./.github/workflows/PhotographyApi-variable-substitutions.yml
+    
   build-test-publish:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - uses: ./.github/workflows/PhotographyApi-variable-substitutions.yml
-    - uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-api-build-test-publish-no-checkout.yml@main
-      with:
-        api-name: PhotographyApi
+    needs: checkout-substitute
+    uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-api-build-test-publish-no-checkout.yml@main
+    with:
+      api-name: PhotographyApi
       
   deploy-run:
     needs: build-test-publish
