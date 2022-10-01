@@ -21,4 +21,19 @@ public class PhotographyRepository : IPhotographyRepository
 
         return result.Map();
     }
+
+    public async Task<Business.Entities.Account?> GetAccountByUserName(string userName)
+    {
+        var account = await _photographyContext.Accounts
+            .Where(account => account.UserName == userName)
+            .SingleOrDefaultAsync();
+
+        return account?.Map();
+    }
+
+    public async Task AddAccount(Business.Entities.Account account)
+    {
+        await _photographyContext.AddAsync(account.Map());
+        _photographyContext.SaveChanges();
+    }
 }

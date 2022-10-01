@@ -10,5 +10,6 @@ public static class BusinessBindings
     public static IServiceCollection AddBusinessBindings(this IServiceCollection services) => services
         .AddScoped<IGetPhotosByDateDescendingQuery, GetPhotosByDateDescendingQuery>()
         .AddScoped<ISaveImageToFolderQuery, SaveImageToFolderQuery>()
-        .AddScoped<IAddPhotoQuery, AddPhotoQuery>();
+        .AddScoped<IAddPhotoQuery, AddPhotoQuery>()
+        .AddScoped<IAuthenticationComponent, AuthenticationComponent>();
 }
