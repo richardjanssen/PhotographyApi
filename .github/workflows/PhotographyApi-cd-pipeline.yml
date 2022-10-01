@@ -9,6 +9,8 @@ jobs:
     uses: ./.github/workflows/dotnet-api-build-test-publish.yml
     with:
       api-name: PhotographyApi
+    secrets:
+      database-connection-string: ${{ secrets.DATABASE_CONNECTION_STRING }}
       
   deploy-run:
     needs: build-test-publish
