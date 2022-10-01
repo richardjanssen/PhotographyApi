@@ -1,4 +1,5 @@
 using Business.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
 using PhotographyApi.ViewModels;
@@ -27,6 +28,7 @@ public class PhotosController : ControllerBase
         return (await _getPhotosByDateDescendingQuery.Execute()).Select(photo => photo.Map(_basePath)).ToList();
     }
 
+    [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
     public async Task<PhotoViewModel> UploadPhoto()
     {
