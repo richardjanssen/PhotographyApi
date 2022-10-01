@@ -11,6 +11,7 @@ jobs:
       api-name: PhotographyApi
     secrets:
       database-connection-string: ${{ secrets.DATABASE_CONNECTION_STRING }}
+      jwt-secret-key: ${{ secrets.JWT_SECRET_KEY }}
       
   deploy-run:
     needs: build-test-publish
