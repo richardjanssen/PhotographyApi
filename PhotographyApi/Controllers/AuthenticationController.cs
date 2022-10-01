@@ -16,7 +16,7 @@ namespace PhotographyApi.Controllers
             _authenticationComponent = authenticationComponent;
         }
 
-        //[Authorize(Roles = "PhotographyApi_Admin")]
+        [Authorize(Roles = "PhotographyApi_Admin")]
         [HttpPost]
         [Route("AddAccount")]
         public void AddAccount(AccountViewModel accountViewModel) =>
