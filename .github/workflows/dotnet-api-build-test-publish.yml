@@ -9,7 +9,8 @@ on:
 
 jobs:
   build-test-publish:
-    environment: production
+    environment:
+      name: production
 
     runs-on: ubuntu-latest
 
