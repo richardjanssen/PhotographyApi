@@ -9,4 +9,5 @@ public class PhotographyDbContext : DbContext
 
     public DbSet<Photo> Photos => Set<Photo>();
     public DbSet<Image> Images => Set<Image>();
+    public DbSet<Account> Accounts => Set<Account>();
 }
