@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business.Components.Test", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Helpers", "Test.Helpers\Test.Helpers.csproj", "{33F040A3-A22C-425B-8DE4-272E5775D12D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functional.Test", "Functional.Test\Functional.Test.csproj", "{979E3915-97E5-4A6B-B660-3A650B9C1AEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functional.Test", "Functional.Test\Functional.Test.csproj", "{979E3915-97E5-4A6B-B660-3A650B9C1AEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
