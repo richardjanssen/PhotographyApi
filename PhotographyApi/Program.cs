@@ -1,5 +1,6 @@
 using Common.Common;
 using Infrastructure.Ioc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using NLog;
 using NLog.Web;
 
@@ -30,7 +31,7 @@ try
                 .AllowAnyHeader();
         });
     });
-    builder.Services.AddControllers();
+    builder.Services.AddControllers(options => options.OutputFormatters.RemoveType<StringOutputFormatter>());
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();

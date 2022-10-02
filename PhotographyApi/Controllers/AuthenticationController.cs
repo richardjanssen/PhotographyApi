@@ -6,7 +6,7 @@ using PhotographyApi.ViewModels;
 namespace PhotographyApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/v1")]
+    [Route("api/v1/[controller]/[action]")]
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationComponent _authenticationComponent;
@@ -18,13 +18,11 @@ namespace PhotographyApi.Controllers
 
         [Authorize(Roles = "PhotographyApi_Admin")]
         [HttpPost]
-        [Route("AddAccount")]
         public void AddAccount(AccountViewModel accountViewModel) =>
             throw new NotImplementedException();
             //await _authenticationComponent.AddAccount(accountViewModel.UserName, accountViewModel.Password);
 
         [HttpPost]
-        [Route("VerifyAccount")]
         public async Task<string?> VerifyAccount(AccountViewModel accountViewModel)
         {
             return await _authenticationComponent.AuthenticateAccount(accountViewModel.UserName, accountViewModel.Password);
