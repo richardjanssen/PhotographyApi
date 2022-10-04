@@ -1,6 +1,8 @@
-﻿using Business.Entities;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using SixLabors.ImageSharp;
+using Image = Business.Entities.Image;
+using SharpImage = SixLabors.ImageSharp.Image;
 
 namespace Business.Components.Internal;
 
@@ -23,7 +25,9 @@ public class SaveImageToFolderQuery : ISaveImageToFolderQuery
         var fullPath = Path.Combine(pathToSave, fileName);
         using var stream = new FileStream(fullPath, FileMode.Create);
         file.CopyTo(stream);
-        return new Image(100, 100, guid, extension);
+        IImageInfo imageInfo = SharpImage.Identify(file.OpenReadStream());
+
+        return new Image(imageInfo.Width, imageInfo.Height, guid, extension);
     }
 
     private static string GetExtension(string contentType)

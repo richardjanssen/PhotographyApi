@@ -35,9 +35,6 @@ public class PhotosController : ControllerBase
         var formCollection = await Request.ReadFormAsync();
         var file = formCollection.Files[0];
 
-        // Commented out until authorisation
-        //return _addPhotoQuery.Execute(file).Map(_basePath);
-
-        throw new NotImplementedException("Not implemented until authorisation");
+        return _addPhotoQuery.Execute(file).Map(_basePath);
     }
 }
