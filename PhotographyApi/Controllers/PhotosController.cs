@@ -12,7 +12,7 @@ public class PhotosController : ControllerBase
 {
     private readonly IGetPhotosByDateDescendingQuery _getPhotosByDateDescendingQuery;
     private readonly IAddPhotoQuery _addPhotoQuery;
-    private readonly string _basePath = "api/Images";
+    private readonly string _basePath = "Images";
 
     public PhotosController(
         IGetPhotosByDateDescendingQuery getPhotosByDateDescendingQuery,
