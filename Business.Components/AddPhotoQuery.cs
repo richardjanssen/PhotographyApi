@@ -12,6 +12,7 @@ public class AddPhotoQuery : IAddPhotoQuery
     private readonly IPhotographyRepository _photographyRepository;
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly ISaveImageToFolderQuery _saveImageToFolderQuery;
+    private readonly List<Size> _resizeLimits;
 
     public AddPhotoQuery(
         IPhotographyRepository photographyRepository,
@@ -21,13 +22,22 @@ public class AddPhotoQuery : IAddPhotoQuery
         _photographyRepository = photographyRepository;
         _dateTimeProvider = dateTimeProvider;
         _saveImageToFolderQuery = saveImageToFolderQuery;
+        _resizeLimits = GetResizeLimits();
     }
 
     public Photo Execute(IFormFile file)
     {
-        var image = _saveImageToFolderQuery.Execute(file);
+        var images = _saveImageToFolderQuery.Execute(file, _resizeLimits);
         var date = _dateTimeProvider.UtcNow;
-        var photo = new Photo(null, date, new List<Image> { image });
+        var photo = new Photo(null, date, images);
         return _photographyRepository.AddPhoto(photo);
     }
+
+    private static List<Size> GetResizeLimits() => new() {
+        new Size(800, 320),
+        new Size(1600, 640),
+        new Size(1920, 1200),
+        new Size(2560, 1440),
+        new Size(3840, 2160)
+    };
 }
