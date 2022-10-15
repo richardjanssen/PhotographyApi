@@ -5,5 +5,5 @@ namespace Business.Components.Internal;
 
 public interface ISaveImageToFolderQuery
 {
-    Image Execute(IFormFile file);
+    IReadOnlyCollection<Image> Execute(IFormFile file, IReadOnlyCollection<Size> maxDimensions);
 }
