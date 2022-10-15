@@ -17,14 +17,17 @@ public sealed class TestSetup
         var httpResponseMessage = new HttpResponseMessage();
         var fakeDateTimeProvider = new FakeDateTimeProvider();
         var fakePhotographyDbContext = new FakePhotographyDbContext();
+        var fakeWebHostEnvironment = new FakeWebHostEnvironment();
 
         // Register webApplicationFactory so SUT can be built
-        var webApplicationFactory = new PhotographyWebApplicationFactory(fakePhotographyDbContext, fakeDateTimeProvider);
+        var webApplicationFactory = new PhotographyWebApplicationFactory(fakePhotographyDbContext, fakeDateTimeProvider, fakeWebHostEnvironment);
         _objectContainer.RegisterInstanceAs(httpResponseMessage, typeof(HttpResponseMessage));
         _objectContainer.RegisterInstanceAs(webApplicationFactory, typeof(PhotographyWebApplicationFactory));
+        _objectContainer.RegisterInstanceAs(fakeWebHostEnvironment, typeof(FakeWebHostEnvironment));
 
         // register in _objectContainer so fakes can be found and edited in tests
         _objectContainer.RegisterInstanceAs(fakeDateTimeProvider, typeof(FakeDateTimeProvider));
         _objectContainer.RegisterInstanceAs(fakePhotographyDbContext, typeof(FakePhotographyDbContext));
+        _objectContainer.RegisterInstanceAs(fakeWebHostEnvironment, typeof(FakeWebHostEnvironment));
     }
 }
