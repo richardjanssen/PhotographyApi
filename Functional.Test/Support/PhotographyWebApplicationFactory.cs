@@ -1,6 +1,7 @@
 ﻿using Common.Common.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -25,12 +26,22 @@ public class PhotographyWebApplicationFactory : WebApplicationFactory<Program>
 
     protected override IHost CreateHost(IHostBuilder builder)
     {
+        builder.ConfigureAppConfiguration((context, config) =>
+        {
+            config.AddInMemoryCollection(new[]
+            {
+                new KeyValuePair<string, string>("AppSettings:JwtIssuer", "AFakeJwtIssuerForTestingPurposes"),
+                new KeyValuePair<string, string>("AppSettings:JwtSecret", "AFakeJwtSecretForTestingPurposes")
+            });
+        });
+
         builder.ConfigureServices(services =>
         {
             services.AddScoped(_ => _fakePhotographyDbContext.GetContext());
             services.AddTransient<IDateTimeProvider>(_ => _fakeDateTimeProvider);
             services.AddTransient<IWebHostEnvironment>(_ => _fakeWebHostEnvironment);
         });
+        
 
         return base.CreateHost(builder);
     }
