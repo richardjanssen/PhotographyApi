@@ -1,8 +1,11 @@
 using Common.Common;
 using Infrastructure.Ioc;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.IdentityModel.Tokens;
 using NLog;
 using NLog.Web;
+using System.Text;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -30,6 +33,20 @@ try
                 .AllowCredentials()
                 .AllowAnyHeader();
         });
+    });
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = configuration["AppSettings:JwtIssuer"],
+                ValidAudience = configuration["AppSettings:JwtIssuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AppSettings:JwtSecret"]))
+            };
     });
     builder.Services.AddControllers(options => options.OutputFormatters.RemoveType<StringOutputFormatter>());
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -60,6 +77,7 @@ try
     app.UsePathBase("/api");
     app.UseStaticFiles();
     app.UseCors("PhotographyClient");
+    app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllers();
