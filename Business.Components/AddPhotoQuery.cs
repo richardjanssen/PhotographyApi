@@ -25,12 +25,12 @@ public class AddPhotoQuery : IAddPhotoQuery
         _resizeLimits = GetResizeLimits();
     }
 
-    public Photo Execute(IFormFile file)
+    public async Task<Photo> Execute(IFormFile file)
     {
         var images = _saveImageToFolderQuery.Execute(file, _resizeLimits);
         var date = _dateTimeProvider.UtcNow;
         var photo = new Photo(null, date, images);
-        return _photographyRepository.AddPhoto(photo);
+        return await _photographyRepository.AddPhoto(photo);
     }
 
     private static List<Size> GetResizeLimits() => new() {

@@ -1,5 +1,4 @@
-﻿using Business.Entities;
-using Business.Interfaces;
+﻿using Business.Interfaces;
 using Common.Common;
 using Data.Repository.Interfaces;
 using Microsoft.Extensions.Options;
@@ -35,14 +34,6 @@ public class AuthenticationComponent : IAuthenticationComponent
         return VerifyPasswordAgainstHash(password, account.PasswordHash, account.Salt) ? GenerateJwtToken(account.UserName) : null;
     }
 
-    public async Task AddAccount(string userName, string password)
-    {
-        var salt = GenerateSalt();
-        var hashedPassword = ComputeHash(password, salt);
-
-        await _photographyRepository.AddAccount(new Account(userName, hashedPassword, salt));
-    }
-
     private string GenerateJwtToken(string userName)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JwtSecret));
@@ -64,14 +55,6 @@ public class AuthenticationComponent : IAuthenticationComponent
         var handler = new JwtSecurityTokenHandler();
 
         return handler.WriteToken(securityToken);
-    }
-
-    private static string GenerateSalt()
-    {
-        var salt = new byte[128 / 8];
-        using var generator = RandomNumberGenerator.Create();
-        generator.GetBytes(salt);
-        return Convert.ToBase64String(salt);
     }
 
     private static string ComputeHash(string password, string salt)

@@ -1,5 +1,4 @@
-﻿using Common.Common.Interfaces;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.FileProviders;
 
 namespace Test.Helpers;

@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Test.Helpers;
-using Test.Helpers.Builders;
+using PhotoTestBuilder = Test.Helpers.Builders.Business.Entities.PhotoTestBuilder;
 
 namespace Business.Components.Test;
 

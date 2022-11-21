@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace Data.Repository.Entities;
 
-namespace Data.Repository.Entities;
-
-[Table("Accounts")]
 public class Account
 {
     public Account(string userName, string passwordHash, string salt)
