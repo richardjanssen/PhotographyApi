@@ -23,10 +23,8 @@ public class PhotosController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IReadOnlyCollection<PhotoViewModel>> Get()
-    {
-        return (await _getPhotosByDateDescendingQuery.Execute()).Select(photo => photo.Map(_basePath)).ToList();
-    }
+    public async Task<IReadOnlyCollection<PhotoViewModel>> Get() =>
+        (await _getPhotosByDateDescendingQuery.Execute()).Select(photo => photo.Map(_basePath)).ToList();
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
@@ -35,6 +33,6 @@ public class PhotosController : ControllerBase
         var formCollection = await Request.ReadFormAsync();
         var file = formCollection.Files[0];
 
-        return _addPhotoQuery.Execute(file).Map(_basePath);
+        return (await _addPhotoQuery.Execute(file)).Map(_basePath);
     }
 }

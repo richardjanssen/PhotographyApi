@@ -7,17 +7,15 @@ public static class PhotographyRepositoryMapExtensions
     public static Business.Entities.Photo Map(this Photo photo) =>
         new(photo.Id, photo.Date, photo.Images.Select(image => image.Map()).ToList());
 
-    public static Photo Map(this Business.Entities.Photo photo) =>
+    public static Photo Map(this Business.Entities.Photo photo, int id) =>
     new()
     {
+        Id = id,
         Date = photo.Date,
         Images = photo.Images.Select(image => image.Map()).ToList()
     };
 
     public static Business.Entities.Account Map(this Account account) =>
-        new(account.UserName, account.PasswordHash, account.Salt);
-
-    public static Account Map(this Business.Entities.Account account) =>
         new(account.UserName, account.PasswordHash, account.Salt);
 
     private static Business.Entities.Image Map(this Image image) =>

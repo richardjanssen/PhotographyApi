@@ -1,6 +1,6 @@
 ﻿using Business.Entities;
 
-namespace Test.Helpers.Builders;
+namespace Test.Helpers.Builders.Business.Entities;
 
 public class PhotoTestBuilder
 {

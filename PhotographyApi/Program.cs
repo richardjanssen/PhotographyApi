@@ -54,7 +54,6 @@ try
     builder.Services.AddSwaggerGen();
 
     builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
-    builder.Services.AddPhotographyDatabase(configuration);
     builder.Services.AddDataBindings();
     builder.Services.AddBusinessBindings();
     builder.Services.AddCommonBindings();

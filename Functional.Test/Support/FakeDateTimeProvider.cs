@@ -6,20 +6,11 @@ public class FakeDateTimeProvider : IDateTimeProvider
 {
     private DateTime _mockedDateTime;
 
-    public FakeDateTimeProvider()
-    {
-        _mockedDateTime = TestConstants.FakeDateTimeToday;
-    }
+    public FakeDateTimeProvider() => _mockedDateTime = TestConstants.FakeDateTimeToday;
 
-    public FakeDateTimeProvider(DateTime now)
-    {
-        _mockedDateTime = now;
-    }
+    public FakeDateTimeProvider(DateTime now) => _mockedDateTime = now;
 
-    public FakeDateTimeProvider(int year, int month, int date)
-    {
-        _mockedDateTime = new DateTime(year, month, date);
-    }
+    public FakeDateTimeProvider(int year, int month, int date) => _mockedDateTime = new DateTime(year, month, date);
 
     public void SetDateTime(DateTime dateTime) => _mockedDateTime = dateTime;
 

@@ -1,3 +1,4 @@
+using Data.Repository;
 using Data.Repository.Entities;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -11,7 +12,8 @@ namespace Functional.Test.StepDefinitions;
 public sealed class PhotosController_GetSteps
 {
     private readonly PhotographyWebApplicationFactory _webApplicationFactory;
-    private readonly FakePhotographyDbContext _fakePhotographyDbContext;
+    private readonly FakePhotographyManager _fakePhotgraphyManager;
+
     private HttpResponseMessage _response = null!;
 
     private readonly DateTime _someDateTime = TestConstants.SomeDateTime;
@@ -19,16 +21,16 @@ public sealed class PhotosController_GetSteps
 
     public PhotosController_GetSteps(
         PhotographyWebApplicationFactory webApplicationFactory,
-        FakePhotographyDbContext fakePhotographyDbContext)
+        FakePhotographyManager fakePhotgraphyManager)
     {
         _webApplicationFactory = webApplicationFactory;
-        _fakePhotographyDbContext = fakePhotographyDbContext;
+        _fakePhotgraphyManager = fakePhotgraphyManager;
     }
 
     [Given("a number of photos in the database")]
-    public void GivenANumberOfPhotosInTheDatabase()
+    public async Task GivenANumberOfPhotosInTheDatabase()
     {
-        _fakePhotographyDbContext.Seed(new List<Photo> {
+        await _fakePhotgraphyManager.WritePhotos(new List<Photo> {
             new Photo { Id = 1, Date = _someDateTime },
             new Photo { Id = 2, Date = _someLaterDateTime }
         });
