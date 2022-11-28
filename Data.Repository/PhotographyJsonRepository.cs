@@ -13,10 +13,10 @@ public class PhotographyJsonRepository : IPhotographyRepository
 
     public async Task<Business.Entities.Photo> AddPhoto(Business.Entities.Photo photo)
     {
-        var currentPhotos = await _photographyManager.GetPhotos();
+        var currentPhotos = (await _photographyManager.GetPhotos()).ToList();
 
         var id = currentPhotos.Count > 0 ? currentPhotos.Select(photo => photo.Id).Max() + 1 : 1;
-        currentPhotos.ToList().Add(photo.Map(id));
+        currentPhotos.Add(photo.Map(id));
 
         await _photographyManager.WritePhotos(currentPhotos);
 
