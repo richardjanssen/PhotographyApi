@@ -1,6 +1,7 @@
 using Common.Common;
 using Infrastructure.Ioc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.IdentityModel.Tokens;
 using NLog;
@@ -23,6 +24,11 @@ try
     builder.Host.UseNLog();
 
     // Add services to the container.
+    builder.Services.Configure<ForwardedHeadersOptions>(options =>
+    {
+        options.ForwardedHeaders =
+            ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    });
     builder.Services.AddCors(opt =>
     {
         opt.AddPolicy("PhotographyClient", builder =>
@@ -60,7 +66,8 @@ try
 
     var app = builder.Build();
 
-    // Configure the HTTP request pipeline.
+    app.UseForwardedHeaders();
+
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger(c => c.RouteTemplate = "api/swagger/{documentname}/swagger.json");
