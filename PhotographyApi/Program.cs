@@ -21,14 +21,14 @@ try
 
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
-    
+
     // Add services to the container.
     builder.Services.AddCors(opt =>
     {
         opt.AddPolicy("PhotographyClient", builder =>
         {
             builder
-                .WithOrigins("https://localhost:4200")
+                .WithOrigins(configuration["AppSettings:CorsOrigins"].Split(','))
                 .AllowAnyMethod()
                 .AllowCredentials()
                 .AllowAnyHeader();
