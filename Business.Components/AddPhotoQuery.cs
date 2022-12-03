@@ -34,10 +34,10 @@ public class AddPhotoQuery : IAddPhotoQuery
     }
 
     private static List<Size> GetResizeLimits() => new() {
-        new Size(800, 320),
-        new Size(1600, 640),
-        new Size(1920, 1200),
-        new Size(2560, 1440),
-        new Size(3840, 2160)
+        new Size(840, 336),
+        new Size(1680, 672),
+        new Size(2016, 1260),
+        new Size(2688, 1512),
+        new Size(4032, 2268)
     };
 }
