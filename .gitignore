@@ -340,5 +340,4 @@ ASALocalRun/
 healthchecksdb
 
 # Database files
-PhotographyApi/data/accounts.json
-PhotographyApi/data/photos.json
+PhotographyApi/data/*.json

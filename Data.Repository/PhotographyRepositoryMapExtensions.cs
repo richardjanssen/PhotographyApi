@@ -15,6 +15,16 @@ public static class PhotographyRepositoryMapExtensions
         Images = photo.Images.Select(image => image.Map()).ToList()
     };
 
+    public static Business.Entities.Album Map(this Album album) => new(album.Id, album.Name);
+
+    public static Album Map(this Business.Entities.Album album, int id, string fileName) =>
+    new()
+    {
+        Id = id,
+        Name = album.Name,
+        FileName = fileName
+    };
+
     public static Business.Entities.Account Map(this Account account) =>
         new(account.UserName, account.PasswordHash, account.Salt);
 
