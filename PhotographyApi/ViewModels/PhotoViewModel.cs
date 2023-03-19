@@ -9,7 +9,7 @@ public class PhotoViewModel
         Images = images;
     }
 
-    public int? Id { get; set; }
-    public DateTime? Date { get; set; }
-    public IReadOnlyCollection<ImageWithPathViewModel> Images { get; set; }
+    public int? Id { get; }
+    public DateTime? Date { get; }
+    public IReadOnlyCollection<ImageWithPathViewModel> Images { get; }
 }

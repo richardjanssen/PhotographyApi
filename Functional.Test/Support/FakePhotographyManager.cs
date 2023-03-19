@@ -13,4 +13,34 @@ public class FakePhotographyManager : IPhotographyManager
     public async Task WritePhotos(IReadOnlyCollection<Photo> photos) => await Task.Run(() => _photos = photos);
 
     public async Task<IReadOnlyCollection<Account>> GetAccounts() => await Task.Run(() => _accounts);
+
+    public Task<IReadOnlyCollection<Album>> GetAlbums()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task WriteAlbums(IReadOnlyCollection<Album> photos)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<AlbumDetails> GetAlbumDetails(string fileName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task WriteAlbumDetails(string fileName, AlbumDetails albumDetails)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IReadOnlyCollection<HikerUpdate>> GetHikerUpdates()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task WriteHikerUpdates(IReadOnlyCollection<HikerUpdate> hikerUpdates)
+    {
+        throw new NotImplementedException();
+    }
 }

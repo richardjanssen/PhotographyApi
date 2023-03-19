@@ -10,8 +10,8 @@ public class Image
         Extension = extension;
     }
 
-    public int WidthPx { get; set; }
-    public int HeightPx { get; set; }
-    public Guid Guid { get; set; }
-    public string Extension { get; set; }
+    public int WidthPx { get; }
+    public int HeightPx { get; }
+    public Guid Guid { get; }
+    public string Extension { get; }
 }
