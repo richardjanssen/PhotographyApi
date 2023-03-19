@@ -9,7 +9,7 @@ public class Account
         Salt = salt;
     }
 
-    public string UserName { get; set; }
-    public string PasswordHash { get; set; }
-    public string Salt { get; set; }
+    public string UserName { get; }
+    public string PasswordHash { get; }
+    public string Salt { get; }
 }

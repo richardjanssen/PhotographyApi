@@ -11,5 +11,8 @@ public static class BusinessBindings
         .AddScoped<IGetPhotosByDateDescendingQuery, GetPhotosByDateDescendingQuery>()
         .AddScoped<ISaveImageToFolderQuery, SaveImageToFolderQuery>()
         .AddScoped<IAddPhotoQuery, AddPhotoQuery>()
-        .AddScoped<IAuthenticationComponent, AuthenticationComponent>();
+        .AddScoped<IAuthenticationComponent, AuthenticationComponent>()
+        .AddScoped<IGetHighlightsQuery, GetHighlightsQuery>()
+        ;
+
 }

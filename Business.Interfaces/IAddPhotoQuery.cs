@@ -5,5 +5,5 @@ namespace Business.Interfaces;
 
 public interface IAddPhotoQuery
 {
-    Task<Photo> Execute(IFormFile file);
+    Task<Photo> Execute(AddPhoto addPhoto);
 }

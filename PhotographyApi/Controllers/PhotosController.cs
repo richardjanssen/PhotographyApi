@@ -1,3 +1,4 @@
+using Business.Entities;
 using Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,8 @@ public class PhotosController : ControllerBase
         var formCollection = await Request.ReadFormAsync();
         var file = formCollection.Files[0];
 
-        return (await _addPhotoQuery.Execute(file)).Map(_basePath);
+        int? albumId = formCollection.ContainsKey("albumId") ? int.Parse(formCollection["albumId"]) : null;
+        var addPhoto = new AddPhoto(albumId, file);
+        return (await _addPhotoQuery.Execute(addPhoto)).Map(_basePath);
     }
 }

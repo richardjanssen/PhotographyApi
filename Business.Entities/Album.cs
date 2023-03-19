@@ -2,12 +2,12 @@
 
 public class Album
 {
-    public Album(int? id, string name)
+    public Album(int? id, string title)
     {
         Id = id;
-        Name = name;
+        Title = title;
     }
 
-    public int? Id { get; set; }
-    public string Name { get; }
+    public int? Id { get; }
+    public string Title { get; }
 }

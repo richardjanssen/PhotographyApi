@@ -25,12 +25,23 @@ public class AddPhotoQuery : IAddPhotoQuery
         _resizeLimits = GetResizeLimits();
     }
 
-    public async Task<Photo> Execute(IFormFile file)
+    public async Task<Photo> Execute(AddPhoto addPhoto)
     {
-        var images = _saveImageToFolderQuery.Execute(file, _resizeLimits);
+        if (addPhoto.AlbumId != null)
+        {
+            if ((await _photographyRepository.GetAlbums()).All(album => album.Id != addPhoto.AlbumId))
+            {
+                throw new InvalidOperationException($"Cannot add photo to album with id {addPhoto.AlbumId}. Album does not exist");
+            };
+        }
+
+        var images = _saveImageToFolderQuery.Execute(addPhoto.Image, _resizeLimits);
         var date = _dateTimeProvider.UtcNow;
         var photo = new Photo(null, date, images);
-        return await _photographyRepository.AddPhoto(photo);
+
+        return addPhoto.AlbumId != null ?
+            await _photographyRepository.AddAlbumPhoto(photo, (int)addPhoto.AlbumId) :
+            await _photographyRepository.AddPhoto(photo);
     }
 
     private static List<Size> GetResizeLimits() => new() {

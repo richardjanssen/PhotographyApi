@@ -29,7 +29,7 @@ public class AlbumController : ControllerBase
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpGet]
-    public async Task<IReadOnlyCollection<AlbumViewModel>> GetAlbums()
+    public async Task<IReadOnlyCollection<AlbumViewModel>> GetAll()
     {
         return (await _photographyRepository.GetAlbums()).Select(album => album.Map()).ToList();
     }

@@ -7,16 +7,20 @@ namespace Data.Repository;
 
 public class PhotographyJsonManager : IPhotographyManager
 {
+    private readonly string _dataBasePath = "data/";
+    private readonly string _albumBasePath;
     private readonly string _photosPath;
     private readonly string _accountsPath;
     private readonly string _albumsPath;
+    private readonly string _hikerUpdatesPath;
 
     public PhotographyJsonManager(IWebHostEnvironment environment)
     {
-        const string dataBasePath = "data/";
-        _photosPath = Path.Combine(environment.ContentRootPath, $"{dataBasePath}photos.json");
-        _accountsPath = Path.Combine(environment.ContentRootPath, $"{dataBasePath}accounts.json");
-        _albumsPath = Path.Combine(environment.ContentRootPath, $"{dataBasePath}albums.json");
+        _albumBasePath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}/albums/");
+        _photosPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}photos.json");
+        _accountsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}accounts.json");
+        _albumsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}albums.json");
+        _hikerUpdatesPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}hiker_updates.json");
     }
 
     public async Task<IReadOnlyCollection<Photo>> GetPhotos()
@@ -59,4 +63,47 @@ public class PhotographyJsonManager : IPhotographyManager
         var jsonData = JsonConvert.SerializeObject(albums);
         await File.WriteAllTextAsync(_albumsPath, jsonData);
     }
+
+    public async Task<AlbumDetails> GetAlbumDetails(string fileName)
+    {
+        var albumPath = Path.Combine(_albumBasePath, fileName);
+
+        if (!File.Exists(albumPath)) return CreateEmptyAlbumDetails();
+
+        var jsonData = await File.ReadAllTextAsync(albumPath);
+
+        if (string.IsNullOrWhiteSpace(jsonData)) return CreateEmptyAlbumDetails();
+
+        return JsonConvert.DeserializeObject<AlbumDetails>(jsonData) ?? CreateEmptyAlbumDetails();
+    }
+
+    public async Task WriteAlbumDetails(string fileName, AlbumDetails albumDetails)
+    {
+        Directory.CreateDirectory(_albumBasePath);
+        var albumPath = Path.Combine(_albumBasePath, fileName);
+        var jsonData = JsonConvert.SerializeObject(albumDetails);
+        await File.WriteAllTextAsync(albumPath, jsonData);
+    }
+
+    public async Task<IReadOnlyCollection<HikerUpdate>> GetHikerUpdates()
+    {
+        if (!File.Exists(_hikerUpdatesPath)) return new List<HikerUpdate>();
+
+        var jsonData = await File.ReadAllTextAsync(_hikerUpdatesPath);
+
+        if (string.IsNullOrWhiteSpace(jsonData)) return new List<HikerUpdate>();
+
+        return JsonConvert.DeserializeObject<List<HikerUpdate>>(jsonData) ?? new List<HikerUpdate>();
+    }
+
+    public async Task WriteHikerUpdates(IReadOnlyCollection<HikerUpdate> hikerUpdates)
+    {
+        var jsonData = JsonConvert.SerializeObject(hikerUpdates);
+        await File.WriteAllTextAsync(_hikerUpdatesPath, jsonData);
+    }
+
+    private static AlbumDetails CreateEmptyAlbumDetails() => new()
+    {
+        Photos = new List<Photo>()
+    };
 }

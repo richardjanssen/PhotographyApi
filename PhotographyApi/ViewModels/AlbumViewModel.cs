@@ -2,12 +2,12 @@
 
 public class AlbumViewModel
 {
-    public AlbumViewModel(int? id, string name)
+    public AlbumViewModel(int? id, string title)
     {
         Id = id;
-        Name = name;
+        Title = title;
     }
 
-    public int? Id { get; set; }
-    public string Name { get; set; }
+    public int? Id { get; }
+    public string Title { get; }
 }

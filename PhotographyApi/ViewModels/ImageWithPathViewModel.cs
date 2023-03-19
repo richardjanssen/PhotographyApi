@@ -9,7 +9,7 @@ public class ImageWithPathViewModel
         Path = path;
     }
 
-    public int WidthPx { get; set; }
-    public int HeightPx { get; set; }
-    public string Path { get; set; }
+    public int WidthPx { get; }
+    public int HeightPx { get; }
+    public string Path { get; }
 }
