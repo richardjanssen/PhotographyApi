@@ -1,3 +1,4 @@
+using Common.Common;
 using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,5 +33,12 @@ public class AlbumController : ControllerBase
     public async Task<IReadOnlyCollection<AlbumViewModel>> GetAll()
     {
         return (await _photographyRepository.GetAlbums()).Select(album => album.Map()).ToList();
+    }
+
+    [Authorize(Roles = "PhotographyApi_Admin")]
+    [HttpGet]
+    public async Task<AlbumDetailsViewModel> GetById(int id)
+    {
+        return (await _photographyRepository.GetAlbumById(id)).Map(Constants.PhotosBasePath);
     }
 }

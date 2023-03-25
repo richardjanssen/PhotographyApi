@@ -9,6 +9,7 @@ public interface IPhotographyRepository
     Task<Photo> AddAlbumPhoto(Photo photo, int albumId);
     Task<Account?> GetAccountByUserName(string userName);
     Task<IEnumerable<Album>> GetAlbums();
+    Task<AlbumDetails> GetAlbumById(int id);
     Task<Album> AddAlbum(Album album);
     Task<IEnumerable<AddHikerUpdate>> GetHikerUpdates();
     Task<AddHikerUpdate> AddHikerUpdate(AddHikerUpdate addHikerUpdate);
