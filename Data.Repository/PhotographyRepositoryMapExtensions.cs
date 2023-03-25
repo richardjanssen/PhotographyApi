@@ -25,6 +25,9 @@ public static class PhotographyRepositoryMapExtensions
         FileName = fileName
     };
 
+    public static Business.Entities.AlbumDetails Map(this AlbumDetails albumDetails) =>
+        new(albumDetails.Photos.Select(photo => photo.Map()).ToList());
+
     public static Business.Entities.AddHikerUpdate Map(this HikerUpdate hikerUpdate) => new(
         hikerUpdate.Id,
         hikerUpdate.Title,

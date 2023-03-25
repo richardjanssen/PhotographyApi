@@ -1,5 +1,6 @@
 using Business.Entities;
 using Business.Interfaces;
+using Common.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
@@ -13,7 +14,6 @@ public class PhotosController : ControllerBase
 {
     private readonly IGetPhotosByDateDescendingQuery _getPhotosByDateDescendingQuery;
     private readonly IAddPhotoQuery _addPhotoQuery;
-    private readonly string _basePath = "Images";
 
     public PhotosController(
         IGetPhotosByDateDescendingQuery getPhotosByDateDescendingQuery,
@@ -25,7 +25,7 @@ public class PhotosController : ControllerBase
 
     [HttpGet]
     public async Task<IReadOnlyCollection<PhotoViewModel>> Get() =>
-        (await _getPhotosByDateDescendingQuery.Execute()).Select(photo => photo.Map(_basePath)).ToList();
+        (await _getPhotosByDateDescendingQuery.Execute()).Select(photo => photo.Map(Constants.PhotosBasePath)).ToList();
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
@@ -36,6 +36,6 @@ public class PhotosController : ControllerBase
 
         int? albumId = formCollection.ContainsKey("albumId") ? int.Parse(formCollection["albumId"]) : null;
         var addPhoto = new AddPhoto(albumId, file);
-        return (await _addPhotoQuery.Execute(addPhoto)).Map(_basePath);
+        return (await _addPhotoQuery.Execute(addPhoto)).Map(Constants.PhotosBasePath);
     }
 }

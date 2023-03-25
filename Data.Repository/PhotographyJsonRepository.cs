@@ -29,7 +29,7 @@ public class PhotographyJsonRepository : IPhotographyRepository
 
         if (album == null) throw new InvalidOperationException($"Cannot add photo to album with id {albumId}. Album does not exist");
 
-        var albumDetails = (await _photographyManager.GetAlbumDetails(album.FileName));
+        var albumDetails = await _photographyManager.GetAlbumDetails(album.FileName);
         var albumPhotos = albumDetails.Photos.ToList();
 
         var id = albumPhotos.Count > 0 ? albumPhotos.Select(photo => photo.Id).Max() + 1 : 1;
@@ -42,7 +42,13 @@ public class PhotographyJsonRepository : IPhotographyRepository
     }
 
     public async Task<IEnumerable<Business.Entities.Album>> GetAlbums() =>
-    (await _photographyManager.GetAlbums()).Select(album => album.Map()).ToList();
+        (await _photographyManager.GetAlbums()).Select(album => album.Map()).ToList();
+
+    public async Task<Business.Entities.AlbumDetails> GetAlbumById(int id)
+    {
+        var album = (await _photographyManager.GetAlbums()).First(album => album.Id == id);
+        return (await _photographyManager.GetAlbumDetails(album.FileName)).Map();
+    }
 
     public async Task<Business.Entities.Album> AddAlbum(Business.Entities.Album album)
     {
