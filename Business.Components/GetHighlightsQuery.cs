@@ -14,8 +14,9 @@ public class GetHighlightsQuery : IGetHighlightsQuery
     public async Task<IReadOnlyCollection<Highlight>> Execute()
     {
         var sections = (await _photographyRepository.GetSections()).OrderBy(section => section.StartDistance).ToList();
+        var places = (await _photographyRepository.GetPlaces()).Select(place => place.Map());
         var hikerUpdates = (await _photographyRepository.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map());
-        var placeHighlights = hikerUpdates; // Will be concat with places
+        var placeHighlights = places.Concat(hikerUpdates);
 
         var highlightsNotInSection = placeHighlights;
         var sectionsWithChildren = sections.Select(section =>
