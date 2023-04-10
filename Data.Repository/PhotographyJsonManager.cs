@@ -12,9 +12,10 @@ public class PhotographyJsonManager : IPhotographyManager
     private readonly string _photosPath;
     private readonly string _accountsPath;
     private readonly string _albumsPath;
-    private readonly string _hikerUpdatesPath;
     private readonly string _sectionsPath;
     private readonly string _placesPath;
+    private readonly string _hikerUpdatesPath;
+    private readonly string _hikerLocationsPath;
 
     public PhotographyJsonManager(IWebHostEnvironment environment)
     {
@@ -22,9 +23,10 @@ public class PhotographyJsonManager : IPhotographyManager
         _photosPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}photos.json");
         _accountsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}accounts.json");
         _albumsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}albums.json");
-        _hikerUpdatesPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}hiker_updates.json");
         _sectionsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}sections.json");
         _placesPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}places.json");
+        _hikerUpdatesPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}hiker_updates.json");
+        _hikerLocationsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}hiker_locations.json");
     }
 
     public async Task<IReadOnlyCollection<Photo>> GetPhotos()
@@ -120,6 +122,17 @@ public class PhotographyJsonManager : IPhotographyManager
         if (string.IsNullOrWhiteSpace(jsonData)) return new List<HikerUpdate>();
 
         return JsonConvert.DeserializeObject<List<HikerUpdate>>(jsonData) ?? new List<HikerUpdate>();
+    }
+
+    public async Task<IReadOnlyCollection<HikerLocation>> GetHikerLocations()
+    {
+        if (!File.Exists(_hikerLocationsPath)) return new List<HikerLocation>();
+
+        var jsonData = await File.ReadAllTextAsync(_hikerLocationsPath);
+
+        if (string.IsNullOrWhiteSpace(jsonData)) return new List<HikerLocation>();
+
+        return JsonConvert.DeserializeObject<List<HikerLocation>>(jsonData) ?? new List<HikerLocation>();
     }
 
     public async Task WriteHikerUpdates(IReadOnlyCollection<HikerUpdate> hikerUpdates)

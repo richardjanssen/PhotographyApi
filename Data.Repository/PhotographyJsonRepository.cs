@@ -84,6 +84,9 @@ public class PhotographyJsonRepository : IPhotographyRepository
         return addHikerUpdate;
     }
 
+    public async Task<IEnumerable<Business.Entities.HikerLocation>> GetHikerLocations() =>
+    (await _photographyManager.GetHikerLocations()).Select(hikerLocation => hikerLocation.Map()).ToList();
+
     public async Task<Business.Entities.Account?> GetAccountByUserName(string userName) =>
         (await _photographyManager.GetAccounts()).SingleOrDefault(account => account.UserName == userName)?.Map();
 }
