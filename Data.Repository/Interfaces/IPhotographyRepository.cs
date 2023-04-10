@@ -12,6 +12,7 @@ public interface IPhotographyRepository
     Task<AlbumDetails> GetAlbumById(int id);
     Task<Album> AddAlbum(Album album);
     Task<IEnumerable<Section>> GetSections();
+    Task<IEnumerable<Place>> GetPlaces();
     Task<IEnumerable<AddHikerUpdate>> GetHikerUpdates();
     Task<AddHikerUpdate> AddHikerUpdate(AddHikerUpdate addHikerUpdate);
 }

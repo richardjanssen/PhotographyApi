@@ -14,6 +14,7 @@ public class PhotographyJsonManager : IPhotographyManager
     private readonly string _albumsPath;
     private readonly string _hikerUpdatesPath;
     private readonly string _sectionsPath;
+    private readonly string _placesPath;
 
     public PhotographyJsonManager(IWebHostEnvironment environment)
     {
@@ -23,6 +24,7 @@ public class PhotographyJsonManager : IPhotographyManager
         _albumsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}albums.json");
         _hikerUpdatesPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}hiker_updates.json");
         _sectionsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}sections.json");
+        _placesPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}places.json");
     }
 
     public async Task<IReadOnlyCollection<Photo>> GetPhotos()
@@ -96,6 +98,17 @@ public class PhotographyJsonManager : IPhotographyManager
         if (string.IsNullOrWhiteSpace(jsonData)) return new List<Section>();
 
         return JsonConvert.DeserializeObject<List<Section>>(jsonData) ?? new List<Section>();
+    }
+
+    public async Task<IReadOnlyCollection<Place>> GetPlaces()
+    {
+        if (!File.Exists(_placesPath)) return new List<Place>();
+
+        var jsonData = await File.ReadAllTextAsync(_placesPath);
+
+        if (string.IsNullOrWhiteSpace(jsonData)) return new List<Place>();
+
+        return JsonConvert.DeserializeObject<List<Place>>(jsonData) ?? new List<Place>();
     }
 
     public async Task<IReadOnlyCollection<HikerUpdate>> GetHikerUpdates()

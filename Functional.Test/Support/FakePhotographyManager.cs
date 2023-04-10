@@ -48,4 +48,9 @@ public class FakePhotographyManager : IPhotographyManager
     {
         throw new NotImplementedException();
     }
+
+    public Task<IReadOnlyCollection<Place>> GetPlaces()
+    {
+        throw new NotImplementedException();
+    }
 }

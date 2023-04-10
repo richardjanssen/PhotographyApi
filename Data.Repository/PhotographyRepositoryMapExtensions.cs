@@ -31,6 +31,9 @@ public static class PhotographyRepositoryMapExtensions
     public static Business.Entities.Section Map(this Section section) =>
         new(section.Id, section.Title, section.StartDistance, section.EndDistance);
 
+    public static Business.Entities.Place Map(this Place place) =>
+        new(place.Id, place.Type, place.Title, place.Distance);
+
     public static Business.Entities.AddHikerUpdate Map(this HikerUpdate hikerUpdate) => new(
         hikerUpdate.Id,
         hikerUpdate.Title,
