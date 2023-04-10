@@ -1,7 +1,6 @@
 ﻿using Business.Entities;
 using Business.Interfaces;
 using Data.Repository.Interfaces;
-using Common.Common.Enums;
 
 namespace Business.Components;
 
@@ -14,7 +13,30 @@ public class GetHighlightsQuery : IGetHighlightsQuery
 
     public async Task<IReadOnlyCollection<Highlight>> Execute()
     {
-        var hikerHighlights = (await _photographyRepository.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map(HighlightType.Place));
-        return hikerHighlights.ToList();
+        var sections = (await _photographyRepository.GetSections()).OrderBy(section => section.StartDistance).ToList();
+        var hikerUpdates = (await _photographyRepository.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map());
+        var placeHighlights = hikerUpdates; // Will be concat with places
+
+        var highlightsNotInSection = placeHighlights;
+        var sectionsWithChildren = sections.Select(section =>
+        {
+            var highlightsInSection = highlightsNotInSection
+                .Where(highlight => IsPlaceInSection(highlight, section))
+                .OrderBy(highlight => highlight.Distance)
+                .ToList();
+            highlightsNotInSection = highlightsNotInSection.Where(highlight => !IsPlaceInSection(highlight, section));
+
+            return section.Map(highlightsInSection);
+        }).ToList();
+
+        return sectionsWithChildren
+            .Concat(highlightsNotInSection.Select(highlight => highlight.Map()))
+            .OrderBy(highlight => highlight.Distance)
+            .ToList();
+    }
+
+    private static bool IsPlaceInSection(PlaceHighlight place, Section section)
+    {
+        return section.StartDistance <= place.Distance && section.EndDistance > place.Distance;
     }
 }

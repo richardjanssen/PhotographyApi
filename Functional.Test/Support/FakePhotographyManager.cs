@@ -43,4 +43,9 @@ public class FakePhotographyManager : IPhotographyManager
     {
         throw new NotImplementedException();
     }
+
+    public Task<IReadOnlyCollection<Section>> GetSections()
+    {
+        throw new NotImplementedException();
+    }
 }
