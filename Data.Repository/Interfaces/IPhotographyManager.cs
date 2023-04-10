@@ -11,6 +11,7 @@ public interface IPhotographyManager
     Task WriteAlbums(IReadOnlyCollection<Album> photos);
     Task<AlbumDetails> GetAlbumDetails(string fileName);
     Task WriteAlbumDetails(string fileName, AlbumDetails albumDetails);
+    Task<IReadOnlyCollection<Section>> GetSections();
     Task<IReadOnlyCollection<HikerUpdate>> GetHikerUpdates();
     Task WriteHikerUpdates(IReadOnlyCollection<HikerUpdate> hikerUpdates);
 }

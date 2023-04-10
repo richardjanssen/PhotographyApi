@@ -28,6 +28,9 @@ public static class PhotographyRepositoryMapExtensions
     public static Business.Entities.AlbumDetails Map(this AlbumDetails albumDetails) =>
         new(albumDetails.Photos.Select(photo => photo.Map()).ToList());
 
+    public static Business.Entities.Section Map(this Section section) =>
+        new(section.Id, section.Title, section.StartDistance, section.EndDistance);
+
     public static Business.Entities.AddHikerUpdate Map(this HikerUpdate hikerUpdate) => new(
         hikerUpdate.Id,
         hikerUpdate.Title,

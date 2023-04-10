@@ -63,6 +63,9 @@ public class PhotographyJsonRepository : IPhotographyRepository
         return album;
     }
 
+    public async Task<IEnumerable<Business.Entities.Section>> GetSections() =>
+    (await _photographyManager.GetSections()).Select(section => section.Map()).ToList();
+
     public async Task<IEnumerable<Business.Entities.AddHikerUpdate>> GetHikerUpdates() =>
         (await _photographyManager.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map()).ToList();
 

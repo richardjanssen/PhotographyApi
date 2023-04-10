@@ -1,5 +1,4 @@
 ﻿using Common.Common.Enums;
-using Microsoft.AspNetCore.Http;
 
 namespace Business.Entities;
 
