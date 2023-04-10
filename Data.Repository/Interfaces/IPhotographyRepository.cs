@@ -15,4 +15,5 @@ public interface IPhotographyRepository
     Task<IEnumerable<Place>> GetPlaces();
     Task<IEnumerable<AddHikerUpdate>> GetHikerUpdates();
     Task<AddHikerUpdate> AddHikerUpdate(AddHikerUpdate addHikerUpdate);
+    Task<IEnumerable<HikerLocation>> GetHikerLocations();
 }

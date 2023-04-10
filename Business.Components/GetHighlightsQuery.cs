@@ -14,9 +14,12 @@ public class GetHighlightsQuery : IGetHighlightsQuery
     public async Task<IReadOnlyCollection<Highlight>> Execute()
     {
         var sections = (await _photographyRepository.GetSections()).OrderBy(section => section.StartDistance).ToList();
-        var places = (await _photographyRepository.GetPlaces()).Select(place => place.Map());
-        var hikerUpdates = (await _photographyRepository.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map());
-        var placeHighlights = places.Concat(hikerUpdates);
+        var hikerLocation = (await _photographyRepository.GetHikerLocations()).OrderByDescending(location => location.Date).FirstOrDefault();
+        var places = (await _photographyRepository.GetPlaces()).Select(place => place.Map(IsHikerAtDistance(hikerLocation, place.Distance)));
+        var hikerIsAtAPlace = places.Any(place => IsHikerAtDistance(hikerLocation, place.Distance));
+        var hikerLocationHighlightList = hikerIsAtAPlace ? new List<PlaceHighlight>() : new List<PlaceHighlight>() { new(null, "Current location", hikerLocation!.Distance, Common.Common.Enums.PlaceHighlightType.Location, true) };
+        var hikerUpdates = (await _photographyRepository.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map(false));
+        var placeHighlights = places.Concat(hikerUpdates).Concat(hikerLocationHighlightList);
 
         var highlightsNotInSection = placeHighlights;
         var sectionsWithChildren = sections.Select(section =>
@@ -39,5 +42,15 @@ public class GetHighlightsQuery : IGetHighlightsQuery
     private static bool IsPlaceInSection(PlaceHighlight place, Section section)
     {
         return section.StartDistance <= place.Distance && section.EndDistance > place.Distance;
+    }
+
+    private static bool IsHikerAtDistance(HikerLocation? hikerLocation, double distance)
+    {
+        if (hikerLocation == null)
+        {
+            return false;
+        }
+
+        return distance == hikerLocation.Distance;
     }
 }

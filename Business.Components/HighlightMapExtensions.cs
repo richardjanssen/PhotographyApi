@@ -5,12 +5,12 @@ namespace Business.Components;
 
 public static class HighlightMapExtensions
 {
-    public static PlaceHighlight Map(this IBaseHighlight baseHighlight) => new(
+    public static PlaceHighlight Map(this IBaseHighlight baseHighlight, bool isCurrentLocation) => new(
     baseHighlight.Id,
     baseHighlight.Title,
     baseHighlight.Distance,
     baseHighlight.Type,
-    false);
+    isCurrentLocation);
 
     public static Highlight Map(this Section section, IReadOnlyCollection<PlaceHighlight> children) => new(
         section.Id,
@@ -27,6 +27,6 @@ public static class HighlightMapExtensions
         highlight.Distance,
         HighlightType.Place,
         highlight.PlaceType,
-        false,
+        highlight.CurrentLocation,
         new List<Highlight>());
 }
