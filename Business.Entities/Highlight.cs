@@ -4,29 +4,14 @@ namespace Business.Entities;
 
 public class Highlight
 {
-    public Highlight(
-        int? id,
-        string title,
-        double distance,
-        HighlightType type,
-        PlaceHighlightType? placeType,
-        bool currentLocation,
-        IReadOnlyCollection<Highlight> children)
+    public Highlight(HighlightType type, SectionHighlight? sectionHighlight, PointHighlight? pointHighlight)
     {
-        Id = id;
-        Title = title;
-        Distance = distance;
         Type = type;
-        PlaceType = placeType;
-        CurrentLocation = currentLocation;
-        Children = children;
+        SectionHighlight = sectionHighlight;
+        PointHighlight = pointHighlight;
     }
 
-    public int? Id { get; }
-    public string Title { get; }
-    public double Distance { get; }
     public HighlightType Type { get; }
-    public PlaceHighlightType? PlaceType { get; }
-    public bool CurrentLocation { get; }
-    public IReadOnlyCollection<Highlight> Children { get; }
+    public SectionHighlight? SectionHighlight { get; }
+    public PointHighlight? PointHighlight { get; }
 }

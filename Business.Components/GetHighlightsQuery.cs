@@ -16,26 +16,31 @@ public class GetHighlightsQuery : IGetHighlightsQuery
         var sections = (await _photographyRepository.GetSections()).OrderBy(section => section.StartDistance).ToList();
         var hikerLocation = (await _photographyRepository.GetHikerLocations()).OrderByDescending(location => location.Date).FirstOrDefault();
         var places = (await _photographyRepository.GetPlaces()).Select(place => place.Map(IsHikerAtDistance(hikerLocation, place.Distance)));
-        var hikerIsAtAPlace = places.Any(place => IsHikerAtDistance(hikerLocation, place.Distance));
-        var hikerLocationHighlightList = hikerIsAtAPlace ? new List<PlaceHighlight>() : new List<PlaceHighlight>() { new(null, "Current location", hikerLocation!.Distance, Common.Common.Enums.PlaceHighlightType.Location, true) };
+        var hikerLocationHighlightList = hikerLocation == null
+            ? new List<PlaceHighlight>()
+            : new List<PlaceHighlight>() { new(null, "Current location", hikerLocation!.Distance, Common.Common.Enums.PlaceHighlightType.Location, true) };
         var hikerUpdates = (await _photographyRepository.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map(false));
         var placeHighlights = places.Concat(hikerUpdates).Concat(hikerLocationHighlightList);
 
-        var highlightsNotInSection = placeHighlights;
+        var placeHighlightsNotInSection = placeHighlights;
         var sectionsWithChildren = sections.Select(section =>
         {
-            var highlightsInSection = highlightsNotInSection
+            var highlightsInSection = placeHighlightsNotInSection
                 .Where(highlight => IsPlaceInSection(highlight, section))
                 .OrderBy(highlight => highlight.Distance)
                 .ToList();
-            highlightsNotInSection = highlightsNotInSection.Where(highlight => !IsPlaceInSection(highlight, section));
+            placeHighlightsNotInSection = placeHighlightsNotInSection.Where(highlight => !IsPlaceInSection(highlight, section));
 
             return section.Map(highlightsInSection);
         }).ToList();
 
+        var highlightsNotInSection = placeHighlightsNotInSection.ToList().Map().Select(pointHighlight => pointHighlight.Map());
         return sectionsWithChildren
-            .Concat(highlightsNotInSection.Select(highlight => highlight.Map()))
-            .OrderBy(highlight => highlight.Distance)
+            .Concat(highlightsNotInSection)
+            .OrderBy(highlight =>
+                highlight.Type == Common.Common.Enums.HighlightType.Section
+                    ? highlight.SectionHighlight!.StartDistance
+                    : highlight.PointHighlight!.Distance)
             .ToList();
     }
 

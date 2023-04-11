@@ -1,3 +1,4 @@
+using Business.Entities;
 using Business.Interfaces;
 using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -16,9 +17,15 @@ public class HighlightController : ControllerBase
     public HighlightController(IGetHighlightsQuery getHighlightsQuery) =>
         _getHighlightsQuery = getHighlightsQuery;
 
+    //[HttpGet]
+    //public async Task<IReadOnlyCollection<HighlightViewModel>> GetAll()
+    //{
+    //    return (await _getHighlightsQuery.Execute()).Select(highlight => highlight.Map()).ToList();
+    //}
+
     [HttpGet]
-    public async Task<IReadOnlyCollection<HighlightViewModel>> GetAll()
+    public async Task<IReadOnlyCollection<Highlight>> GetAll()
     {
-        return (await _getHighlightsQuery.Execute()).Select(highlight => highlight.Map()).ToList();
+        return (await _getHighlightsQuery.Execute()).ToList();
     }
 }

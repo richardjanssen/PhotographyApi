@@ -12,21 +12,22 @@ public static class HighlightMapExtensions
     baseHighlight.Type,
     isCurrentLocation);
 
-    public static Highlight Map(this Section section, IReadOnlyCollection<PlaceHighlight> children) => new(
-        section.Id,
-        section.Title,
-        section.StartDistance,
-        HighlightType.Section,
-        null,
-        false,
-        children.Select(child => child.Map()).ToList());
+    public static PointWithDistance Map(this IBaseHighlight baseHighlight) => new(
+    baseHighlight.Id,
+    baseHighlight.Title,
+    baseHighlight.Type,
+    baseHighlight.Distance);
 
-    public static Highlight Map(this PlaceHighlight highlight) => new(
-        highlight.Id,
-        highlight.Title,
-        highlight.Distance,
-        HighlightType.Place,
-        highlight.PlaceType,
-        highlight.CurrentLocation,
-        new List<Highlight>());
+    public static Highlight Map(this Section section, IReadOnlyCollection<PlaceHighlight> children) {
+        var sectionHighlight = new SectionHighlight(section.Title, children.Map(), section.StartDistance);
+        return new Highlight(HighlightType.Section, sectionHighlight, null);
+    }
+
+    public static IReadOnlyCollection<PointHighlight> Map(this IReadOnlyCollection<PlaceHighlight> placeHighlights)
+    {
+        var childrenByDistance = placeHighlights.GroupBy(x => x.Distance);
+        return childrenByDistance.Select(group => new PointHighlight(group.Key, group.Any(highlight => highlight.PlaceType == PlaceHighlightType.Location), group.Select(highlight => new Point(highlight.Id, highlight.PlaceType, highlight.Title)).ToList())).ToList();
+    }
+
+    public static Highlight Map(this PointHighlight highlight) => new(HighlightType.Place, null, highlight);
 }
