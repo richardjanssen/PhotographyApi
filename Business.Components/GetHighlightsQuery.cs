@@ -15,21 +15,21 @@ public class GetHighlightsQuery : IGetHighlightsQuery
     {
         var sections = (await _photographyRepository.GetSections()).OrderBy(section => section.StartDistance).ToList();
         var hikerLocation = (await _photographyRepository.GetHikerLocations()).OrderByDescending(location => location.Date).FirstOrDefault();
-        var places = (await _photographyRepository.GetPlaces()).Select(place => place.Map(IsHikerAtDistance(hikerLocation, place.Distance)));
+        var places = (await _photographyRepository.GetPlaces()).Select(place => place.Map());
         var hikerLocationHighlightList = hikerLocation == null
-            ? new List<PlaceHighlight>()
-            : new List<PlaceHighlight>() { new(null, "Current location", hikerLocation!.Distance, Common.Common.Enums.PlaceHighlightType.Location, true) };
-        var hikerUpdates = (await _photographyRepository.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map(false));
+            ? new List<PointWithDistance>()
+            : new List<PointWithDistance>() { new(null, "Current location", Common.Common.Enums.PlaceHighlightType.Location, hikerLocation!.Distance) };
+        var hikerUpdates = (await _photographyRepository.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map());
         var placeHighlights = places.Concat(hikerUpdates).Concat(hikerLocationHighlightList);
 
         var placeHighlightsNotInSection = placeHighlights;
         var sectionsWithChildren = sections.Select(section =>
         {
             var highlightsInSection = placeHighlightsNotInSection
-                .Where(highlight => IsPlaceInSection(highlight, section))
+                .Where(highlight => IsPointInSection(highlight, section))
                 .OrderBy(highlight => highlight.Distance)
                 .ToList();
-            placeHighlightsNotInSection = placeHighlightsNotInSection.Where(highlight => !IsPlaceInSection(highlight, section));
+            placeHighlightsNotInSection = placeHighlightsNotInSection.Where(highlight => !IsPointInSection(highlight, section));
 
             return section.Map(highlightsInSection);
         }).ToList();
@@ -44,18 +44,8 @@ public class GetHighlightsQuery : IGetHighlightsQuery
             .ToList();
     }
 
-    private static bool IsPlaceInSection(PlaceHighlight place, Section section)
+    private static bool IsPointInSection(PointWithDistance point, Section section)
     {
-        return section.StartDistance <= place.Distance && section.EndDistance > place.Distance;
-    }
-
-    private static bool IsHikerAtDistance(HikerLocation? hikerLocation, double distance)
-    {
-        if (hikerLocation == null)
-        {
-            return false;
-        }
-
-        return distance == hikerLocation.Distance;
+        return section.StartDistance <= point.Distance && section.EndDistance > point.Distance;
     }
 }

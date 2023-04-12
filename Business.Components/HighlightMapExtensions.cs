@@ -5,25 +5,18 @@ namespace Business.Components;
 
 public static class HighlightMapExtensions
 {
-    public static PlaceHighlight Map(this IBaseHighlight baseHighlight, bool isCurrentLocation) => new(
-    baseHighlight.Id,
-    baseHighlight.Title,
-    baseHighlight.Distance,
-    baseHighlight.Type,
-    isCurrentLocation);
-
     public static PointWithDistance Map(this IBaseHighlight baseHighlight) => new(
     baseHighlight.Id,
     baseHighlight.Title,
     baseHighlight.Type,
     baseHighlight.Distance);
 
-    public static Highlight Map(this Section section, IReadOnlyCollection<PlaceHighlight> children) {
+    public static Highlight Map(this Section section, IReadOnlyCollection<PointWithDistance> children) {
         var sectionHighlight = new SectionHighlight(section.Title, children.Map(), section.StartDistance);
         return new Highlight(HighlightType.Section, sectionHighlight, null);
     }
 
-    public static IReadOnlyCollection<PointHighlight> Map(this IReadOnlyCollection<PlaceHighlight> placeHighlights)
+    public static IReadOnlyCollection<PointHighlight> Map(this IReadOnlyCollection<PointWithDistance> placeHighlights)
     {
         var childrenByDistance = placeHighlights.GroupBy(x => x.Distance);
         return childrenByDistance.Select(group => new PointHighlight(group.Key, group.Any(highlight => highlight.PlaceType == PlaceHighlightType.Location), group.Select(highlight => new Point(highlight.Id, highlight.PlaceType, highlight.Title)).ToList())).ToList();
