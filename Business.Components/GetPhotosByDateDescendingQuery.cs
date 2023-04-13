@@ -1,6 +1,6 @@
-﻿using Business.Entities;
+﻿using Business.Entities.Dto;
 using Business.Interfaces;
-using Data.Repository.Interfaces;
+using Data.Interfaces;
 
 namespace Business.Components;
 

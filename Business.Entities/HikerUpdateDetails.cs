@@ -1,10 +1,11 @@
-﻿using Common.Common.Enums;
+﻿using Business.Entities.Dto;
+using Common.Common.Enums;
 
 namespace Business.Entities;
 
-public class HikerUpdate
+public class HikerUpdateDetails
 {
-    public HikerUpdate(int id, string title, PlaceHighlightType type, string text, double distance, Album album)
+    public HikerUpdateDetails(int id, string title, PlaceHighlightType type, string text, double distance, Album album)
     {
         Id = id;
         Title = title;

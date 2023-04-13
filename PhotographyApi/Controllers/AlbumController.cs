@@ -1,9 +1,10 @@
 using Common.Common;
-using Data.Repository.Interfaces;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
 using PhotographyApi.ViewModels;
+using PhotographyApi.ViewModels.Albums;
 
 namespace PhotographyApi.Controllers;
 
@@ -18,13 +19,8 @@ public class AlbumController : ControllerBase
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
-    public async Task AddAlbum(AlbumViewModel album)
+    public async Task AddAlbum(AddAlbumViewModel album)
     {
-        if (album.Id != null)
-        {
-            throw new ArgumentException("album.Id should be null when creating a new album");
-        }
-
         await _photographyRepository.AddAlbum(album.Map());
     }
 

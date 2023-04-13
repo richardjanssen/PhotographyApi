@@ -4,7 +4,7 @@ using Common.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
-using PhotographyApi.ViewModels;
+using PhotographyApi.ViewModels.Photos;
 
 namespace PhotographyApi.Controllers;
 

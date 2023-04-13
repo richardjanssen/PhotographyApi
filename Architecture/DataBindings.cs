@@ -1,4 +1,5 @@
-﻿using Data.Repository;
+﻿using Data.Interfaces;
+using Data.Repository;
 using Data.Repository.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 

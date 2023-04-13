@@ -1,6 +1,6 @@
 ﻿using Business.Interfaces;
 using Common.Common;
-using Data.Repository.Interfaces;
+using Data.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

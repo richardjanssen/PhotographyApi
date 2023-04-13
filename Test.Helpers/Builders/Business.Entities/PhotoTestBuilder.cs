@@ -1,4 +1,4 @@
-﻿using Business.Entities;
+﻿using Business.Entities.Dto;
 
 namespace Test.Helpers.Builders.Business.Entities;
 

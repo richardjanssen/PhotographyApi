@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
-using Image = Business.Entities.Image;
+using Image = Business.Entities.Dto.Image;
 using SharpImage = SixLabors.ImageSharp.Image;
 
 namespace Business.Components.Internal;

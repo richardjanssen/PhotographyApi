@@ -1,8 +1,8 @@
-﻿namespace PhotographyApi.ViewModels;
+﻿namespace PhotographyApi.ViewModels.Photos;
 
-public class ImageWithPathViewModel
+public class ImageViewModel
 {
-    public ImageWithPathViewModel(int widthPx, int heightPx, string path)
+    public ImageViewModel(int widthPx, int heightPx, string path)
     {
         WidthPx = widthPx;
         HeightPx = heightPx;

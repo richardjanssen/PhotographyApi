@@ -1,6 +1,6 @@
 ﻿using Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using PhotographyApi.ViewModels;
+using PhotographyApi.ViewModels.Accounts;
 
 namespace PhotographyApi.Controllers
 {

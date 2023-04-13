@@ -2,7 +2,7 @@ using Data.Repository;
 using Data.Repository.Entities;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using PhotographyApi.ViewModels;
+using PhotographyApi.ViewModels.Photos;
 using TechTalk.SpecFlow;
 using Test.Helpers;
 

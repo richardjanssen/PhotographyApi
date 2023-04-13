@@ -1,6 +1,6 @@
-﻿using Business.Entities;
+﻿using Business.Entities.Dto;
 
-namespace Data.Repository.Interfaces;
+namespace Data.Interfaces;
 
 public interface IPhotographyRepository
 {
@@ -13,7 +13,7 @@ public interface IPhotographyRepository
     Task<Album> AddAlbum(Album album);
     Task<IEnumerable<Section>> GetSections();
     Task<IEnumerable<Place>> GetPlaces();
-    Task<IEnumerable<AddHikerUpdate>> GetHikerUpdates();
-    Task<AddHikerUpdate> AddHikerUpdate(AddHikerUpdate addHikerUpdate);
+    Task<IEnumerable<HikerUpdate>> GetHikerUpdates();
+    Task<HikerUpdate> AddHikerUpdate(HikerUpdate addHikerUpdate);
     Task<IEnumerable<HikerLocation>> GetHikerLocations();
 }

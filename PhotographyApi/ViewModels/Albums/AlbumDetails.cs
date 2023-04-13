@@ -1,4 +1,6 @@
-﻿namespace PhotographyApi.ViewModels;
+﻿using PhotographyApi.ViewModels.Photos;
+
+namespace PhotographyApi.ViewModels;
 
 public class AlbumDetailsViewModel
 {

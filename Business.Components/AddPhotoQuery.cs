@@ -1,9 +1,9 @@
 ﻿using Business.Components.Internal;
 using Business.Entities;
+using Business.Entities.Dto;
 using Business.Interfaces;
 using Common.Common.Interfaces;
-using Data.Repository.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Data.Interfaces;
 
 namespace Business.Components;
 
@@ -37,7 +37,7 @@ public class AddPhotoQuery : IAddPhotoQuery
 
         var images = _saveImageToFolderQuery.Execute(addPhoto.Image, _resizeLimits);
         var date = _dateTimeProvider.UtcNow;
-        var photo = new Photo(null, date, images);
+        var photo = new Photo(date, images);
 
         return addPhoto.AlbumId != null ?
             await _photographyRepository.AddAlbumPhoto(photo, (int)addPhoto.AlbumId) :

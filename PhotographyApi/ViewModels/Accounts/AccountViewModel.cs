@@ -1,4 +1,4 @@
-﻿namespace PhotographyApi.ViewModels;
+﻿namespace PhotographyApi.ViewModels.Accounts;
 
 public class AccountViewModel
 {
