@@ -4,10 +4,10 @@ namespace Data.Repository;
 
 public static class PhotographyRepositoryMapExtensions
 {
-    public static Business.Entities.Photo Map(this Photo photo) =>
+    public static Business.Entities.Dto.Photo Map(this Photo photo) =>
         new(photo.Id, photo.Date, photo.Images.Select(image => image.Map()).ToList());
 
-    public static Photo Map(this Business.Entities.Photo photo, int id) =>
+    public static Photo Map(this Business.Entities.Dto.Photo photo, int id) =>
     new()
     {
         Id = id,
@@ -15,9 +15,9 @@ public static class PhotographyRepositoryMapExtensions
         Images = photo.Images.Select(image => image.Map()).ToList()
     };
 
-    public static Business.Entities.Album Map(this Album album) => new(album.Id, album.Title);
+    public static Business.Entities.Dto.Album Map(this Album album) => new(album.Id, album.Title);
 
-    public static Album Map(this Business.Entities.Album album, int id, string fileName) =>
+    public static Album Map(this Business.Entities.Dto.Album album, int id, string fileName) =>
     new()
     {
         Id = id,
@@ -25,16 +25,16 @@ public static class PhotographyRepositoryMapExtensions
         FileName = fileName
     };
 
-    public static Business.Entities.AlbumDetails Map(this AlbumDetails albumDetails) =>
+    public static Business.Entities.Dto.AlbumDetails Map(this AlbumDetails albumDetails) =>
         new(albumDetails.Photos.Select(photo => photo.Map()).ToList());
 
-    public static Business.Entities.Section Map(this Section section) =>
+    public static Business.Entities.Dto.Section Map(this Section section) =>
         new(section.Id, section.Title, section.StartDistance, section.EndDistance);
 
-    public static Business.Entities.Place Map(this Place place) =>
+    public static Business.Entities.Dto.Place Map(this Place place) =>
         new(place.Id, place.Type, place.Title, place.Distance);
 
-    public static Business.Entities.AddHikerUpdate Map(this HikerUpdate hikerUpdate) => new(
+    public static Business.Entities.Dto.HikerUpdate Map(this HikerUpdate hikerUpdate) => new(
         hikerUpdate.Id,
         hikerUpdate.Title,
         hikerUpdate.Type,
@@ -42,7 +42,7 @@ public static class PhotographyRepositoryMapExtensions
         hikerUpdate.Distance,
         hikerUpdate.AlbumId);
 
-    public static HikerUpdate Map(this Business.Entities.AddHikerUpdate addHikerUpdate, int id) =>
+    public static HikerUpdate Map(this Business.Entities.Dto.HikerUpdate addHikerUpdate, int id) =>
         new()
         {
             Id = id,
@@ -53,16 +53,16 @@ public static class PhotographyRepositoryMapExtensions
             AlbumId = addHikerUpdate.AlbumId
         };
 
-    public static Business.Entities.HikerLocation Map(this HikerLocation hikerLocation) =>
+    public static Business.Entities.Dto.HikerLocation Map(this HikerLocation hikerLocation) =>
         new(hikerLocation.Id, hikerLocation.Date, hikerLocation.Distance);
 
-    public static Business.Entities.Account Map(this Account account) =>
+    public static Business.Entities.Dto.Account Map(this Account account) =>
         new(account.UserName, account.PasswordHash, account.Salt);
 
-    private static Business.Entities.Image Map(this Image image) =>
+    private static Business.Entities.Dto.Image Map(this Image image) =>
         new(image.WidthPx, image.HeightPx, image.Guid, image.Extension);
 
-    private static Image Map(this Business.Entities.Image image) =>
+    private static Image Map(this Business.Entities.Dto.Image image) =>
         new()
         {
             WidthPx = image.WidthPx,

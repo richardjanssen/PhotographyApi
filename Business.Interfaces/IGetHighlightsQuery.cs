@@ -1,4 +1,4 @@
-﻿using Business.Entities;
+﻿using Business.Entities.Highlights;
 
 namespace Business.Interfaces;
 

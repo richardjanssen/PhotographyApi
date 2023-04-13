@@ -1,4 +1,5 @@
-﻿using Common.Common.Enums;
+﻿using Business.Entities.Dto;
+using Common.Common.Enums;
 
 namespace Business.Entities;
 

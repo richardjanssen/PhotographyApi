@@ -1,4 +1,4 @@
-﻿namespace Business.Entities;
+﻿namespace Business.Entities.Highlights;
 
 public class SectionHighlight
 {

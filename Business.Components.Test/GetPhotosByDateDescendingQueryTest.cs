@@ -1,5 +1,5 @@
-using Business.Entities;
-using Data.Repository.Interfaces;
+using Business.Entities.Dto;
+using Data.Interfaces;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

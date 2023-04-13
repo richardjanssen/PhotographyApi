@@ -1,12 +1,11 @@
 ﻿using Common.Common.Enums;
 
-namespace Business.Entities;
+namespace PhotographyApi.ViewModels.HikerUpdates;
 
-public class AddHikerUpdate : IBaseHighlight
+public class AddHikerUpdateViewModel
 {
-    public AddHikerUpdate(int? id, string title, PlaceHighlightType type, string? text, double distance, int? albumId)
+    public AddHikerUpdateViewModel(string title, PlaceHighlightType type, string? text, double distance, int? albumId)
     {
-        Id = id;
         Title = title;
         Type = type;
         Text = text;
@@ -14,11 +13,9 @@ public class AddHikerUpdate : IBaseHighlight
         AlbumId = albumId;
     }
 
-    public int? Id { get; }
     public string Title { get; }
     public PlaceHighlightType Type { get; }
     public string? Text { get; }
     public double Distance { get; }
     public int? AlbumId { get; }
-
 }

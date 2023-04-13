@@ -1,4 +1,4 @@
-﻿namespace Business.Entities;
+﻿namespace Business.Entities.Dto;
 
 public class Section
 {

@@ -1,6 +1,6 @@
 ﻿using Common.Common.Enums;
 
-namespace Business.Entities;
+namespace Business.Entities.Highlights;
 
 public class Highlight
 {

@@ -1,4 +1,6 @@
-﻿using Data.Repository.Interfaces;
+﻿using Business.Entities.Dto;
+using Data.Interfaces;
+using Data.Repository.Interfaces;
 
 namespace Data.Repository;
 
@@ -8,11 +10,16 @@ public class PhotographyJsonRepository : IPhotographyRepository
 
     public PhotographyJsonRepository(IPhotographyManager photographyManager) => _photographyManager = photographyManager;
 
-    public async Task<IEnumerable<Business.Entities.Photo>> GetPhotos() =>
+    public async Task<IEnumerable<Photo>> GetPhotos() =>
         (await _photographyManager.GetPhotos()).Select(photo => photo.Map()).ToList();
 
-    public async Task<Business.Entities.Photo> AddPhoto(Business.Entities.Photo photo)
+    public async Task<Photo> AddPhoto(Photo photo)
     {
+        if (photo.Id != 0)
+        {
+            throw new ArgumentException("photo.Id should be 0 when creating a new photo");
+        }
+
         var currentPhotos = (await _photographyManager.GetPhotos()).ToList();
 
         var id = currentPhotos.Count > 0 ? currentPhotos.Select(photo => photo.Id).Max() + 1 : 1;
@@ -23,8 +30,13 @@ public class PhotographyJsonRepository : IPhotographyRepository
         return photo;
     }
 
-    public async Task<Business.Entities.Photo> AddAlbumPhoto(Business.Entities.Photo photo, int albumId)
+    public async Task<Photo> AddAlbumPhoto(Photo photo, int albumId)
     {
+        if (photo.Id != 0)
+        {
+            throw new ArgumentException("photo.Id should be 0 when creating a new photo");
+        }
+
         var album = (await _photographyManager.GetAlbums()).ToList().FirstOrDefault(album => album.Id == albumId);
 
         if (album == null) throw new InvalidOperationException($"Cannot add photo to album with id {albumId}. Album does not exist");
@@ -41,17 +53,22 @@ public class PhotographyJsonRepository : IPhotographyRepository
         return photo;
     }
 
-    public async Task<IEnumerable<Business.Entities.Album>> GetAlbums() =>
+    public async Task<IEnumerable<Album>> GetAlbums() =>
         (await _photographyManager.GetAlbums()).Select(album => album.Map()).ToList();
 
-    public async Task<Business.Entities.AlbumDetails> GetAlbumById(int id)
+    public async Task<AlbumDetails> GetAlbumById(int id)
     {
         var album = (await _photographyManager.GetAlbums()).First(album => album.Id == id);
         return (await _photographyManager.GetAlbumDetails(album.FileName)).Map();
     }
 
-    public async Task<Business.Entities.Album> AddAlbum(Business.Entities.Album album)
+    public async Task<Album> AddAlbum(Album album)
     {
+        if (album.Id != 0)
+        {
+            throw new ArgumentException("album.Id should be 0 when creating a new album");
+        }
+
         var currentAlbums = (await _photographyManager.GetAlbums()).ToList();
 
         var id = currentAlbums.Count > 0 ? currentAlbums.Select(album => album.Id).Max() + 1 : 1;
@@ -63,17 +80,22 @@ public class PhotographyJsonRepository : IPhotographyRepository
         return album;
     }
 
-    public async Task<IEnumerable<Business.Entities.Section>> GetSections() =>
+    public async Task<IEnumerable<Section>> GetSections() =>
         (await _photographyManager.GetSections()).Select(section => section.Map()).ToList();
 
-    public async Task<IEnumerable<Business.Entities.Place>> GetPlaces() =>
+    public async Task<IEnumerable<Place>> GetPlaces() =>
         (await _photographyManager.GetPlaces()).Select(place => place.Map()).ToList();
 
-    public async Task<IEnumerable<Business.Entities.AddHikerUpdate>> GetHikerUpdates() =>
+    public async Task<IEnumerable<HikerUpdate>> GetHikerUpdates() =>
         (await _photographyManager.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map()).ToList();
 
-    public async Task<Business.Entities.AddHikerUpdate> AddHikerUpdate(Business.Entities.AddHikerUpdate addHikerUpdate)
+    public async Task<HikerUpdate> AddHikerUpdate(HikerUpdate addHikerUpdate)
     {
+        if (addHikerUpdate.Id != 0)
+        {
+            throw new ArgumentException("addHikerUpdate.Id should be 0 when creating a new hiker update");
+        }
+
         var currentHikerUpdates = (await _photographyManager.GetHikerUpdates()).ToList();
 
         var id = currentHikerUpdates.Count > 0 ? currentHikerUpdates.Select(album => album.Id).Max() + 1 : 1;
@@ -84,9 +106,9 @@ public class PhotographyJsonRepository : IPhotographyRepository
         return addHikerUpdate;
     }
 
-    public async Task<IEnumerable<Business.Entities.HikerLocation>> GetHikerLocations() =>
+    public async Task<IEnumerable<HikerLocation>> GetHikerLocations() =>
     (await _photographyManager.GetHikerLocations()).Select(hikerLocation => hikerLocation.Map()).ToList();
 
-    public async Task<Business.Entities.Account?> GetAccountByUserName(string userName) =>
+    public async Task<Account?> GetAccountByUserName(string userName) =>
         (await _photographyManager.GetAccounts()).SingleOrDefault(account => account.UserName == userName)?.Map();
 }

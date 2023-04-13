@@ -1,10 +1,10 @@
 ﻿using Common.Common.Enums;
 
-namespace Business.Entities;
+namespace Business.Entities.Dto;
 
-public class Place : IBaseHighlight
+public class Place
 {
-    public Place(int? id, PlaceHighlightType type, string title, double distance)
+    public Place(int id, PlaceHighlightType type, string title, double distance)
     {
         Id = id;
         Type = type;
@@ -12,7 +12,7 @@ public class Place : IBaseHighlight
         Distance = distance;
     }
 
-    public int? Id { get; }
+    public int Id { get; }
     public PlaceHighlightType Type { get; set; }
     public string Title { get; }
     public double Distance { get; }

@@ -1,8 +1,8 @@
-using Data.Repository.Interfaces;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
-using PhotographyApi.ViewModels;
+using PhotographyApi.ViewModels.HikerUpdates;
 
 namespace PhotographyApi.Controllers;
 
@@ -15,14 +15,14 @@ public class HikerUpdateController : ControllerBase
     public HikerUpdateController(IPhotographyRepository photographyRepository) =>
         _photographyRepository = photographyRepository;
 
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    //[Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
     public async Task AddHikerUpdate(AddHikerUpdateViewModel addHikerUpdate)
     {
-        if (addHikerUpdate.Id != null)
-        {
-            throw new ArgumentException("addHikerUpdate.Id should be null when creating a new hiker update");
-        }
+        //if (addHikerUpdate.Id != null)
+        //{
+        //    throw new ArgumentException("addHikerUpdate.Id should be null when creating a new hiker update");
+        //}
 
         await _photographyRepository.AddHikerUpdate(addHikerUpdate.Map());
     }

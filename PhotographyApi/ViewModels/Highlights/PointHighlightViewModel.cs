@@ -1,20 +1,20 @@
-﻿namespace Business.Entities;
+﻿namespace PhotographyApi.ViewModels.Highlights;
 
-public class PointHighlight
+public class PointHighlightViewModel
 {
-    public PointHighlight(
+    public PointHighlightViewModel(
         double distance,
         bool currentLocation,
-        IReadOnlyCollection<Point> points)
+        IReadOnlyCollection<PointViewModel> points)
     {
         Distance = distance;
         CurrentLocation = currentLocation;
         Points = points;
     }
-    
+
     public double Distance { get; }
-    
+
     public bool CurrentLocation { get; }
 
-    public IReadOnlyCollection<Point> Points { get; }
+    public IReadOnlyCollection<PointViewModel> Points { get; }
 }

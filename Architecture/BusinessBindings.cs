@@ -1,4 +1,5 @@
 ﻿using Business.Components;
+using Business.Components.GetHighlights;
 using Business.Components.Internal;
 using Business.Interfaces;
 using Microsoft.Extensions.DependencyInjection;

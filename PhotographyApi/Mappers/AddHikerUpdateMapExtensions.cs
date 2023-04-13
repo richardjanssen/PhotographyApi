@@ -1,12 +1,11 @@
-﻿using Business.Entities;
-using PhotographyApi.ViewModels;
+﻿using Business.Entities.Dto;
+using PhotographyApi.ViewModels.HikerUpdates;
 
 namespace PhotographyApi.Mappers;
 
 public static class AddHikerUpdateMapExtensions
 {
-    public static AddHikerUpdate Map(this AddHikerUpdateViewModel addHikerUpdate) => new(
-        addHikerUpdate.Id,
+    public static HikerUpdate Map(this AddHikerUpdateViewModel addHikerUpdate) => new(
         addHikerUpdate.Title,
         addHikerUpdate.Type,
         addHikerUpdate.Text,
