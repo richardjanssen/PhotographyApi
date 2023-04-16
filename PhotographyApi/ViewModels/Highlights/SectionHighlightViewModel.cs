@@ -2,14 +2,14 @@
 
 public class SectionHighlightViewModel
 {
-    public SectionHighlightViewModel(string title, IReadOnlyCollection<PointHighlightViewModel> children, double distance)
+    public SectionHighlightViewModel(int highlightIndex, string title, IReadOnlyCollection<PointHighlightViewModel> children)
     {
+        HighlightIndex = highlightIndex;
         Title = title;
         Children = children;
-        StartDistance = distance;
     }
 
+    public int HighlightIndex { get; }
     public string Title { get; }
     public IReadOnlyCollection<PointHighlightViewModel> Children { get; }
-    public double StartDistance { get; }
 }
