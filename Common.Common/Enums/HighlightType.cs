@@ -2,6 +2,6 @@
 
 public enum HighlightType
 {
-    Place = 1,
-    Section = 2
+    place = 1,
+    section = 2
 }

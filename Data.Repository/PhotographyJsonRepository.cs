@@ -89,6 +89,9 @@ public class PhotographyJsonRepository : IPhotographyRepository
     public async Task<IEnumerable<HikerUpdate>> GetHikerUpdates() =>
         (await _photographyManager.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map()).ToList();
 
+    public async Task<HikerUpdate?> GetHikerUpdateById(int id) =>
+        (await _photographyManager.GetHikerUpdates()).FirstOrDefault(update => update.Id == id)?.Map();
+
     public async Task<HikerUpdate> AddHikerUpdate(HikerUpdate addHikerUpdate)
     {
         if (addHikerUpdate.Id != 0)

@@ -1,6 +1,7 @@
 ﻿using Business.Entities.Dto;
 using Business.Entities.Highlights;
 using Business.Interfaces;
+using Common.Common.Enums;
 using Data.Interfaces;
 
 namespace Business.Components.GetHighlights;
@@ -35,7 +36,7 @@ public class GetHighlightsQuery : IGetHighlightsQuery
         return sectionsWithChildren
             .Concat(highlightsNotInSection)
             .OrderBy(highlight =>
-                highlight.Type == Common.Common.Enums.HighlightType.Section
+                highlight.Type == HighlightType.section
                     ? highlight.SectionHighlight!.StartDistance
                     : highlight.PointHighlight!.Distance)
             .ToList();
@@ -52,7 +53,7 @@ public class GetHighlightsQuery : IGetHighlightsQuery
         var hikerLocation = (await hikerLocationsTask).OrderByDescending(location => location.Date).FirstOrDefault();
         var hikerLocationHighlightList = hikerLocation == null
             ? new List<PointWithDistance>()
-            : new List<PointWithDistance>() { new(null, "Current location", Common.Common.Enums.PlaceHighlightType.Location, hikerLocation!.Distance) };
+            : new List<PointWithDistance>() { new(null, "Current location", PlaceHighlightType.location, hikerLocation!.Distance) };
 
         return places.Concat(hikerUpdates).Concat(hikerLocationHighlightList);
     }

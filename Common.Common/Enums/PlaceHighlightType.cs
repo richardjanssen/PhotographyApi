@@ -2,8 +2,8 @@
 
 public enum PlaceHighlightType
 {
-    Photo = 1,
-    Blog = 2,
-    Location = 3,
-    Town = 4
+    photo = 1,
+    blog = 2,
+    location = 3,
+    town = 4
 }
