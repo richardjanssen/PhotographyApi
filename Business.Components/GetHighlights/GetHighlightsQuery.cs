@@ -1,6 +1,6 @@
 ﻿using Business.Entities.Dto;
 using Business.Entities.Highlights;
-using Business.Interfaces;
+using Business.Interfaces.GetHighlights;
 using Common.Common.Enums;
 using Data.Interfaces;
 
@@ -18,7 +18,7 @@ public class GetHighlightsQuery : IGetHighlightsQuery
         var sectionsTask = _photographyRepository.GetSections();
         var pointsTask = GetPoints();
 
-        var pointsNotInSection = await GetPoints();
+        var pointsNotInSection = await pointsTask;
         var sections = (await sectionsTask).OrderBy(section => section.StartDistance).ToList();
         var sectionsWithChildren = sections.Select(section =>
         {
@@ -51,9 +51,10 @@ public class GetHighlightsQuery : IGetHighlightsQuery
         var places = (await placesTask).Select(place => place.Map());
         var hikerUpdates = (await hikerUpdatesTask).Select(hikerUpdate => hikerUpdate.Map());
         var hikerLocation = (await hikerLocationsTask).OrderByDescending(location => location.Date).FirstOrDefault();
-        var hikerLocationHighlightList = hikerLocation == null
+        var hikerLocationHighlightList = hikerLocation?.RoundedDistance == null
             ? new List<PointWithDistance>()
-            : new List<PointWithDistance>() { new(null, "Current location", PlaceHighlightType.location, hikerLocation!.Distance) };
+            : new List<PointWithDistance>() { new(
+                null,"Current location",PlaceHighlightType.location,hikerLocation!.RoundedDistance ?? 0) };
 
         return places.Concat(hikerUpdates).Concat(hikerLocationHighlightList);
     }

@@ -53,8 +53,26 @@ public static class PhotographyRepositoryMapExtensions
             AlbumId = addHikerUpdate.AlbumId
         };
 
+    public static HikerLocation Map(this Business.Entities.Dto.HikerLocation hikerLocation, int id) =>
+    new()
+    {
+        Id = id,
+        Date = hikerLocation.Date,
+        ActualDistance = hikerLocation.ActualDistance,
+        RoundedDistance = hikerLocation.RoundedDistance,
+        IsManual = hikerLocation.IsManual,
+        Lat = hikerLocation.Lat,
+        Lon = hikerLocation.Lon
+    };
+
     public static Business.Entities.Dto.HikerLocation Map(this HikerLocation hikerLocation) =>
-        new(hikerLocation.Id, hikerLocation.Date, hikerLocation.Distance);
+        new(hikerLocation.Id,
+            hikerLocation.Date,
+            hikerLocation.ActualDistance,
+            hikerLocation.RoundedDistance,
+            hikerLocation.IsManual,
+            hikerLocation.Lat,
+            hikerLocation.Lon);
 
     public static Business.Entities.Dto.Account Map(this Account account) =>
         new(account.UserName, account.PasswordHash, account.Salt);

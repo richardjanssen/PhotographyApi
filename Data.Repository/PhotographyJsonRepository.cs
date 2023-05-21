@@ -37,9 +37,8 @@ public class PhotographyJsonRepository : IPhotographyRepository
             throw new ArgumentException("photo.Id should be 0 when creating a new photo");
         }
 
-        var album = (await _photographyManager.GetAlbums()).ToList().FirstOrDefault(album => album.Id == albumId);
-
-        if (album == null) throw new InvalidOperationException($"Cannot add photo to album with id {albumId}. Album does not exist");
+        var album = (await _photographyManager.GetAlbums()).ToList().FirstOrDefault(album => album.Id == albumId)
+            ?? throw new InvalidOperationException($"Cannot add photo to album with id {albumId}. Album does not exist");
 
         var albumDetails = await _photographyManager.GetAlbumDetails(album.FileName);
         var albumPhotos = albumDetails.Photos.ToList();
@@ -107,6 +106,23 @@ public class PhotographyJsonRepository : IPhotographyRepository
         await _photographyManager.WriteHikerUpdates(currentHikerUpdates);
 
         return addHikerUpdate;
+    }
+
+    public async Task<HikerLocation> AddHikerLocation(HikerLocation hikerLocation)
+    {
+        if (hikerLocation.Id != 0)
+        {
+            throw new ArgumentException("hikerLocation.Id should be 0 when creating a new hiker update");
+        }
+
+        var currentHikerLocations = (await _photographyManager.GetHikerLocations()).ToList();
+
+        var id = currentHikerLocations.Count > 0 ? currentHikerLocations.Select(location => location.Id).Max() + 1 : 1;
+        currentHikerLocations.Add(hikerLocation.Map(id));
+
+        await _photographyManager.WriteHikerLocations(currentHikerLocations);
+
+        return hikerLocation;
     }
 
     public async Task<IEnumerable<HikerLocation>> GetHikerLocations() =>
