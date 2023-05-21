@@ -1,4 +1,4 @@
-using Business.Interfaces;
+using Business.Interfaces.GetHighlights;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
 using PhotographyApi.ViewModels.Highlights;

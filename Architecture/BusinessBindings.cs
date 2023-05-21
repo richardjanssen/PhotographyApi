@@ -1,7 +1,10 @@
 ﻿using Business.Components;
 using Business.Components.GetHighlights;
 using Business.Components.Internal;
+using Business.Components.Locations;
 using Business.Interfaces;
+using Business.Interfaces.GetHighlights;
+using Business.Interfaces.Locations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Ioc;
@@ -15,6 +18,7 @@ public static class BusinessBindings
         .AddScoped<IAddPhotoQuery, AddPhotoQuery>()
         .AddScoped<IAuthenticationComponent, AuthenticationComponent>()
         .AddScoped<IGetHighlightsQuery, GetHighlightsQuery>()
+        .AddScoped<IAddManualLocationQuery, AddManualLocationQuery>()
         ;
 
 }

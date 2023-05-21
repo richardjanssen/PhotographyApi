@@ -15,5 +15,6 @@ public interface IPhotographyManager
     Task<IReadOnlyCollection<Place>> GetPlaces();
     Task<IReadOnlyCollection<HikerUpdate>> GetHikerUpdates();
     Task<IReadOnlyCollection<HikerLocation>> GetHikerLocations();
+    Task WriteHikerLocations(IReadOnlyCollection<HikerLocation> hikerLocations);
     Task WriteHikerUpdates(IReadOnlyCollection<HikerUpdate> hikerUpdates);
 }

@@ -134,6 +134,11 @@ public class PhotographyJsonManager : IPhotographyManager
 
         return JsonConvert.DeserializeObject<List<HikerLocation>>(jsonData) ?? new List<HikerLocation>();
     }
+    public async Task WriteHikerLocations(IReadOnlyCollection<HikerLocation> hikerLocations)
+    {
+        var jsonData = JsonConvert.SerializeObject(hikerLocations);
+        await File.WriteAllTextAsync(_hikerLocationsPath, jsonData);
+    }
 
     public async Task WriteHikerUpdates(IReadOnlyCollection<HikerUpdate> hikerUpdates)
     {
