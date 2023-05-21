@@ -58,4 +58,9 @@ public class FakePhotographyManager : IPhotographyManager
     {
         throw new NotImplementedException();
     }
+
+    public Task WriteHikerLocations(IReadOnlyCollection<HikerLocation> hikerLocations)
+    {
+        throw new NotImplementedException();
+    }
 }
