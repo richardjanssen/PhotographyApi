@@ -1,14 +1,14 @@
 ﻿using Business.Entities;
-using Business.Interfaces;
+using Business.Interfaces.HikerUpdates;
 using Data.Interfaces;
 
-namespace Business.Components;
+namespace Business.Components.HikerUpdates;
 
 public class GetHikerUpdateDetailsQuery : IGetHikerUpdateDetailsQuery
 {
     private readonly IPhotographyRepository _photographyRepository;
 
-    public GetHikerUpdateDetailsQuery(IPhotographyRepository photographyRepository) => 
+    public GetHikerUpdateDetailsQuery(IPhotographyRepository photographyRepository) =>
         _photographyRepository = photographyRepository;
 
     public async Task<HikerUpdateDetails> Execute(int id)

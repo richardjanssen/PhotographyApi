@@ -4,7 +4,7 @@ using Common.Common.Enums;
 
 namespace Business.Components.GetHighlights;
 
-public static class GetHighlightsMapExtensions
+internal static class GetHighlightsMapExtensions
 {
     public static PointWithDistance Map(this Place place) => new(place.Id, place.Title, place.Type, place.Distance);
 
