@@ -22,6 +22,7 @@ public static class BusinessBindings
         .AddScoped<IAuthenticationComponent, AuthenticationComponent>()
         .AddScoped<IGetHighlightsQuery, GetHighlightsQuery>()
         .AddScoped<IAddManualLocationQuery, AddManualLocationQuery>()
+        .AddScoped<IGetLocationsQuery, GetLocationsQuery>()
         ;
 
 }

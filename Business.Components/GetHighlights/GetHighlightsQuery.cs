@@ -50,11 +50,14 @@ public class GetHighlightsQuery : IGetHighlightsQuery
 
         var places = (await placesTask).Select(place => place.Map());
         var hikerUpdates = (await hikerUpdatesTask).Select(hikerUpdate => hikerUpdate.Map());
-        var hikerLocation = (await hikerLocationsTask).OrderByDescending(location => location.Date).FirstOrDefault();
-        var hikerLocationHighlightList = hikerLocation?.RoundedDistance == null
+        var hikerLocation = (await hikerLocationsTask)
+            .Where(location => location.RoundedDistance != null)
+            .OrderByDescending(location => location.Date)
+            .FirstOrDefault();
+        var hikerLocationHighlightList = hikerLocation == null
             ? new List<PointWithDistance>()
             : new List<PointWithDistance>() { new(
-                null,"Current location",PlaceHighlightType.location,hikerLocation!.RoundedDistance ?? 0) };
+                null,"Current location",PlaceHighlightType.location, hikerLocation.RoundedDistance ?? 0) };
 
         return places.Concat(hikerUpdates).Concat(hikerLocationHighlightList);
     }
