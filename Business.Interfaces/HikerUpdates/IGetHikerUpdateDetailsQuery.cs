@@ -1,6 +1,6 @@
 ﻿using Business.Entities;
 
-namespace Business.Interfaces;
+namespace Business.Interfaces.HikerUpdates;
 
 public interface IGetHikerUpdateDetailsQuery
 {

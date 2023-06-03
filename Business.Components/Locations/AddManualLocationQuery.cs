@@ -12,7 +12,7 @@ public class AddManualLocationQuery : IAddManualLocationQuery
 
     public async Task Execute(double distance)
     {
-        var location = new HikerLocation(new DateTime(), distance, distance, true, null, null);
+        var location = new HikerLocation(DateTime.Now, distance, distance, true, null, null);
         await _photographyRepository.AddHikerLocation(location);
     }
 }

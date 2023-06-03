@@ -1,6 +1,7 @@
 using Business.Interfaces.Locations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PhotographyApi.Mappers;
 using PhotographyApi.ViewModels.Locations;
 
 namespace PhotographyApi.Controllers;
@@ -10,9 +11,18 @@ namespace PhotographyApi.Controllers;
 public class LocationController : ControllerBase
 {
     private readonly IAddManualLocationQuery _addManualLocationQuery;
+    private readonly IGetLocationsQuery _getLocationsQuery;
 
-    public LocationController(IAddManualLocationQuery addManualLocationQuery) =>
+    public LocationController(IAddManualLocationQuery addManualLocationQuery, IGetLocationsQuery getLocationsQuery)
+    {
         _addManualLocationQuery = addManualLocationQuery;
+        _getLocationsQuery = getLocationsQuery;
+    }
+
+    [Authorize(Roles = "PhotographyApi_Admin")]
+    [HttpGet]
+    public async Task<IReadOnlyCollection<LocationViewModel>> GetAll() =>
+    (await _getLocationsQuery.Execute()).Select(location => location.Map()).ToList();
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
