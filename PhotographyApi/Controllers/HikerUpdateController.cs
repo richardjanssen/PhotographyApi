@@ -33,7 +33,7 @@ public class HikerUpdateController : ControllerBase
     public async Task<HikerUpdateDetailsViewModel> GetById(int id) =>
         (await _getHikerUpdateDetailsQuery.Execute(id)).Map();
 
-    //[Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpGet]
     public async Task<IReadOnlyCollection<HikerUpdateBasicViewModel>> GetAll() =>
         (await _getHikerUpdatesQuery.Execute()).Select(update => update.Map()).ToList();
@@ -45,7 +45,7 @@ public class HikerUpdateController : ControllerBase
         await _photographyRepository.AddHikerUpdate(addHikerUpdate.Map());
     }
 
-    //[Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpDelete]
     public async Task Delete(int id) => await _deleteHikerUpdateQuery.Execute(id);
 }
