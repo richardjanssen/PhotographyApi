@@ -128,6 +128,13 @@ public class PhotographyJsonRepository : IPhotographyRepository
     public async Task<IEnumerable<HikerLocation>> GetHikerLocations() =>
     (await _photographyManager.GetHikerLocations()).Select(hikerLocation => hikerLocation.Map()).ToList();
 
+    public async Task DeleteLocation(int id)
+    {
+        var currentHikerLocations = (await _photographyManager.GetHikerLocations()).ToList();
+        var newHikerLocations = currentHikerLocations.Where(location => location.Id != id).ToList();
+        await _photographyManager.WriteHikerLocations(newHikerLocations);
+    }
+
     public async Task<Account?> GetAccountByUserName(string userName) =>
         (await _photographyManager.GetAccounts()).SingleOrDefault(account => account.UserName == userName)?.Map();
 }
