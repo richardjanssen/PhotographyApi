@@ -10,5 +10,7 @@ public class GetLocationsQuery : IGetLocationsQuery
 
     public GetLocationsQuery(IPhotographyRepository photographyRepository) => _photographyRepository = photographyRepository;
 
-    public async Task<IReadOnlyCollection<HikerLocation>> Execute() => (await _photographyRepository.GetHikerLocations()).ToList();
+    public async Task<IReadOnlyCollection<HikerLocation>> Execute() => (await _photographyRepository.GetHikerLocations())
+        .OrderByDescending(location => location.Date)
+        .ToList();
 }
