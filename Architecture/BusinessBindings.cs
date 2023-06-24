@@ -24,5 +24,6 @@ public static class BusinessBindings
         .AddScoped<IAddManualLocationQuery, AddManualLocationQuery>()
         .AddScoped<IGetLocationsQuery, GetLocationsQuery>()
         .AddScoped<IDeleteLocationQuery, DeleteLocationQuery>()
+        .AddScoped<IDeleteHikerUpdateQuery, DeleteHikerUpdateQuery>()
         ;
 }
