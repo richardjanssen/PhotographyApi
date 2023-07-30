@@ -2,4 +2,4 @@
 
 namespace PhotographyApi.ViewModels.HikerUpdates;
 
-public record HikerUpdateBasicViewModel(int Id, string Title, PlaceHighlightType Type, double Distance);
+public record HikerUpdateBasicViewModel(int Id, DateTime Date, string Title, PlaceHighlightType Type, double Distance);

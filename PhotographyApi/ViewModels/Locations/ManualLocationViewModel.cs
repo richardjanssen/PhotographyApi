@@ -1,3 +1,3 @@
 ﻿namespace PhotographyApi.ViewModels.Locations;
 
-public record ManualLocationViewModel(double Distance);
+public record ManualLocationViewModel(int PlaceId);

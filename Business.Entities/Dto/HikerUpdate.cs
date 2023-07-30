@@ -4,9 +4,10 @@ namespace Business.Entities.Dto;
 
 public class HikerUpdate
 {
-    public HikerUpdate(int id, string title, PlaceHighlightType type, string? text, double distance, int? albumId)
+    public HikerUpdate(int id, DateTime date, string title, PlaceHighlightType type, string? text, double distance, int? albumId)
     {
         Id = id;
+        Date = date;
         Title = title;
         Type = type;
         Text = text;
@@ -14,8 +15,9 @@ public class HikerUpdate
         AlbumId = albumId;
     }
 
-    public HikerUpdate(string title, PlaceHighlightType type, string? text, double distance, int? albumId)
+    public HikerUpdate(DateTime date, string title, PlaceHighlightType type, string? text, double distance, int? albumId)
     {
+        Date = date;
         Title = title;
         Type = type;
         Text = text;
@@ -24,6 +26,7 @@ public class HikerUpdate
     }
 
     public int Id { get; }
+    public DateTime Date { get; }
     public string Title { get; }
     public PlaceHighlightType Type { get; }
     public string? Text { get; }

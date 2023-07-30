@@ -1,21 +1,35 @@
-﻿namespace PhotographyApi.ViewModels.Highlights;
+﻿using Common.Common.Enums;
+
+namespace PhotographyApi.ViewModels.Highlights;
 
 public class PointHighlightViewModel
 {
     public PointHighlightViewModel(
-        int highlightIndex,
+        int id, 
+        DateTime date,
+        PlaceHighlightType placeType,
+        string title,
         double distance,
-        bool currentLocation,
-        IReadOnlyCollection<PointViewModel> points)
+        bool isManual,
+        string? text,
+        AlbumDetailsViewModel? albumDetails)
     {
-        HighlightIndex = highlightIndex;
+        Id = id;
+        Date = date;
+        PlaceType = placeType;
+        Title = title;
         Distance = distance;
-        CurrentLocation = currentLocation;
-        Points = points;
+        IsManual = isManual;
+        Text = text;
+        AlbumDetails = albumDetails;
     }
 
-    public int HighlightIndex { get; }
+    public int Id { get; }
+    public DateTime Date { get; }
+    public PlaceHighlightType PlaceType { get; }
+    public string Title { get; }
     public double Distance { get; }
-    public bool CurrentLocation { get; }
-    public IReadOnlyCollection<PointViewModel> Points { get; }
+    public bool IsManual { get; }
+    public string? Text { get; }
+    public AlbumDetailsViewModel? AlbumDetails { get; }
 }

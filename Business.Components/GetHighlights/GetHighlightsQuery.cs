@@ -1,7 +1,6 @@
 ﻿using Business.Entities.Dto;
 using Business.Entities.Highlights;
 using Business.Interfaces.GetHighlights;
-using Common.Common.Enums;
 using Data.Interfaces;
 
 namespace Business.Components.GetHighlights;
@@ -18,28 +17,16 @@ public class GetHighlightsQuery : IGetHighlightsQuery
         var sectionsTask = _photographyRepository.GetSections();
         var pointsTask = GetPoints();
 
-        var pointsNotInSection = await pointsTask;
         var sections = (await sectionsTask).OrderBy(section => section.StartDistance).ToList();
-        var sectionsWithChildren = sections.Select(section =>
-        {
-            var highlightsInSection = pointsNotInSection
-                .Where(highlight => IsPointInSection(highlight, section))
-                .OrderBy(highlight => highlight.Distance)
-                .ToList();
-            pointsNotInSection = pointsNotInSection.Where(highlight => !IsPointInSection(highlight, section));
+        var points = await pointsTask;
 
-            return section.Map(highlightsInSection);
-        }).ToList();
+        var pointsWithSections = points
+            .OrderByDescending(point => point.Date)
+            .Select(point => {
+                return (Point: point, Section: GetSectionForPoint(point, sections));
+            }).ToList();
 
-        var highlightsNotInSection = pointsNotInSection.ToList().Map().Select(pointHighlight => pointHighlight.Map());
-
-        return sectionsWithChildren
-            .Concat(highlightsNotInSection)
-            .OrderBy(highlight =>
-                highlight.Type == HighlightType.section
-                    ? highlight.SectionHighlight!.StartDistance
-                    : highlight.PointHighlight!.Distance)
-            .ToList();
+        return GetHighlightsTimeline(pointsWithSections);
     }
 
     private async Task<IEnumerable<PointWithDistance>> GetPoints()
@@ -48,18 +35,103 @@ public class GetHighlightsQuery : IGetHighlightsQuery
         var hikerUpdatesTask = _photographyRepository.GetHikerUpdates();
         var hikerLocationsTask = _photographyRepository.GetHikerLocations();
 
-        var places = (await placesTask).Select(place => place.Map());
+        var places = (await placesTask);
         var hikerUpdates = (await hikerUpdatesTask).Select(hikerUpdate => hikerUpdate.Map());
-        var hikerLocation = (await hikerLocationsTask)
-            .Where(location => location.RoundedDistance != null)
-            .OrderByDescending(location => location.Date)
-            .FirstOrDefault();
-        var hikerLocationHighlightList = hikerLocation == null
-            ? new List<PointWithDistance>()
-            : new List<PointWithDistance>() { new(
-                null,"Current location",PlaceHighlightType.location, hikerLocation.RoundedDistance ?? 0) };
+        var hikerLocations = await hikerLocationsTask;
 
-        return places.Concat(hikerUpdates).Concat(hikerLocationHighlightList);
+        // Get all hiker locations that match a place
+        var hikerLocationsWithPlace = hikerLocations
+            .Where(hikerLocation => hikerLocation.PlaceId != null);
+
+        // Remove duplicates in automatic places (we might match the same location multiple times in a row)
+        var automaticHikerLocationsWithPlace = hikerLocationsWithPlace.Where(hikerLocation => !hikerLocation.IsManual)
+            .OrderBy(hikerLocation => hikerLocation.Date)
+            .DistinctBy(hikerLocation => hikerLocation.PlaceId);
+
+        var manualHikerLocationsWithPlace = hikerLocationsWithPlace.Where(hikerLocation => hikerLocation.IsManual);
+
+        var hikerLocationsOrdered = automaticHikerLocationsWithPlace.Concat(manualHikerLocationsWithPlace)
+            .OrderByDescending(hikerLocation => hikerLocation.Date)
+            .Select(hikerLocation =>
+            {
+                var place = places.FirstOrDefault(p => p.Id == hikerLocation.PlaceId);
+                return place != null
+                    ? new PointWithDistance(hikerLocation.Id, hikerLocation.Date, place.Title, place.Type, place.Distance, hikerLocation.IsManual)
+                    : null;
+            })
+            .OfType<PointWithDistance>();
+
+        return hikerUpdates.Concat(hikerLocationsOrdered);
+    }
+
+    private static IReadOnlyCollection<Highlight> GetHighlightsTimeline(List<(PointWithDistance Point, Section? Section)> pointsWithSections)
+    {
+        var highlights = new List<Highlight>();
+        var consecutivePointsInSameSection = new List<PointWithDistance>();
+        Section? previousSection = null;
+        Section? currentSection = null;
+        for (var i = 0; i < pointsWithSections.Count; i++)
+        {
+            currentSection = pointsWithSections[i].Section;
+            var currentPoint = pointsWithSections[i].Point;
+            if (currentSection?.Id == null)
+            {
+                // Create section highlight with consecutivePointsInSameSection as points if Count > 0, append to highlights
+                if (consecutivePointsInSameSection.Any())
+                {
+                    if (previousSection != null)
+                    {
+                        highlights.Add(previousSection.Map(consecutivePointsInSameSection));
+                    }
+                }
+
+                // Create new empty list consecutivePointsInSameSection
+                consecutivePointsInSameSection = new List<PointWithDistance>();
+
+                // Create point highlight, append to highlights
+                highlights.Add(currentPoint.Map().Map());
+
+                // Set previousSection to currentSection
+                previousSection = currentSection;
+            }
+            else if (currentSection?.Id != previousSection?.Id)
+            {
+                // Create section highlight with consecutivePointsInSameSection as points if Count > 0, append to highlights
+                if (consecutivePointsInSameSection.Any())
+                {
+                    if (previousSection != null)
+                    {
+                        highlights.Add(previousSection.Map(consecutivePointsInSameSection));
+                    }
+                }
+
+                // Create new list consecutivePointsInSameSection with current point in it
+                consecutivePointsInSameSection = new List<PointWithDistance> { currentPoint };
+
+                // Set previousSectionId to currentSectionId
+                previousSection = currentSection;
+            }
+            else
+            {
+                // Append current point to consecutivePointsInSameSection
+                consecutivePointsInSameSection.Add(currentPoint);
+            }
+        }
+        // Create section highlight with consecutivePointsInSameSection as points if Count > 0, append to highlights
+        if (consecutivePointsInSameSection.Any())
+        {
+            if (currentSection != null)
+            {
+                highlights.Add(currentSection.Map(consecutivePointsInSameSection));
+            }
+        }
+
+        return highlights;
+    }
+
+    private static Section? GetSectionForPoint(PointWithDistance point, IReadOnlyCollection<Section> sections)
+    {
+        return sections.FirstOrDefault(section => IsPointInSection(point, section));
     }
     private static bool IsPointInSection(PointWithDistance point, Section section)
     {

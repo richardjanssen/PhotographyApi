@@ -36,6 +36,7 @@ public static class PhotographyRepositoryMapExtensions
 
     public static Business.Entities.Dto.HikerUpdate Map(this HikerUpdate hikerUpdate) => new(
         hikerUpdate.Id,
+        hikerUpdate.Date,
         hikerUpdate.Title,
         hikerUpdate.Type,
         hikerUpdate.Text,
@@ -46,6 +47,7 @@ public static class PhotographyRepositoryMapExtensions
         new()
         {
             Id = id,
+            Date = addHikerUpdate.Date,
             Title = addHikerUpdate.Title,
             Type = addHikerUpdate.Type,
             Text = addHikerUpdate.Text,
@@ -58,21 +60,19 @@ public static class PhotographyRepositoryMapExtensions
     {
         Id = id,
         Date = hikerLocation.Date,
-        ActualDistance = hikerLocation.ActualDistance,
-        RoundedDistance = hikerLocation.RoundedDistance,
         IsManual = hikerLocation.IsManual,
         Lat = hikerLocation.Lat,
-        Lon = hikerLocation.Lon
+        Lon = hikerLocation.Lon,
+        PlaceId = hikerLocation.PlaceId
     };
 
     public static Business.Entities.Dto.HikerLocation Map(this HikerLocation hikerLocation) =>
         new(hikerLocation.Id,
             hikerLocation.Date,
-            hikerLocation.ActualDistance,
-            hikerLocation.RoundedDistance,
             hikerLocation.IsManual,
             hikerLocation.Lat,
-            hikerLocation.Lon);
+            hikerLocation.Lon,
+            hikerLocation.PlaceId);
 
     public static Business.Entities.Dto.Account Map(this Account account) =>
         new(account.UserName, account.PasswordHash, account.Salt);

@@ -5,6 +5,7 @@ namespace Data.Repository.Entities;
 public class HikerUpdate
 {
     public int Id { get; set; }
+    public DateTime Date { get; set; }
     public string Title { get; set; } = null!;
     public PlaceHighlightType Type { get; set; }
     public string? Text { get; set; }
