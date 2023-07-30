@@ -8,9 +8,8 @@ public static class LocationMapExtensions
     public static LocationViewModel Map(this HikerLocation location) => new(
         location.Id,
         location.Date,
-        location.ActualDistance,
-        location.RoundedDistance,
         location.IsManual,
         location.Lat,
-        location.Lon);
+        location.Lon,
+        location.PlaceId);
 }

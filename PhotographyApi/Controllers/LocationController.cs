@@ -11,15 +11,18 @@ namespace PhotographyApi.Controllers;
 public class LocationController : ControllerBase
 {
     private readonly IAddManualLocationQuery _addManualLocationQuery;
+    private readonly IAddAutomaticLocationQuery _addAutomaticLocationQuery;
     private readonly IGetLocationsQuery _getLocationsQuery;
     private readonly IDeleteLocationQuery _deleteLocationQuery;
 
     public LocationController(
         IAddManualLocationQuery addManualLocationQuery,
+        IAddAutomaticLocationQuery addAutomaticLocationQuery,
         IGetLocationsQuery getLocationsQuery,
         IDeleteLocationQuery deleteLocationQuery)
     {
         _addManualLocationQuery = addManualLocationQuery;
+        _addAutomaticLocationQuery = addAutomaticLocationQuery;
         _getLocationsQuery = getLocationsQuery;
         _deleteLocationQuery = deleteLocationQuery;
     }
@@ -32,7 +35,12 @@ public class LocationController : ControllerBase
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
     public async Task AddManual(ManualLocationViewModel manualLocation) => 
-        await _addManualLocationQuery.Execute(manualLocation.Distance);
+        await _addManualLocationQuery.Execute(manualLocation.PlaceId);
+
+    [Authorize(Roles = "PhotographyApi_Admin")]
+    [HttpPost]
+    public async Task AddAutomatic(ManualLocationViewModel manualLocation) =>
+        await _addAutomaticLocationQuery.Execute(manualLocation.PlaceId);
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpDelete]

@@ -16,5 +16,5 @@ public class HighlightController : ControllerBase
 
     [HttpGet]
     public async Task<IReadOnlyCollection<HighlightViewModel>> GetAll() =>
-        (await _getHighlightsQuery.Execute()).Select((highlight, index) => highlight.Map(index)).ToList();
+        (await _getHighlightsQuery.Execute()).Select((highlight) => highlight.Map()).ToList();
 }

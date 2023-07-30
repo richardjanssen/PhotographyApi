@@ -4,41 +4,36 @@ public class HikerLocation
 {
     public HikerLocation(int id,
         DateTime date,
-        double? actualDistance,
-        double? roundedDistance,
         bool isManual,
         double? lat,
-        double? lon)
+        double? lon,
+        int? placeId)
     {
         Id = id;
         Date = date;
-        ActualDistance = actualDistance;
-        RoundedDistance = roundedDistance;
         IsManual = isManual;
         Lat = lat;
         Lon = lon;
+        PlaceId = placeId;
     }
 
     public HikerLocation(DateTime date,
-        double? actualDistance,
-        double? roundedDistance,
         bool isManual,
         double? lat,
-        double? lon)
+        double? lon,
+        int? placeId)
     {
         Date = date;
-        ActualDistance = actualDistance;
-        RoundedDistance = roundedDistance;
         IsManual = isManual;
         Lat = lat;
         Lon = lon;
+        PlaceId = placeId;
     }
 
     public int Id { get; }
     public DateTime Date { get; }
-    public double? ActualDistance { get; }
-    public double? RoundedDistance { get; }
     public bool IsManual { get; }
     public double? Lat { get; }
     public double? Lon { get; }
+    public int? PlaceId { get; }
 }

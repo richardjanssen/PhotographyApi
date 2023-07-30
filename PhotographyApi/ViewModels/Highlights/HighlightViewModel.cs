@@ -4,7 +4,10 @@ namespace PhotographyApi.ViewModels.Highlights;
 
 public class HighlightViewModel
 {
-    public HighlightViewModel(HighlightType type, SectionHighlightViewModel? sectionHighlight, PointHighlightViewModel? pointHighlight)
+    public HighlightViewModel(
+        HighlightType type,
+        SectionHighlightViewModel? sectionHighlight,
+        PointHighlightViewModel? pointHighlight)
     {
         Type = type;
         SectionHighlight = sectionHighlight;

@@ -1,6 +1,6 @@
 ﻿namespace Business.Interfaces.Locations;
 
-public interface IAddManualLocationQuery
+public interface IAddAutomaticLocationQuery
 {
     Task Execute(int placeId);
 }
