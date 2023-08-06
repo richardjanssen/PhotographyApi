@@ -2,8 +2,7 @@
 
 namespace PhotographyApi.ViewModels.HikerUpdates;
 
-public record HikerUpdateViewModel(
-    DateTime Date,
+public record AddHikerUpdateViewModel(
     string Title,
     PlaceHighlightType Type,
     string? Text,

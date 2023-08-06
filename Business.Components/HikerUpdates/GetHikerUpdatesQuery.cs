@@ -12,5 +12,5 @@ public class GetHikerUpdatesQuery : IGetHikerUpdatesQuery
         _photographyRepository = photographyRepository;
 
     public async Task<IReadOnlyCollection<HikerUpdate>> Execute() =>
-        (await _photographyRepository.GetHikerUpdates()).ToList();
+        (await _photographyRepository.GetHikerUpdates()).OrderByDescending(update => update.Date).ToList();
 }
