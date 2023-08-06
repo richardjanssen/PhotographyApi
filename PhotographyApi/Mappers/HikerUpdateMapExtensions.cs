@@ -5,8 +5,8 @@ namespace PhotographyApi.Mappers;
 
 public static class HikerUpdateMapExtensions
 {
-    public static HikerUpdate Map(this HikerUpdateViewModel addHikerUpdate) => new(
-        addHikerUpdate.Date,
+    public static HikerUpdate Map(this AddHikerUpdateViewModel addHikerUpdate, DateTime date) => new(
+        date,
         addHikerUpdate.Title,
         addHikerUpdate.Type,
         addHikerUpdate.Text,
