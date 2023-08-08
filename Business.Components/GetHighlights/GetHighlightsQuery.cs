@@ -39,6 +39,18 @@ public class GetHighlightsQuery : IGetHighlightsQuery
         var hikerUpdates = (await hikerUpdatesTask).Select(hikerUpdate => hikerUpdate.Map());
         var hikerLocations = await hikerLocationsTask;
 
+        var mostRecentLocationWithCoordinates = hikerLocations
+            .Where(location => location.Lat != null && location.Lon != null)
+            .OrderByDescending(location => location.Date).FirstOrDefault();
+
+        PointWithDistance? mostRecentLocationPoint = null;
+        if (mostRecentLocationWithCoordinates != null)
+        {
+            var placeOfMostRecentLocation = places.Where(place => place.Id == mostRecentLocationWithCoordinates.PlaceId).FirstOrDefault();
+            var distance = placeOfMostRecentLocation != null ? placeOfMostRecentLocation.Distance : GetDistanceOnTrail(mostRecentLocationWithCoordinates.Lat, mostRecentLocationWithCoordinates.Lon);
+            mostRecentLocationPoint = new PointWithDistance(mostRecentLocationWithCoordinates.Id, mostRecentLocationWithCoordinates.Date, "Riesj is hier", Common.Common.Enums.PlaceHighlightType.location, distance, mostRecentLocationWithCoordinates.IsManual);
+        }
+
         // Get all hiker locations that match a place
         var hikerLocationsWithPlace = hikerLocations
             .Where(hikerLocation => hikerLocation.PlaceId != null);
@@ -61,7 +73,11 @@ public class GetHighlightsQuery : IGetHighlightsQuery
             })
             .OfType<PointWithDistance>();
 
-        return hikerUpdates.Concat(hikerLocationsOrdered);
+        return hikerUpdates
+            .Concat(hikerLocationsOrdered)
+            .Concat(mostRecentLocationPoint != null
+            ? new List<PointWithDistance> { mostRecentLocationPoint }
+            : new List<PointWithDistance>());
     }
 
     private static IReadOnlyCollection<Highlight> GetHighlightsTimeline(List<(PointWithDistance Point, Section? Section)> pointsWithSections)
@@ -136,5 +152,16 @@ public class GetHighlightsQuery : IGetHighlightsQuery
     private static bool IsPointInSection(PointWithDistance point, Section section)
     {
         return section.StartDistance <= point.Distance && section.EndDistance > point.Distance;
+    }
+
+    private static double? GetDistanceOnTrail(double? lat, double? lon)
+    {
+        if (lat == null || lon == null)
+        {
+            return null;
+        }
+
+        // Todo implement some logic here
+        return null;
     }
 }

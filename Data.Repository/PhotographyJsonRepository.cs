@@ -135,6 +135,9 @@ public class PhotographyJsonRepository : IPhotographyRepository
     public async Task<IEnumerable<HikerLocation>> GetHikerLocations() =>
     (await _photographyManager.GetHikerLocations()).Select(hikerLocation => hikerLocation.Map()).ToList();
 
+    public async Task<HikerLocation?> GetHikerLocationById(int id) =>
+        (await _photographyManager.GetHikerLocations()).FirstOrDefault(location => location.Id == id)?.Map();
+
     public async Task DeleteLocation(int id)
     {
         var currentHikerLocations = (await _photographyManager.GetHikerLocations()).ToList();

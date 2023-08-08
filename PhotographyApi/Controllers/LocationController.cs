@@ -1,4 +1,5 @@
 using Business.Interfaces.Locations;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
@@ -14,23 +15,30 @@ public class LocationController : ControllerBase
     private readonly IAddAutomaticLocationQuery _addAutomaticLocationQuery;
     private readonly IGetLocationsQuery _getLocationsQuery;
     private readonly IDeleteLocationQuery _deleteLocationQuery;
+    private readonly IPhotographyRepository _photographyRepository;
 
     public LocationController(
         IAddManualLocationQuery addManualLocationQuery,
         IAddAutomaticLocationQuery addAutomaticLocationQuery,
         IGetLocationsQuery getLocationsQuery,
-        IDeleteLocationQuery deleteLocationQuery)
+        IDeleteLocationQuery deleteLocationQuery,
+        IPhotographyRepository photographyRepository)
     {
         _addManualLocationQuery = addManualLocationQuery;
         _addAutomaticLocationQuery = addAutomaticLocationQuery;
         _getLocationsQuery = getLocationsQuery;
         _deleteLocationQuery = deleteLocationQuery;
+        _photographyRepository = photographyRepository;
     }
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpGet]
     public async Task<IReadOnlyCollection<LocationViewModel>> GetAll() =>
     (await _getLocationsQuery.Execute()).Select(location => location.Map()).ToList();
+
+    [HttpGet]
+    public async Task<CoordinateViewModel?> GetCoordinateById(int id) =>
+    (await _photographyRepository.GetHikerLocationById(id))?.MapCoordinate();
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]

@@ -11,5 +11,5 @@ public static class HighlightMapExtensions
     private static SectionHighlightViewModel Map(this SectionHighlight section) =>
         new(section.Title, section.Children.Select((point, pointIndex) => point.Map()).ToList());
     private static PointHighlightViewModel Map(this PointHighlight point) =>
-        new(point.Id, point.Date, point.PlaceType, point.Title, point.Distance, point.IsManual, point.Text, point.AlbumDetails?.Map(Constants.PhotosBasePath));
+        new(point.Id, point.Date, point.PlaceType, point.Title, point.Distance, point.IsManual);
 }
