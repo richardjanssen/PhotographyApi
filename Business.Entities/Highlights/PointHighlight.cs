@@ -5,7 +5,7 @@ namespace Business.Entities.Highlights;
 
 public class PointHighlight
 {
-    public PointHighlight(int id, DateTime date, PlaceHighlightType placeType, string title, double distance, bool isManual, string? text, AlbumDetails? albumDetails)
+    public PointHighlight(int id, DateTime date, PlaceHighlightType placeType, string title, double? distance, bool isManual)
     {
         Id = id;
         Date = date;
@@ -13,16 +13,12 @@ public class PointHighlight
         Title = title;
         Distance = distance;
         IsManual = isManual;
-        Text = text;
-        AlbumDetails = albumDetails;
     }
 
     public int Id { get; }
     public DateTime Date { get; }
     public PlaceHighlightType PlaceType { get; }
     public string Title { get; }
-    public double Distance { get; }
+    public double? Distance { get; }
     public bool IsManual { get; }
-    public string? Text { get; }
-    public AlbumDetails? AlbumDetails { get; }
 }
