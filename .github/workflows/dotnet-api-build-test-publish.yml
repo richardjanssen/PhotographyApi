@@ -11,6 +11,8 @@ on:
         required: true
       jwt-secret-key:
         required: true
+      mapbox-public-token:
+        required: true
 
 jobs:
   build-test-publish:
@@ -27,6 +29,7 @@ jobs:
       env:
         ConnectionStrings.PhotographyDatabase: ${{ secrets.database-connection-string }}
         AppSettings.JwtSecret: ${{ secrets.jwt-secret-key }}
+        AppSettings.MapboxPublicToken: ${{ secrets.mapbox-public-token }}
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
