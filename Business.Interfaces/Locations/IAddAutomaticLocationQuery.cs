@@ -2,5 +2,5 @@
 
 public interface IAddAutomaticLocationQuery
 {
-    Task Execute(int placeId);
+    Task Execute(double lat, double lon);
 }
