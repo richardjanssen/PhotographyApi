@@ -3,6 +3,7 @@ using Business.Components.GetHighlights;
 using Business.Components.HikerUpdates;
 using Business.Components.Internal;
 using Business.Components.Locations;
+using Business.Components.Locations.Internal;
 using Business.Interfaces;
 using Business.Interfaces.GetHighlights;
 using Business.Interfaces.HikerUpdates;
@@ -23,6 +24,7 @@ public static class BusinessBindings
         .AddScoped<IGetHighlightsQuery, GetHighlightsQuery>()
         .AddScoped<IAddManualLocationQuery, AddManualLocationQuery>()
         .AddScoped<IAddAutomaticLocationQuery, AddAutomaticLocationQuery>()
+        .AddScoped<IGetDistanceBetweenLocationsQuery,  GetDistanceBetweenLocationsQuery>()
         .AddScoped<IGetLocationsQuery, GetLocationsQuery>()
         .AddScoped<IDeleteLocationQuery, DeleteLocationQuery>()
         .AddScoped<IDeleteHikerUpdateQuery, DeleteHikerUpdateQuery>()

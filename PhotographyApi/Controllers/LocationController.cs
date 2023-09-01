@@ -47,8 +47,8 @@ public class LocationController : ControllerBase
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
-    public async Task AddAutomatic(ManualLocationViewModel manualLocation) =>
-        await _addAutomaticLocationQuery.Execute(manualLocation.PlaceId);
+    public async Task AddAutomatic(AutomaticLocationViewModel manualLocation) =>
+        await _addAutomaticLocationQuery.Execute(manualLocation.Lat, manualLocation.Lon);
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpDelete]
