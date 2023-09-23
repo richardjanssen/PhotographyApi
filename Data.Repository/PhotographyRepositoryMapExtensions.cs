@@ -32,7 +32,7 @@ public static class PhotographyRepositoryMapExtensions
         new(section.Id, section.Title, section.StartDistance, section.EndDistance);
 
     public static Business.Entities.Dto.Place Map(this Place place) =>
-        new(place.Id, place.Type, place.Title, place.Distance, place.Lat, place.Lon);
+        new(place.Id, place.SectionId, place.Type, place.Title, place.Distance, place.Lat, place.Lon);
 
     public static Business.Entities.Dto.HikerUpdate Map(this HikerUpdate hikerUpdate) => new(
         hikerUpdate.Id,
@@ -41,7 +41,8 @@ public static class PhotographyRepositoryMapExtensions
         hikerUpdate.Type,
         hikerUpdate.Text,
         hikerUpdate.Distance,
-        hikerUpdate.AlbumId);
+        hikerUpdate.AlbumId,
+        hikerUpdate.PlaceId);
 
     public static HikerUpdate Map(this Business.Entities.Dto.HikerUpdate addHikerUpdate, int id) =>
         new()

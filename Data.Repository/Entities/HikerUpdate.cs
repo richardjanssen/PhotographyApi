@@ -11,5 +11,5 @@ public class HikerUpdate
     public string? Text { get; set; }
     public double Distance { get; set; }
     public int? AlbumId { get; set; }
-    
+    public int? PlaceId { get; set; }
 }

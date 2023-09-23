@@ -36,7 +36,11 @@ public class GetHighlightsQuery : IGetHighlightsQuery
         var hikerLocationsTask = _photographyRepository.GetHikerLocations();
 
         var places = (await placesTask);
-        var hikerUpdates = (await hikerUpdatesTask).Select(hikerUpdate => hikerUpdate.Map());
+        var hikerUpdates = (await hikerUpdatesTask).Select(hikerUpdate =>
+        {
+            var place = places.FirstOrDefault(p => p.Id == hikerUpdate.PlaceId);
+            return hikerUpdate.Map(place?.SectionId);
+        });
         var hikerLocations = await hikerLocationsTask;
 
         // Get most recent location 
@@ -49,7 +53,7 @@ public class GetHighlightsQuery : IGetHighlightsQuery
         {
             var placeOfMostRecentLocation = places.Where(place => place.Id == mostRecentLocationWithCoordinates.PlaceId).FirstOrDefault();
             var distance = placeOfMostRecentLocation != null ? placeOfMostRecentLocation.Distance : GetDistanceOnTrail(mostRecentLocationWithCoordinates.Lat, mostRecentLocationWithCoordinates.Lon);
-            mostRecentLocationPoint = new PointWithDistance(mostRecentLocationWithCoordinates.Id, mostRecentLocationWithCoordinates.Date, "Riesj is hier", Common.Common.Enums.PlaceHighlightType.location, distance, mostRecentLocationWithCoordinates.IsManual);
+            mostRecentLocationPoint = new PointWithDistance(mostRecentLocationWithCoordinates.Id, placeOfMostRecentLocation?.SectionId, mostRecentLocationWithCoordinates.Date, "Riesj is hier", Common.Common.Enums.PlaceHighlightType.location, distance, mostRecentLocationWithCoordinates.IsManual);
         }
 
         // Get all hiker locations that match a place
@@ -69,7 +73,7 @@ public class GetHighlightsQuery : IGetHighlightsQuery
             {
                 var place = places.FirstOrDefault(p => p.Id == hikerLocation.PlaceId);
                 return place != null
-                    ? new PointWithDistance(hikerLocation.Id, hikerLocation.Date, place.Title, place.Type, place.Distance, hikerLocation.IsManual)
+                    ? new PointWithDistance(hikerLocation.Id, place.SectionId, hikerLocation.Date, place.Title, place.Type, place.Distance, hikerLocation.IsManual)
                     : null;
             })
             .OfType<PointWithDistance>();
@@ -148,12 +152,14 @@ public class GetHighlightsQuery : IGetHighlightsQuery
 
     private static Section? GetSectionForPoint(PointWithDistance point, IReadOnlyCollection<Section> sections)
     {
-        return sections.FirstOrDefault(section => IsPointInSection(point, section));
+        return sections.FirstOrDefault(section => section.Id == point.SectionId);
+        //return sections.FirstOrDefault(section => IsPointInSection(point, section));
     }
-    private static bool IsPointInSection(PointWithDistance point, Section section)
-    {
-        return section.StartDistance <= point.Distance && section.EndDistance > point.Distance;
-    }
+
+    //private static bool IsPointInSection(PointWithDistance point, Section section)
+    //{
+    //    return section.StartDistance <= point.Distance && section.EndDistance > point.Distance;
+    //}
 
     private static double? GetDistanceOnTrail(double? lat, double? lon)
     {

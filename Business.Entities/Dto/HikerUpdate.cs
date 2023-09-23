@@ -4,7 +4,7 @@ namespace Business.Entities.Dto;
 
 public class HikerUpdate
 {
-    public HikerUpdate(int id, DateTime date, string title, PlaceHighlightType type, string? text, double distance, int? albumId)
+    public HikerUpdate(int id, DateTime date, string title, PlaceHighlightType type, string? text, double distance, int? albumId, int? placeId)
     {
         Id = id;
         Date = date;
@@ -13,9 +13,10 @@ public class HikerUpdate
         Text = text;
         Distance = distance;
         AlbumId = albumId;
+        PlaceId = placeId;
     }
 
-    public HikerUpdate(DateTime date, string title, PlaceHighlightType type, string? text, double distance, int? albumId)
+    public HikerUpdate(DateTime date, string title, PlaceHighlightType type, string? text, double distance, int? albumId, int? placeId)
     {
         Date = date;
         Title = title;
@@ -23,6 +24,7 @@ public class HikerUpdate
         Text = text;
         Distance = distance;
         AlbumId = albumId;
+        PlaceId = placeId;
     }
 
     public int Id { get; }
@@ -32,5 +34,6 @@ public class HikerUpdate
     public string? Text { get; }
     public double Distance { get; }
     public int? AlbumId { get; }
+    public int? PlaceId { get; }
 
 }

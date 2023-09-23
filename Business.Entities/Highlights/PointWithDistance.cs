@@ -4,9 +4,10 @@ namespace Business.Entities.Highlights;
 
 public class PointWithDistance
 {
-    public PointWithDistance(int id, DateTime date, string title, PlaceHighlightType placeType, double? distance, bool isManual)
+    public PointWithDistance(int id, int? sectionId, DateTime date, string title, PlaceHighlightType placeType, double? distance, bool isManual)
     {
         Id = id;
+        SectionId = sectionId;
         Date = date;
         Title = title;
         PlaceType = placeType;
@@ -15,6 +16,7 @@ public class PointWithDistance
     }
 
     public int Id { get; }
+    public int? SectionId { get; }
     public DateTime Date { get; }
     public string Title { get; }
     public PlaceHighlightType PlaceType { get; }

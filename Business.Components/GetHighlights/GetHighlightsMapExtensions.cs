@@ -6,7 +6,14 @@ namespace Business.Components.GetHighlights;
 
 internal static class GetHighlightsMapExtensions
 {
-    public static PointWithDistance Map(this HikerUpdate update) => new(update.Id, update.Date, update.Title, update.Type, update.Distance, true);
+    public static PointWithDistance Map(this HikerUpdate update, int? sectionId) => new(
+        update.Id,
+        sectionId,
+        update.Date,
+        update.Title,
+        update.Type,
+        update.Distance,
+        true);
 
     public static Highlight Map(this Section section, IReadOnlyCollection<PointWithDistance> children) =>
         new(HighlightType.section, section.Map(children.Map()), null);
