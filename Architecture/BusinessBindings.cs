@@ -1,11 +1,12 @@
 ﻿using Business.Components;
-using Business.Components.GetHighlights;
+using Business.Components.HighlightsTimeline;
+using Business.Components.HighlightsTimeline.Internal;
 using Business.Components.HikerUpdates;
 using Business.Components.Internal;
 using Business.Components.Locations;
 using Business.Components.Locations.Internal;
 using Business.Interfaces;
-using Business.Interfaces.GetHighlights;
+using Business.Interfaces.HighlightsTimeline;
 using Business.Interfaces.HikerUpdates;
 using Business.Interfaces.Locations;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,12 +22,19 @@ public static class BusinessBindings
         .AddScoped<ISaveImageToFolderQuery, SaveImageToFolderQuery>()
         .AddScoped<IAddPhotoQuery, AddPhotoQuery>()
         .AddScoped<IAuthenticationComponent, AuthenticationComponent>()
-        .AddScoped<IGetHighlightsQuery, GetHighlightsQuery>()
+        .AddHighlightsTimelineBindings()
         .AddScoped<IAddManualLocationQuery, AddManualLocationQuery>()
         .AddScoped<IAddAutomaticLocationQuery, AddAutomaticLocationQuery>()
         .AddScoped<IGetDistanceBetweenLocationsQuery,  GetDistanceBetweenLocationsQuery>()
         .AddScoped<IGetLocationsQuery, GetLocationsQuery>()
         .AddScoped<IDeleteLocationQuery, DeleteLocationQuery>()
         .AddScoped<IDeleteHikerUpdateQuery, DeleteHikerUpdateQuery>()
+        ;
+
+    private static IServiceCollection AddHighlightsTimelineBindings(this IServiceCollection services) => services
+        .AddScoped<IGetHighlightsTimelineQuery, GetHighlightsTimelineQuery>()
+        .AddScoped<IGetPointHighlightsQuery, GetPointHighlightsQuery>()
+        .AddScoped<IGetTimelineHikerUpdatesQuery, GetTimelineHikerUpdatesQuery>()
+        .AddScoped<IGetTimelineHikerLocationsQuery, GetTimelineHikerLocationsQuery>()
         ;
 }

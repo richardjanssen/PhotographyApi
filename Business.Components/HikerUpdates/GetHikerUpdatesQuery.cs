@@ -2,13 +2,13 @@
 using Business.Interfaces.HikerUpdates;
 using Data.Interfaces;
 
-namespace Business.Components;
+namespace Business.Components.HikerUpdates;
 
 public class GetHikerUpdatesQuery : IGetHikerUpdatesQuery
 {
     private readonly IPhotographyRepository _photographyRepository;
 
-    public GetHikerUpdatesQuery(IPhotographyRepository photographyRepository) => 
+    public GetHikerUpdatesQuery(IPhotographyRepository photographyRepository) =>
         _photographyRepository = photographyRepository;
 
     public async Task<IReadOnlyCollection<HikerUpdate>> Execute() =>

@@ -1,4 +1,4 @@
-using Business.Interfaces.GetHighlights;
+using Business.Interfaces.HighlightsTimeline;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
 using PhotographyApi.ViewModels.Highlights;
@@ -9,9 +9,9 @@ namespace PhotographyApi.Controllers;
 [Route("api/v1/[controller]/[action]")]
 public class HighlightController : ControllerBase
 {
-    private readonly IGetHighlightsQuery _getHighlightsQuery;
+    private readonly IGetHighlightsTimelineQuery _getHighlightsQuery;
 
-    public HighlightController(IGetHighlightsQuery getHighlightsQuery) =>
+    public HighlightController(IGetHighlightsTimelineQuery getHighlightsQuery) =>
         _getHighlightsQuery = getHighlightsQuery;
 
     [HttpGet]
