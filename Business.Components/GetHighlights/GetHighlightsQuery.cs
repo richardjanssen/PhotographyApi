@@ -39,6 +39,7 @@ public class GetHighlightsQuery : IGetHighlightsQuery
         var hikerUpdates = (await hikerUpdatesTask).Select(hikerUpdate => hikerUpdate.Map());
         var hikerLocations = await hikerLocationsTask;
 
+        // Get most recent location 
         var mostRecentLocationWithCoordinates = hikerLocations
             .Where(location => location.Lat != null && location.Lon != null)
             .OrderByDescending(location => location.Date).FirstOrDefault();
