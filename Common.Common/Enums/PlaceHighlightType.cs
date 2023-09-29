@@ -25,5 +25,6 @@ public enum PlaceHighlightType
     twentyFiveHundred = 21,
     threeThousand = 22,
     thirtyFiveHundred = 23,
-    fourThousand = 24
+    fourThousand = 24,
+    enterSection = 25
 }

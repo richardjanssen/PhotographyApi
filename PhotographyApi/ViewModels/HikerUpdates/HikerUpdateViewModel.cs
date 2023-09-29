@@ -6,6 +6,6 @@ public record AddHikerUpdateViewModel(
     string Title,
     PlaceHighlightType Type,
     string? Text,
-    double Distance,
+    double? Distance,
     int? AlbumId,
     int? PlaceId);

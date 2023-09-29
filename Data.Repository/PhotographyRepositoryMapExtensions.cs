@@ -53,7 +53,8 @@ public static class PhotographyRepositoryMapExtensions
             Type = addHikerUpdate.Type,
             Text = addHikerUpdate.Text,
             Distance = addHikerUpdate.Distance,
-            AlbumId = addHikerUpdate.AlbumId
+            AlbumId = addHikerUpdate.AlbumId,
+            PlaceId = addHikerUpdate.PlaceId
         };
 
     public static HikerLocation Map(this Business.Entities.Dto.HikerLocation hikerLocation, int id) =>
