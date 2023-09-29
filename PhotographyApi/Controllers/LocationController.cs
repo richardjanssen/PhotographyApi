@@ -53,5 +53,5 @@ public class LocationController : ControllerBase
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpDelete]
     public async Task Delete(int id) =>
-    await _deleteLocationQuery.Execute(id);
+        await _deleteLocationQuery.Execute(id);
 }

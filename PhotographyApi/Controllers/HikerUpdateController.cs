@@ -1,4 +1,3 @@
-using Business.Components.GetHighlights;
 using Business.Interfaces.HikerUpdates;
 using Common.Common.Interfaces;
 using Data.Interfaces;

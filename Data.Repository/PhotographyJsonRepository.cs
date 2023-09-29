@@ -100,7 +100,7 @@ public class PhotographyJsonRepository : IPhotographyRepository
 
         var currentHikerUpdates = (await _photographyManager.GetHikerUpdates()).ToList();
 
-        var id = currentHikerUpdates.Count > 0 ? currentHikerUpdates.Select(album => album.Id).Max() + 1 : 1;
+        var id = currentHikerUpdates.Count > 0 ? currentHikerUpdates.Select(update => update.Id).Max() + 1 : 1;
         currentHikerUpdates.Add(addHikerUpdate.Map(id));
 
         await _photographyManager.WriteHikerUpdates(currentHikerUpdates);

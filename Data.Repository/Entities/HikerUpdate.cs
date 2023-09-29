@@ -9,7 +9,7 @@ public class HikerUpdate
     public string Title { get; set; } = null!;
     public PlaceHighlightType Type { get; set; }
     public string? Text { get; set; }
-    public double Distance { get; set; }
+    public double? Distance { get; set; }
     public int? AlbumId { get; set; }
-    
+    public int? PlaceId { get; set; }
 }
