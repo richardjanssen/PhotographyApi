@@ -23,7 +23,7 @@ internal static class HikerLocationsExtensions
 
         var point = new PointHighlight(mostRecentLocationWithCoordinates.Id,
             mostRecentLocationWithCoordinates.Date,
-            Common.Common.Enums.PlaceHighlightType.location,
+            Common.Common.Enums.PointHighlightType.location,
             "Riesj is hier",
             placeOfMostRecentLocation?.Distance,
             mostRecentLocationWithCoordinates.IsManual);

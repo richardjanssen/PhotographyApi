@@ -1,11 +1,10 @@
-﻿using Business.Entities.Dto;
-using Common.Common.Enums;
+﻿using Common.Common.Enums;
 
 namespace Business.Entities.Highlights;
 
 public class PointHighlight
 {
-    public PointHighlight(int id, DateTime date, PlaceHighlightType placeType, string title, double? distance, bool isManual)
+    public PointHighlight(int id, DateTime date, PointHighlightType placeType, string title, double? distance, bool isManual)
     {
         Id = id;
         Date = date;
@@ -17,7 +16,7 @@ public class PointHighlight
 
     public int Id { get; }
     public DateTime Date { get; }
-    public PlaceHighlightType PlaceType { get; }
+    public PointHighlightType PlaceType { get; }
     public string Title { get; }
     public double? Distance { get; }
     public bool IsManual { get; }

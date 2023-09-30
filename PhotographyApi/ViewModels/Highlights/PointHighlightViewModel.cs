@@ -7,14 +7,14 @@ public class PointHighlightViewModel
     public PointHighlightViewModel(
         int id, 
         DateTime date,
-        PlaceHighlightType placeType,
+        PointHighlightType type,
         string title,
         double? distance,
         bool isManual)
     {
         Id = id;
         Date = date;
-        PlaceType = placeType;
+        Type = type;
         Title = title;
         Distance = distance;
         IsManual = isManual;
@@ -22,7 +22,7 @@ public class PointHighlightViewModel
 
     public int Id { get; }
     public DateTime Date { get; }
-    public PlaceHighlightType PlaceType { get; }
+    public PointHighlightType Type { get; }
     public string Title { get; }
     public double? Distance { get; }
     public bool IsManual { get; }
