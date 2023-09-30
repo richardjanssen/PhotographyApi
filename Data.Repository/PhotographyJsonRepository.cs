@@ -82,9 +82,6 @@ public class PhotographyJsonRepository : IPhotographyRepository
     public async Task<IEnumerable<Section>> GetSections() =>
         (await _photographyManager.GetSections()).Select(section => section.Map()).ToList();
 
-    public async Task<IEnumerable<Place>> GetPlaces() =>
-        (await _photographyManager.GetPlaces()).Select(place => place.Map()).ToList();
-
     public async Task<IEnumerable<HikerUpdate>> GetHikerUpdates() =>
         (await _photographyManager.GetHikerUpdates()).Select(hikerUpdate => hikerUpdate.Map()).ToList();
 
