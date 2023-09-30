@@ -5,8 +5,8 @@ public class HikerLocation
     public HikerLocation(int id,
         DateTime date,
         bool isManual,
-        double? lat,
-        double? lon,
+        double lat,
+        double lon,
         int? placeId)
     {
         Id = id;
@@ -19,8 +19,8 @@ public class HikerLocation
 
     public HikerLocation(DateTime date,
         bool isManual,
-        double? lat,
-        double? lon,
+        double lat,
+        double lon,
         int? placeId)
     {
         Date = date;
@@ -33,7 +33,7 @@ public class HikerLocation
     public int Id { get; }
     public DateTime Date { get; }
     public bool IsManual { get; }
-    public double? Lat { get; }
-    public double? Lon { get; }
+    public double Lat { get; }
+    public double Lon { get; }
     public int? PlaceId { get; }
 }

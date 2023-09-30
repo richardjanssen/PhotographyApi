@@ -9,23 +9,26 @@ namespace Business.Components.Locations;
 public class AddAutomaticLocationQuery : IAddAutomaticLocationQuery
 {
     private readonly IPhotographyRepository _photographyRepository;
+    private readonly IPlacesRepository _placesRepository;
     private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IGetDistanceBetweenLocationsQuery _getDistanceBetweenLocationsQuery;
     private readonly double _minimumDistance = 1500.0; // Meters
 
     public AddAutomaticLocationQuery(
         IPhotographyRepository photographyRepository,
+        IPlacesRepository placesRepository,
         IDateTimeProvider dateTimeProvider,
         IGetDistanceBetweenLocationsQuery getDistanceBetweenLocationsQuery)
     {
         _photographyRepository = photographyRepository;
+        _placesRepository = placesRepository;
         _dateTimeProvider = dateTimeProvider;
         _getDistanceBetweenLocationsQuery = getDistanceBetweenLocationsQuery;
     }
 
     public async Task Execute(double lat, double lon)
     {
-        var places = await _photographyRepository.GetPlaces();
+        var places = await _placesRepository.GetPlaces();
 
         var nearbyPlaces = places
             .Select(place => (PlaceId: place.Id, Distance: _getDistanceBetweenLocationsQuery.Execute(lat, lon, place.Lat, place.Lon)))

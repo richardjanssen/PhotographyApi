@@ -9,5 +9,6 @@ public static class DataBindings
 {
     public static IServiceCollection AddDataBindings(this IServiceCollection services) => services
         .AddScoped<IPhotographyRepository, PhotographyJsonRepository>()
+        .AddScoped<IPlacesRepository, PlacesRepository>()
         .AddScoped<IPhotographyManager, PhotographyJsonManager>();
 }

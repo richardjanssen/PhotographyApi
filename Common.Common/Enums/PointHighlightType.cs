@@ -1,6 +1,6 @@
 ﻿namespace Common.Common.Enums;
 
-public enum PlaceHighlightType
+public enum PointHighlightType
 {
     photo = 1,
     blog = 2,

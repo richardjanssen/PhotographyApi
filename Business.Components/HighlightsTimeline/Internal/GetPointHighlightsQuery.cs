@@ -5,23 +5,23 @@ namespace Business.Components.HighlightsTimeline.Internal;
 
 public class GetPointHighlightsQuery : IGetPointHighlightsQuery
 {
-    private readonly IPhotographyRepository _photographyRepository;
     private readonly IGetTimelineHikerUpdatesQuery _getTimelineHikerUpdatesQuery;
     private readonly IGetTimelineHikerLocationsQuery _getTimelineHikerLocationsQuery;
+    private readonly IPlacesRepository _placesRepository;
 
     public GetPointHighlightsQuery(
-        IPhotographyRepository photographyRepository,
         IGetTimelineHikerUpdatesQuery getTimelineHikerUpdatesQuery,
-        IGetTimelineHikerLocationsQuery getTimelineHikerLocationsQuery)
+        IGetTimelineHikerLocationsQuery getTimelineHikerLocationsQuery,
+        IPlacesRepository placesRepository)
     {
-        _photographyRepository = photographyRepository;
         _getTimelineHikerUpdatesQuery = getTimelineHikerUpdatesQuery;
         _getTimelineHikerLocationsQuery = getTimelineHikerLocationsQuery;
+        _placesRepository = placesRepository;
     }
 
     public async Task<IEnumerable<(PointHighlight Point, int? SectionId)>> Execute()
     {
-        var places = (await _photographyRepository.GetPlaces()).ToList();
+        var places = (await _placesRepository.GetPlaces()).ToList();
         var hikerUpdates = await _getTimelineHikerUpdatesQuery.Execute(places);
         var hikerLocations = await _getTimelineHikerLocationsQuery.Execute(places);
 

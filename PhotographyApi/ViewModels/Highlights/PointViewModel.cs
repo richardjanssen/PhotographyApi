@@ -4,7 +4,7 @@ namespace PhotographyApi.ViewModels.Highlights;
 
 public class PointViewModel
 {
-    public PointViewModel(int? id, PlaceHighlightType placeType, string title)
+    public PointViewModel(int? id, PointHighlightType placeType, string title)
     {
         Id = id;
         PlaceType = placeType;
@@ -12,7 +12,7 @@ public class PointViewModel
     }
 
     public int? Id { get; }
-    public PlaceHighlightType PlaceType { get; }
+    public PointHighlightType PlaceType { get; }
     public string Title { get; }
 
 }
