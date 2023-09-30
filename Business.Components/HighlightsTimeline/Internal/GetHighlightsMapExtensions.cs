@@ -15,5 +15,5 @@ internal static class GetHighlightsMapExtensions
     public static Highlight Map(this PointHighlight highlight) => new(HighlightType.place, null, highlight);
 
     private static SectionHighlight MapToSectionHighlight(this Section section, IReadOnlyCollection<PointHighlight> children) =>
-        new(section.Title, children, section.StartDistance);
+        new(section.Title, children, section.StartDistance, section.EndDistance);
 }
