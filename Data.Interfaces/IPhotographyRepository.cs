@@ -16,6 +16,7 @@ public interface IPhotographyRepository
     Task<IEnumerable<HikerUpdate>> GetHikerUpdates();
     Task<HikerUpdate?> GetHikerUpdateById(int id);
     Task<HikerUpdate> AddHikerUpdate(HikerUpdate addHikerUpdate);
+    Task<HikerUpdate> UpdateHikerUpdate(HikerUpdate hikerUpdate);
     Task DeleteHikerUpdate(int id);
     Task<IEnumerable<HikerLocation>> GetHikerLocations();
     Task<HikerLocation?> GetHikerLocationById(int id);
