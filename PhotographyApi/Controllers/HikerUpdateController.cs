@@ -32,21 +32,30 @@ public class HikerUpdateController : ControllerBase
         _dateTimeProvider = dateTimeProvider;
     }
 
-    [HttpGet]
-    public async Task<HikerUpdateDetailsViewModel> GetById(int id) =>
-        (await _getHikerUpdateDetailsQuery.Execute(id)).Map();
-
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpGet]
     public async Task<IReadOnlyCollection<HikerUpdateBasicViewModel>> GetAll() =>
-        (await _getHikerUpdatesQuery.Execute()).Select(update => update.Map()).ToList();
+        (await _getHikerUpdatesQuery.Execute()).Select(update => update.MapToHikerUpdateBasic()).ToList();
+
+    [Authorize(Roles = "PhotographyApi_Admin")]
+    [HttpGet]
+    public async Task<AddHikerUpdateViewModel?> GetById(int id) =>
+    (await _photographyRepository.GetHikerUpdateById(id))?.Map();
+
+    [HttpGet]
+    public async Task<HikerUpdateDetailsViewModel> GetDetailsById(int id) =>
+        (await _getHikerUpdateDetailsQuery.Execute(id)).Map();
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
-    public async Task AddHikerUpdate(AddHikerUpdateViewModel addHikerUpdate)
-    {
-        await _photographyRepository.AddHikerUpdate(addHikerUpdate.Map(_dateTimeProvider.UtcNow));
-    }
+    public async Task Add(AddHikerUpdateViewModel addHikerUpdate) => await _photographyRepository.AddHikerUpdate(addHikerUpdate.Map(_dateTimeProvider.UtcNow));
+
+    [Authorize(Roles = "PhotographyApi_Admin")]
+    [HttpPut]
+    public async Task Update(AddHikerUpdateViewModel addHikerUpdate) => await _photographyRepository.UpdateHikerUpdate(
+        addHikerUpdate.Map(addHikerUpdate.Id ?? throw new InvalidOperationException("Id should always have a value when updating hiker update"),
+        _dateTimeProvider.UtcNow));
+
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpDelete]

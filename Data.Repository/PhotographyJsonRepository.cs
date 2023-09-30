@@ -108,6 +108,25 @@ public class PhotographyJsonRepository : IPhotographyRepository
         return addHikerUpdate;
     }
 
+    public async Task<HikerUpdate> UpdateHikerUpdate(HikerUpdate hikerUpdate)
+    {
+        var currentHikerUpdates = (await _photographyManager.GetHikerUpdates()).ToList();
+        foreach (var update in currentHikerUpdates.Where(currentUpdate => currentUpdate.Id == hikerUpdate.Id))
+        {
+            // Id and date are never updated, because these are not user provided
+            update.Title = hikerUpdate.Title;
+            update.Type = hikerUpdate.Type;
+            update.Distance = hikerUpdate.Distance;
+            update.AlbumId = hikerUpdate.AlbumId;
+            update.PlaceId = hikerUpdate.PlaceId;
+            update.Text = hikerUpdate.Text;
+        }
+
+        await _photographyManager.WriteHikerUpdates(currentHikerUpdates);
+
+        return hikerUpdate;
+    }
+
     public async Task DeleteHikerUpdate(int id)
     {
         var currentHikerUpdates = (await _photographyManager.GetHikerUpdates()).ToList();

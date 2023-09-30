@@ -5,7 +5,6 @@ namespace PhotographyApi.Mappers;
 
 public static class HikerUpdateMapExtensions
 {
-    // TODO: Adjust frontend so that placeId instead of distance is sent. Then remove Distance property.
     public static HikerUpdate Map(this AddHikerUpdateViewModel addHikerUpdate, DateTime date) => new(
         date,
         addHikerUpdate.Title,
@@ -15,10 +14,29 @@ public static class HikerUpdateMapExtensions
         addHikerUpdate.AlbumId,
         addHikerUpdate.PlaceId);
 
-    public static HikerUpdateBasicViewModel Map(this HikerUpdate hikerUpdate) => new(
+    public static HikerUpdate Map(this AddHikerUpdateViewModel addHikerUpdate, int id, DateTime date) => new(
+        id,
+        date,
+        addHikerUpdate.Title,
+        addHikerUpdate.Type,
+        addHikerUpdate.Text,
+        addHikerUpdate.Distance,
+        addHikerUpdate.AlbumId,
+        addHikerUpdate.PlaceId);
+
+    public static HikerUpdateBasicViewModel MapToHikerUpdateBasic(this HikerUpdate hikerUpdate) => new(
         hikerUpdate.Id,
         hikerUpdate.Date,
         hikerUpdate.Title,
         hikerUpdate.Type,
         hikerUpdate.Distance);
+
+    public static AddHikerUpdateViewModel Map(this HikerUpdate hikerUpdate) => new(
+        hikerUpdate.Id,
+        hikerUpdate.Title,
+        hikerUpdate.Type,
+        hikerUpdate.Text,
+        hikerUpdate.Distance,
+        hikerUpdate.AlbumId,
+        hikerUpdate.PlaceId);
 }
