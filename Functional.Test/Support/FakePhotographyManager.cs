@@ -63,4 +63,14 @@ public class FakePhotographyManager : IPhotographyManager
     {
         throw new NotImplementedException();
     }
+
+    public Task<Settings> GetSettings()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task WriteSettings(Settings settings)
+    {
+        throw new NotImplementedException();
+    }
 }
