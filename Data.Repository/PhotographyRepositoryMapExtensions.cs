@@ -76,6 +76,14 @@ public static class PhotographyRepositoryMapExtensions
             hikerLocation.Lon,
             hikerLocation.PlaceId);
 
+    public static Business.Entities.Dto.Settings Map(this Settings settings) => new(settings.TrackingEnabled, settings.MapboxEnabled);
+
+    public static Settings Map(this Business.Entities.Dto.Settings settings) => new()
+    {
+        TrackingEnabled = settings.TrackingEnabled,
+        MapboxEnabled = settings.MapboxEnabled
+    };
+
     public static Business.Entities.Dto.Account Map(this Account account) =>
         new(account.UserName, account.PasswordHash, account.Salt);
 
