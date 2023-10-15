@@ -1,4 +1,4 @@
-﻿using Business.Interfaces;
+﻿using Business.Interfaces.Authentication;
 using Common.Common;
 using Data.Interfaces;
 using Microsoft.Extensions.Options;
@@ -7,22 +7,22 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Business.Components;
+namespace Business.Components.Authentication;
 
-public class AuthenticationComponent : IAuthenticationComponent
+public class AuthenticateAccountQuery : IAuthenticateAccountQuery
 {
     private readonly IPhotographyRepository _photographyRepository;
     private readonly AppSettings _appSettings;
 
-    public AuthenticationComponent(
-        IPhotographyRepository photographyRepository, 
+    public AuthenticateAccountQuery(
+        IPhotographyRepository photographyRepository,
         IOptions<AppSettings> appSettings)
     {
         _photographyRepository = photographyRepository;
         _appSettings = appSettings.Value;
     }
 
-    public async Task<string?> AuthenticateAccount(string userName, string password)
+    public async Task<string?> Execute(string userName, string password)
     {
         var account = await _photographyRepository.GetAccountByUserName(userName);
 
@@ -43,7 +43,7 @@ public class AuthenticationComponent : IAuthenticationComponent
 
         var payload = new JwtPayload
         {
-            { "iss", issuer},
+            { "iss", issuer },
             { "aud", issuer },
             { "iat", DateTimeOffset.UtcNow.ToUnixTimeSeconds()},
             { "exp", DateTimeOffset.UtcNow.AddHours(1).ToUnixTimeSeconds()},
@@ -65,6 +65,6 @@ public class AuthenticationComponent : IAuthenticationComponent
         return Convert.ToBase64String(byteResult.GetBytes(24));
     }
 
-    private static bool VerifyPasswordAgainstHash(string password, string hashedPassword, string salt) => 
+    private static bool VerifyPasswordAgainstHash(string password, string hashedPassword, string salt) =>
         hashedPassword == ComputeHash(password, salt);
 }
