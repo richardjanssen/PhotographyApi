@@ -19,4 +19,5 @@ public interface IPhotographyManager
     Task WriteHikerUpdates(IReadOnlyCollection<HikerUpdate> hikerUpdates);
     Task<Settings> GetSettings();
     Task WriteSettings(Settings settings);
+    Task<IReadOnlyCollection<DistanceMarker>> GetTrail();
 }

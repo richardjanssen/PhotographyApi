@@ -22,7 +22,7 @@ public class AddManualLocationQuery : IAddManualLocationQuery
     {
         var places = await _placesRepository.GetPlaces();
         var place = places.First(place => place.Id == placeId);
-        var location = new HikerLocation(_dateTimeProvider.UtcNow, true, place.Lat, place.Lon, placeId);
+        var location = new HikerLocation(_dateTimeProvider.UtcNow, true, place.Lat, place.Lon, place.Distance, placeId, place.SectionId);
         await _photographyRepository.AddHikerLocation(location);
     }
 }

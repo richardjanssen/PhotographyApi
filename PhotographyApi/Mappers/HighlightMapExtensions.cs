@@ -14,6 +14,7 @@ public static class HighlightMapExtensions
         section.Title,
         section.StartDistance,
         section.EndDistance,
+        section.FirstEntered,
         section.Children.Select((point, pointIndex) => point.Map()).ToList());
 
     private static PointHighlightViewModel Map(this PointHighlight point) => new(

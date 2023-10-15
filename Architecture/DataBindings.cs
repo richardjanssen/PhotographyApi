@@ -11,5 +11,6 @@ public static class DataBindings
         .AddScoped<IPhotographyRepository, PhotographyJsonRepository>()
         .AddScoped<IPlacesRepository, PlacesRepository>()
         .AddScoped<ISettingsRepository, SettingsRepository>()
+        .AddScoped<ITrailRepository, TrailRepository>()
         .AddScoped<IPhotographyManager, PhotographyJsonManager>();
 }

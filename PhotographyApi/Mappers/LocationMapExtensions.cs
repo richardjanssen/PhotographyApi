@@ -11,7 +11,9 @@ public static class LocationMapExtensions
         location.IsManual,
         location.Lat,
         location.Lon,
-        location.PlaceId);
+        location.Distance,
+        location.PlaceId,
+        location.SectionId);
 
     public static CoordinateViewModel MapCoordinate(this HikerLocation location) => new(
         location.Lat,

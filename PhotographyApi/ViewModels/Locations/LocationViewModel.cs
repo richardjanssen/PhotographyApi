@@ -5,4 +5,6 @@ public record LocationViewModel(int Id,
         bool IsManual,
         double? Lat,
         double? Lon,
-        int? PlaceId);
+        double? Distance,
+        int? PlaceId,
+        int? SectionId);

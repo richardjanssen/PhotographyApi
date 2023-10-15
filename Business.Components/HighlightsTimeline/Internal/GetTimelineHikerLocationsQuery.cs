@@ -13,9 +13,10 @@ public class GetTimelineHikerLocationsQuery : IGetTimelineHikerLocationsQuery
     public async Task<IEnumerable<(PointHighlight Point, int? SectionId)>> Execute(IReadOnlyCollection<Place> places)
     {
         var hikerLocations = (await _photographyRepository.GetHikerLocations()).ToList();
-        var mostRecentHikerLocation = hikerLocations.GetMostRecentHikerLocation(places);
+        var mostRecentHikerLocation = hikerLocations.GetMostRecentHikerLocation();
         var hikerLocationsAtPlace = hikerLocations.GetHikerLocationsAtPlace(places);
+        var firstLocationPerSection = hikerLocations.GetFirstLocationPerSection();
 
-        return mostRecentHikerLocation.Concat(hikerLocationsAtPlace);
+        return mostRecentHikerLocation.Concat(hikerLocationsAtPlace).Concat(firstLocationPerSection);
     }
 }
