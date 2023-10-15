@@ -1,4 +1,4 @@
-﻿using Business.Interfaces;
+﻿using Business.Interfaces.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.ViewModels.Accounts;
 
@@ -8,12 +8,11 @@ namespace PhotographyApi.Controllers;
 [Route("api/v1/[controller]/[action]")]
 public class AuthenticationController : ControllerBase
 {
-    private readonly IAuthenticationComponent _authenticationComponent;
+    private readonly IAuthenticateAccountQuery _authenticateAccountQuery;
 
-    public AuthenticationController(IAuthenticationComponent authenticationComponent) =>
-        _authenticationComponent = authenticationComponent;
+    public AuthenticationController(IAuthenticateAccountQuery authenticateAccountQuery) => _authenticateAccountQuery = authenticateAccountQuery;
 
     [HttpPost]
     public async Task<string?> VerifyAccount(AccountViewModel accountViewModel) =>
-        await _authenticationComponent.AuthenticateAccount(accountViewModel.UserName, accountViewModel.Password);
+        await _authenticateAccountQuery.Execute(accountViewModel.UserName, accountViewModel.Password);
 }

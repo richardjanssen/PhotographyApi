@@ -1,4 +1,5 @@
 ﻿using Business.Components;
+using Business.Components.Authentication;
 using Business.Components.HighlightsTimeline;
 using Business.Components.HighlightsTimeline.Internal;
 using Business.Components.HikerUpdates;
@@ -6,6 +7,7 @@ using Business.Components.Internal;
 using Business.Components.Locations;
 using Business.Components.Locations.Internal;
 using Business.Interfaces;
+using Business.Interfaces.Authentication;
 using Business.Interfaces.HighlightsTimeline;
 using Business.Interfaces.HikerUpdates;
 using Business.Interfaces.Locations;
@@ -21,7 +23,7 @@ public static class BusinessBindings
         .AddScoped<IGetHikerUpdatesQuery, GetHikerUpdatesQuery>()
         .AddScoped<ISaveImageToFolderQuery, SaveImageToFolderQuery>()
         .AddScoped<IAddPhotoQuery, AddPhotoQuery>()
-        .AddScoped<IAuthenticationComponent, AuthenticationComponent>()
+        .AddScoped<IAuthenticateAccountQuery, AuthenticateAccountQuery>()
         .AddHighlightsTimelineBindings()
         .AddScoped<IAddManualLocationQuery, AddManualLocationQuery>()
         .AddScoped<IAddAutomaticLocationQuery, AddAutomaticLocationQuery>()
