@@ -7,5 +7,7 @@ public class HikerLocation
     public bool IsManual { get; set; }
     public double Lat { get; set; }
     public double Lon { get; set; }
+    public double? Distance { get; set; }
     public int? PlaceId { get; set; }
+    public int? SectionId { get; set; }
 }

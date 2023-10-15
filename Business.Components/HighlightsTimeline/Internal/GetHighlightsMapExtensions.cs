@@ -14,6 +14,13 @@ internal static class GetHighlightsMapExtensions
 
     public static Highlight Map(this PointHighlight highlight) => new(HighlightType.place, null, highlight);
 
-    private static SectionHighlight MapToSectionHighlight(this Section section, IReadOnlyCollection<PointHighlight> children) =>
-        new(section.Title, children, section.StartDistance, section.EndDistance);
+    private static SectionHighlight MapToSectionHighlight(this Section section, IReadOnlyCollection<PointHighlight> children)
+    {
+        var enterSectionHighlight = children.FirstOrDefault(highlight => highlight.PlaceType == PointHighlightType.enterSection);
+        return new(section.Title,
+            children.Where(highlight => highlight.PlaceType != PointHighlightType.enterSection).ToList(),
+            section.StartDistance,
+            section.EndDistance,
+            enterSectionHighlight?.Date);
+    }
 }

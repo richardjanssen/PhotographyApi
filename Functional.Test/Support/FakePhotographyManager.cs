@@ -73,4 +73,9 @@ public class FakePhotographyManager : IPhotographyManager
     {
         throw new NotImplementedException();
     }
+
+    public Task<IReadOnlyCollection<DistanceMarker>> GetTrail()
+    {
+        throw new NotImplementedException();
+    }
 }

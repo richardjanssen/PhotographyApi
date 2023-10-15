@@ -65,7 +65,9 @@ public static class PhotographyRepositoryMapExtensions
         IsManual = hikerLocation.IsManual,
         Lat = hikerLocation.Lat,
         Lon = hikerLocation.Lon,
-        PlaceId = hikerLocation.PlaceId
+        Distance = hikerLocation.Distance,
+        PlaceId = hikerLocation.PlaceId,
+        SectionId = hikerLocation.SectionId
     };
 
     public static Business.Entities.Dto.HikerLocation Map(this HikerLocation hikerLocation) =>
@@ -74,7 +76,9 @@ public static class PhotographyRepositoryMapExtensions
             hikerLocation.IsManual,
             hikerLocation.Lat,
             hikerLocation.Lon,
-            hikerLocation.PlaceId);
+            hikerLocation.Distance,
+            hikerLocation.PlaceId,
+            hikerLocation.SectionId);
 
     public static Business.Entities.Dto.Settings Map(this Settings settings) => new(settings.TrackingEnabled, settings.MapboxEnabled);
 
@@ -83,6 +87,8 @@ public static class PhotographyRepositoryMapExtensions
         TrackingEnabled = settings.TrackingEnabled,
         MapboxEnabled = settings.MapboxEnabled
     };
+
+    public static Business.Entities.Dto.DistanceMarker Map(this DistanceMarker marker) => new(marker.Lat, marker.Lon, marker.Distance);
 
     public static Business.Entities.Dto.Account Map(this Account account) =>
         new(account.UserName, account.PasswordHash, account.Salt);

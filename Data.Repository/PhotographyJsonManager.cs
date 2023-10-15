@@ -17,6 +17,7 @@ public class PhotographyJsonManager : IPhotographyManager
     private readonly string _hikerUpdatesPath;
     private readonly string _hikerLocationsPath;
     private readonly string _settingsPath;
+    private readonly string _trailPath;
 
     public PhotographyJsonManager(IWebHostEnvironment environment)
     {
@@ -29,6 +30,7 @@ public class PhotographyJsonManager : IPhotographyManager
         _hikerUpdatesPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}hiker_updates.json");
         _hikerLocationsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}hiker_locations.json");
         _settingsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}settings.json");
+        _trailPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}trail.json");
     }
 
     public async Task<IReadOnlyCollection<Photo>> GetPhotos()
@@ -164,6 +166,17 @@ public class PhotographyJsonManager : IPhotographyManager
     {
         var jsonData = JsonConvert.SerializeObject(settings);
         await File.WriteAllTextAsync(_settingsPath, jsonData);
+    }
+
+    public async Task<IReadOnlyCollection<DistanceMarker>> GetTrail()
+    {
+        if (!File.Exists(_trailPath)) return new List<DistanceMarker>();
+
+        var jsonData = await File.ReadAllTextAsync(_trailPath);
+
+        if (string.IsNullOrWhiteSpace(jsonData)) return new List<DistanceMarker>();
+
+        return JsonConvert.DeserializeObject<IReadOnlyCollection<DistanceMarker>>(jsonData) ?? new List<DistanceMarker>();
     }
 
     private static AlbumDetails CreateEmptyAlbumDetails() => new()
