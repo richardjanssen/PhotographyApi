@@ -13,7 +13,7 @@ public enum PointHighlightType
     mountainPass = 9,
     mountainBypass = 10,
     waterfall = 11,
-    bridge = 12,
+    bridgeOfTheGods = 12,
     terminus = 13,
     laAqueduct = 14,
     devilsPostpile = 15,
