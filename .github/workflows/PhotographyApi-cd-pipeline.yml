@@ -12,6 +12,7 @@ jobs:
     secrets:
       database-connection-string: ${{ secrets.DATABASE_CONNECTION_STRING }}
       jwt-secret-key: ${{ secrets.JWT_SECRET_KEY }}
+      mapbox-public-token: ${{ secrets.MAPBOX_PUBLIC_TOKEN }}
       
   deploy-run:
     needs: build-test-publish
