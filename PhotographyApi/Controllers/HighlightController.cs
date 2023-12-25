@@ -15,6 +15,12 @@ public class HighlightController : ControllerBase
         _getHighlightsQuery = getHighlightsQuery;
 
     [HttpGet]
-    public async Task<IReadOnlyCollection<HighlightViewModel>> GetAll() =>
-        (await _getHighlightsQuery.Execute()).Select((highlight) => highlight.Map()).ToList();
+    public async Task<IReadOnlyCollection<HighlightViewModel>> GetAll()
+    {
+        // Temporary adjustment to trigger error on production
+        throw new NotImplementedException();
+#pragma warning disable CS0162 // Unreachable code detected
+        return (await _getHighlightsQuery.Execute()).Select((highlight) => highlight.Map()).ToList();
+#pragma warning restore CS0162 // Unreachable code detected
+    }
 }
