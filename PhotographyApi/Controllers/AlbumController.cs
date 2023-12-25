@@ -7,7 +7,7 @@ using PhotographyApi.ViewModels;
 using PhotographyApi.ViewModels.Albums;
 
 namespace PhotographyApi.Controllers;
-// Hoi
+// Hoi piepeloi
 [ApiController]
 [Route("api/v1/[controller]/[action]")]
 public class AlbumController : ControllerBase
