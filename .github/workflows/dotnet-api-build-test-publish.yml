@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4.1.1
     - uses: microsoft/variable-substitution@v1 
       with:
         files: 'PhotographyApi/appsettings.Production.json'
@@ -31,9 +31,9 @@ jobs:
         AppSettings.JwtSecret: ${{ secrets.jwt-secret-key }}
         AppSettings.MapboxPublicToken: ${{ secrets.mapbox-public-token }}
     - name: Setup .NET
-      uses: actions/setup-dotnet@v2
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -43,7 +43,7 @@ jobs:
     - name: Publish
       run: dotnet publish ${{ inputs.api-name }}/${{ inputs.api-name }}.csproj -c Release -o dist
     - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2.2.2
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.api-name }}
         path: dist/**
