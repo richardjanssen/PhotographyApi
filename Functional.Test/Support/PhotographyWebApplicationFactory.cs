@@ -32,8 +32,8 @@ public class PhotographyWebApplicationFactory : WebApplicationFactory<Program>
         {
             config.AddInMemoryCollection(new[]
             {
-                new KeyValuePair<string, string>("AppSettings:JwtIssuer", "AFakeJwtIssuerForTestingPurposes"),
-                new KeyValuePair<string, string>("AppSettings:JwtSecret", "AFakeJwtSecretForTestingPurposes")
+                new KeyValuePair<string, string?>("AppSettings:JwtIssuer", "AFakeJwtIssuerForTestingPurposes"),
+                new KeyValuePair<string, string?>("AppSettings:JwtSecret", "AFakeJwtSecretForTestingPurposes")
             });
         });
 

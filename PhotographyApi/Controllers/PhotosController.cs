@@ -34,7 +34,7 @@ public class PhotosController : ControllerBase
         var formCollection = await Request.ReadFormAsync();
         var file = formCollection.Files[0];
 
-        int? albumId = formCollection.ContainsKey("albumId") ? int.Parse(formCollection["albumId"]) : null;
+        int? albumId = formCollection.ContainsKey("albumId") ? int.Parse(formCollection["albumId"]!) : null;
         var addPhoto = new AddPhoto(albumId, file);
         return (await _addPhotoQuery.Execute(addPhoto)).Map(Constants.PhotosBasePath);
     }

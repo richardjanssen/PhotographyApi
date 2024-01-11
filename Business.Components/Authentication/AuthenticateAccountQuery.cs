@@ -61,7 +61,7 @@ public class AuthenticateAccountQuery : IAuthenticateAccountQuery
     {
         var passwordBytes = Encoding.UTF8.GetBytes(password);
         var saltBytes = Encoding.UTF8.GetBytes(salt);
-        var byteResult = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 10000);
+        var byteResult = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 10000, HashAlgorithmName.SHA1);
         return Convert.ToBase64String(byteResult.GetBytes(24));
     }
 
