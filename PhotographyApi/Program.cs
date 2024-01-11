@@ -35,7 +35,7 @@ try
         opt.AddPolicy("PhotographyClient", builder =>
         {
             builder
-                .WithOrigins(configuration["AppSettings:CorsOrigins"].Split(','))
+                .WithOrigins(configuration["AppSettings:CorsOrigins"]!.Split(','))
                 .AllowAnyMethod()
                 .AllowCredentials()
                 .AllowAnyHeader();
@@ -52,7 +52,7 @@ try
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = configuration["AppSettings:JwtIssuer"],
                 ValidAudience = configuration["AppSettings:JwtIssuer"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AppSettings:JwtSecret"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AppSettings:JwtSecret"]!))
             };
     });
     builder.Services.AddControllers(options => options.OutputFormatters.RemoveType<StringOutputFormatter>()).AddJsonOptions(opts =>
