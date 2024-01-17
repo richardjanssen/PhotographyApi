@@ -16,19 +16,22 @@ public class LocationController : ControllerBase
     private readonly IGetLocationsQuery _getLocationsQuery;
     private readonly IDeleteLocationQuery _deleteLocationQuery;
     private readonly IPhotographyRepository _photographyRepository;
+    private readonly IAddSatelliteMessengerLocationQuery _addSatelliteMessengerLocationQuery;
 
     public LocationController(
         IAddManualLocationQuery addManualLocationQuery,
         IAddAutomaticLocationQuery addAutomaticLocationQuery,
         IGetLocationsQuery getLocationsQuery,
         IDeleteLocationQuery deleteLocationQuery,
-        IPhotographyRepository photographyRepository)
+        IPhotographyRepository photographyRepository,
+        IAddSatelliteMessengerLocationQuery addSatelliteMessengerLocationQuery)
     {
         _addManualLocationQuery = addManualLocationQuery;
         _addAutomaticLocationQuery = addAutomaticLocationQuery;
         _getLocationsQuery = getLocationsQuery;
         _deleteLocationQuery = deleteLocationQuery;
         _photographyRepository = photographyRepository;
+        _addSatelliteMessengerLocationQuery = addSatelliteMessengerLocationQuery;
     }
 
     [Authorize(Roles = "PhotographyApi_Admin")]
@@ -49,6 +52,11 @@ public class LocationController : ControllerBase
     [HttpPost]
     public async Task AddAutomatic(AutomaticLocationViewModel manualLocation) =>
         await _addAutomaticLocationQuery.Execute(manualLocation.Lat, manualLocation.Lon);
+
+    //[Authorize(Roles = "PhotographyApi_Admin")]
+    [HttpPost]
+    public async Task AddSatelliteMessengerLocation() =>
+        await _addSatelliteMessengerLocationQuery.Execute();
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpDelete]

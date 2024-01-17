@@ -33,7 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Helpers", "Test.Helper
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functional.Test", "Functional.Test\Functional.Test.csproj", "{979E3915-97E5-4A6B-B660-3A650B9C1AEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Interfaces", "Data.Interfaces\Data.Interfaces.csproj", "{2EFEA8FA-DAA7-48FA-93C5-79F72BC3CD36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Interfaces", "Data.Interfaces\Data.Interfaces.csproj", "{2EFEA8FA-DAA7-48FA-93C5-79F72BC3CD36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Proxies", "Data.Proxies\Data.Proxies.csproj", "{718E3F39-A92C-4624-A3AB-ACE98261E0CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,10 @@ Global
 		{2EFEA8FA-DAA7-48FA-93C5-79F72BC3CD36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EFEA8FA-DAA7-48FA-93C5-79F72BC3CD36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EFEA8FA-DAA7-48FA-93C5-79F72BC3CD36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{718E3F39-A92C-4624-A3AB-ACE98261E0CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{718E3F39-A92C-4624-A3AB-ACE98261E0CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{718E3F39-A92C-4624-A3AB-ACE98261E0CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{718E3F39-A92C-4624-A3AB-ACE98261E0CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +107,7 @@ Global
 		{33F040A3-A22C-425B-8DE4-272E5775D12D} = {24DD8723-14A2-4010-AA9A-3E20F597D30B}
 		{979E3915-97E5-4A6B-B660-3A650B9C1AEE} = {24DD8723-14A2-4010-AA9A-3E20F597D30B}
 		{2EFEA8FA-DAA7-48FA-93C5-79F72BC3CD36} = {A6E80D86-3A65-4664-B8E2-975D6C8221C2}
+		{718E3F39-A92C-4624-A3AB-ACE98261E0CB} = {A6E80D86-3A65-4664-B8E2-975D6C8221C2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {275AC525-0058-44C3-BE15-BA15AA9C18B0}

@@ -27,6 +27,7 @@ public static class BusinessBindings
         .AddHighlightsTimelineBindings()
         .AddScoped<IAddManualLocationQuery, AddManualLocationQuery>()
         .AddScoped<IAddAutomaticLocationQuery, AddAutomaticLocationQuery>()
+        .AddScoped<IAddSatelliteMessengerLocationQuery, AddSatelliteMessengerLocationQuery>()
         .AddScoped<IGetDistanceBetweenLocationsQuery,  GetDistanceBetweenLocationsQuery>()
         .AddScoped<IGetLocationsQuery, GetLocationsQuery>()
         .AddScoped<IDeleteLocationQuery, DeleteLocationQuery>()
