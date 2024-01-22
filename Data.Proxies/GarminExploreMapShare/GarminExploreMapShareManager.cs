@@ -36,7 +36,8 @@ public class GarminExploreMapShareManager(IOptions<AppSettings> appSettings) : I
             {
                 return null;
             }
-            return new SatelliteMessengerLocation(lat, lon, date);
+
+            return new SatelliteMessengerLocation((double)lat, (double)lon, (DateTime)date);
         })
             .Where(location => location is not null)
             .FirstOrDefault();

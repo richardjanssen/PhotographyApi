@@ -26,7 +26,7 @@ public static class BusinessBindings
         .AddScoped<IAuthenticateAccountQuery, AuthenticateAccountQuery>()
         .AddHighlightsTimelineBindings()
         .AddScoped<IAddManualLocationQuery, AddManualLocationQuery>()
-        .AddScoped<IAddAutomaticLocationQuery, AddAutomaticLocationQuery>()
+        .AddScoped<IAddLocationByCoordinateAndDateQuery, AddLocationByCoordinateAndDateQuery>()
         .AddScoped<IAddSatelliteMessengerLocationQuery, AddSatelliteMessengerLocationQuery>()
         .AddScoped<IGetDistanceBetweenLocationsQuery,  GetDistanceBetweenLocationsQuery>()
         .AddScoped<IGetLocationsQuery, GetLocationsQuery>()

@@ -1,47 +1,66 @@
-﻿using Business.Interfaces.Locations;
+﻿using Business.Components.Locations.Internal;
+using Business.Entities;
+using Business.Entities.Dto;
+using Business.Interfaces.Locations;
 using Common.Common.Interfaces;
 using Data.Interfaces;
 using Data.Proxies.GarminExploreMapShare;
 
 namespace Business.Components.Locations;
-public class AddSatelliteMessengerLocationQuery : IAddSatelliteMessengerLocationQuery
+public class AddSatelliteMessengerLocationQuery(
+    IPhotographyRepository photographyRepository,
+    IDateTimeProvider dateTimeProvider,
+    IGarminExploreMapShareManager garminExploreMapShareManager,
+    ISettingsRepository settingsRepository,
+    IAddLocationByCoordinateAndDateQuery addLocationByCoordinateAndDateQuery) : IAddSatelliteMessengerLocationQuery
 {
-    private readonly IPhotographyRepository _photographyRepository;
-    private readonly IDateTimeProvider _dateTimeProvider;
-    private readonly IGarminExploreMapShareManager _garminExploreMapShareManager;
-
-    public AddSatelliteMessengerLocationQuery(
-        IPhotographyRepository photographyRepository,
-        IDateTimeProvider dateTimeProvider,
-        IGarminExploreMapShareManager garminExploreMapShareManager)
-    {
-        _photographyRepository = photographyRepository;
-        _dateTimeProvider = dateTimeProvider;
-        _garminExploreMapShareManager = garminExploreMapShareManager;
-    }
-
     public async Task Execute()
     {
+        // Check if TrackingEnabled setting is enabled.
+        if (!(await settingsRepository.GetSettings()).TrackingEnabled)
+        {
+            return;
+        }
+
+        var locations = await photographyRepository.GetHikerLocations();
+
         // Check if last location > 30 minutes ago. If not, do nothing. If so, continue.
-        if (await HasRecentAutomaticLocation())
+        if (HasRecentAutomaticLocation(locations))
         {
             return;
         }
 
         // Retrieve location from satellite messenger feed.
-        var satelliteMessengerlocation = await _garminExploreMapShareManager.GetSatelliteMessengerLocation();
-        throw new NotImplementedException();
+        var messengerlocation = await garminExploreMapShareManager.GetSatelliteMessengerLocation();
 
-        // Check if location and date have already been added. If so, do nothing. If not, continue.
-
-        // Add location to locations based on lat lon and date.
+        // Check if messenger location has already been added.
+        if (messengerlocation != null && !ContainsSatelliteMessengerLocation(locations, messengerlocation))
+        {
+            // Add location
+            await addLocationByCoordinateAndDateQuery.Execute(messengerlocation.Lat, messengerlocation.Lon, messengerlocation.Date);
+        }
     }
 
-    private async Task<bool> HasRecentAutomaticLocation()
+    private bool HasRecentAutomaticLocation(IEnumerable<HikerLocation> locations)
     {
-        // Temporarily add two years because our mocked locations are in the future...
-        var now = _dateTimeProvider.UtcNow.AddYears(2);
-        return (await _photographyRepository.GetHikerLocations())
-            .Any(location => !location.IsManual && now.Subtract(location.Date).TotalMinutes < 30);
+        var now = dateTimeProvider.UtcNow;
+        return locations.Any(location => !location.IsManual && now.Subtract(location.Date).TotalMinutes < 30);
+    }
+
+    private bool ContainsSatelliteMessengerLocation(IEnumerable<HikerLocation> locations, SatelliteMessengerLocation messengerLocation)
+    {
+        // We know that a new location is always newer than existing locations, so we can look at the most recent location
+        var mostRecentLocation = locations.OrderByDescending(location => location.Date).FirstOrDefault();
+
+        if (mostRecentLocation == null) {
+            return false;
+        }
+
+        if (mostRecentLocation.Date != messengerLocation.Date || mostRecentLocation.Lat != messengerLocation.Lat || mostRecentLocation.Lon != messengerLocation.Lon)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
