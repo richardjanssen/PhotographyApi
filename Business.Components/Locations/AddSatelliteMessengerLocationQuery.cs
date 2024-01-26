@@ -25,7 +25,7 @@ public class AddSatelliteMessengerLocationQuery(
         var locations = await photographyRepository.GetHikerLocations();
 
         // Check if last location > 30 minutes ago. If not, do nothing. If so, continue.
-        if (HasRecentAutomaticLocation(locations))
+        if (HasRecentAutomaticLocation(locations, dateTimeProvider.UtcNow))
         {
             return;
         }
@@ -41,16 +41,18 @@ public class AddSatelliteMessengerLocationQuery(
         }
     }
 
-    private bool HasRecentAutomaticLocation(IEnumerable<HikerLocation> locations)
+    private static bool HasRecentAutomaticLocation(IEnumerable<HikerLocation> locations, DateTime referenceDate)
     {
-        var now = dateTimeProvider.UtcNow;
-        return locations.Any(location => !location.IsManual && now.Subtract(location.Date).TotalMinutes < 30);
+        return locations.Any(location => !location.IsManual && referenceDate.Subtract(location.Date).TotalMinutes < 30);
     }
 
-    private bool ContainsSatelliteMessengerLocation(IEnumerable<HikerLocation> locations, SatelliteMessengerLocation messengerLocation)
+    private static bool ContainsSatelliteMessengerLocation(IEnumerable<HikerLocation> locations, SatelliteMessengerLocation messengerLocation)
     {
         // We know that a new location is always newer than existing locations, so we can look at the most recent location
-        var mostRecentLocation = locations.OrderByDescending(location => location.Date).FirstOrDefault();
+        var mostRecentLocation = locations
+            .Where(location => !location.IsManual)
+            .OrderByDescending(location => location.Date)
+            .FirstOrDefault();
 
         if (mostRecentLocation == null) {
             return false;
