@@ -39,7 +39,7 @@ public class LocationController(
     {
         // This flow uses API key authorization as it is called from an external program
         var apiKey = HttpContext.Request.Headers["RiesjApiKey"].ToString();
-
+        logger.LogInformation(apiKey);
         if (string.IsNullOrEmpty(apiKey) || apiKey != appSettings.Value.RiesjApiKey)
         {
             return Unauthorized();
