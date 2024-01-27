@@ -7,11 +7,13 @@ on:
         required: true
         type: string
     secrets:
-      database-connection-string:
+      riesj-api-key:
         required: true
       jwt-secret-key:
         required: true
       mapbox-public-token:
+        required: true
+      garmin-explore-raw-kml-feed:
         required: true
 
 jobs:
@@ -27,9 +29,10 @@ jobs:
       with:
         files: 'PhotographyApi/appsettings.Production.json'
       env:
-        ConnectionStrings.PhotographyDatabase: ${{ secrets.database-connection-string }}
+        AppSettings.RiesjApiKey: ${{ secrets.riesj-api-key }}
         AppSettings.JwtSecret: ${{ secrets.jwt-secret-key }}
         AppSettings.MapboxPublicToken: ${{ secrets.mapbox-public-token }}
+        AppSettings.GarminExploreRawKmlFeed: ${{ secrets.garmin-explore-raw-kml-feed }}
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
