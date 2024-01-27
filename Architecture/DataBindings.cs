@@ -1,4 +1,5 @@
 ﻿using Data.Interfaces;
+using Data.Proxies.GarminExploreMapShare;
 using Data.Repository;
 using Data.Repository.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,5 +13,9 @@ public static class DataBindings
         .AddScoped<IPlacesRepository, PlacesRepository>()
         .AddScoped<ISettingsRepository, SettingsRepository>()
         .AddScoped<ITrailRepository, TrailRepository>()
-        .AddScoped<IPhotographyManager, PhotographyJsonManager>();
+        .AddScoped<IPhotographyManager, PhotographyJsonManager>()
+        .AddProxies();
+
+    private static IServiceCollection AddProxies(this IServiceCollection services) => services
+        .AddScoped<IGarminExploreMapShareManager, GarminExploreMapShareManager>();
 }

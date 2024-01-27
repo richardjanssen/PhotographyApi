@@ -23,6 +23,7 @@
     <ProjectReference Include="..\Business.Interfaces\Business.Interfaces.csproj" />
     <ProjectReference Include="..\Common.Common\Common.Common.csproj" />
     <ProjectReference Include="..\Data.Interfaces\Data.Interfaces.csproj" />
+    <ProjectReference Include="..\Data.Proxies\Data.Proxies.csproj" />
   </ItemGroup>
 
 </Project>
