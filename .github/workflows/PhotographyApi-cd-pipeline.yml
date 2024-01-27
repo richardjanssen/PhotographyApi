@@ -10,9 +10,10 @@ jobs:
     with:
       api-name: PhotographyApi
     secrets:
-      database-connection-string: ${{ secrets.DATABASE_CONNECTION_STRING }}
+      riesj-api-key: ${{ secrets.RIESJ_API_KEY }}
       jwt-secret-key: ${{ secrets.JWT_SECRET_KEY }}
       mapbox-public-token: ${{ secrets.MAPBOX_PUBLIC_TOKEN }}
+      garmin-explore-raw-kml-feed: ${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}
       
   deploy-run:
     needs: build-test-publish
