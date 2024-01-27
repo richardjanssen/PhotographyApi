@@ -5,6 +5,7 @@ using Business.Interfaces.Locations;
 using Common.Common.Interfaces;
 using Data.Interfaces;
 using Data.Proxies.GarminExploreMapShare;
+using Microsoft.Extensions.Logging;
 
 namespace Business.Components.Locations;
 public class AddSatelliteMessengerLocationQuery(
@@ -12,13 +13,15 @@ public class AddSatelliteMessengerLocationQuery(
     IDateTimeProvider dateTimeProvider,
     IGarminExploreMapShareManager garminExploreMapShareManager,
     ISettingsRepository settingsRepository,
-    IAddLocationByCoordinateAndDateQuery addLocationByCoordinateAndDateQuery) : IAddSatelliteMessengerLocationQuery
+    IAddLocationByCoordinateAndDateQuery addLocationByCoordinateAndDateQuery,
+    ILogger logger) : IAddSatelliteMessengerLocationQuery
 {
     public async Task Execute()
     {
         // Check if TrackingEnabled setting is enabled.
         if (!(await settingsRepository.GetSettings()).TrackingEnabled)
         {
+            logger.LogInformation("Not adding satellite location because TrackingEnabled is false");
             return;
         }
 
@@ -27,6 +30,7 @@ public class AddSatelliteMessengerLocationQuery(
         // Check if last location > 30 minutes ago. If not, do nothing. If so, continue.
         if (HasRecentAutomaticLocation(locations, dateTimeProvider.UtcNow))
         {
+            logger.LogInformation("Not adding satellite location because previous automatic location was added <30 minutes ago");
             return;
         }
 
@@ -38,6 +42,13 @@ public class AddSatelliteMessengerLocationQuery(
         {
             // Add location
             await addLocationByCoordinateAndDateQuery.Execute(messengerlocation.Lat, messengerlocation.Lon, messengerlocation.Date);
+            logger.LogInformation(
+                $"Added satellite location add Lat {messengerlocation.Lat}, Lon {messengerlocation.Lon}, Date {messengerlocation.Date}");
+            return;
+        } else
+        {
+            logger.LogInformation(
+                $"Not adding satellite location because location is null or already is the most recent automatic location");
         }
     }
 
