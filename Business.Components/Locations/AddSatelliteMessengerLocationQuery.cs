@@ -14,7 +14,7 @@ public class AddSatelliteMessengerLocationQuery(
     IGarminExploreMapShareManager garminExploreMapShareManager,
     ISettingsRepository settingsRepository,
     IAddLocationByCoordinateAndDateQuery addLocationByCoordinateAndDateQuery,
-    ILogger logger) : IAddSatelliteMessengerLocationQuery
+    ILogger<AddSatelliteMessengerLocationQuery> logger) : IAddSatelliteMessengerLocationQuery
 {
     public async Task Execute()
     {
@@ -27,7 +27,7 @@ public class AddSatelliteMessengerLocationQuery(
 
         var locations = await photographyRepository.GetHikerLocations();
 
-        // Check if last location > 30 minutes ago. If not, do nothing. If so, continue.
+        // Check if last location > 25 minutes ago. If not, do nothing. If so, continue.
         if (HasRecentAutomaticLocation(locations, dateTimeProvider.UtcNow))
         {
             logger.LogInformation("Not adding satellite location because previous automatic location was added <30 minutes ago");
@@ -54,7 +54,7 @@ public class AddSatelliteMessengerLocationQuery(
 
     private static bool HasRecentAutomaticLocation(IEnumerable<HikerLocation> locations, DateTime referenceDate)
     {
-        return locations.Any(location => !location.IsManual && referenceDate.Subtract(location.Date).TotalMinutes < 30);
+        return locations.Any(location => !location.IsManual && referenceDate.Subtract(location.Date).TotalMinutes < 25);
     }
 
     private static bool ContainsSatelliteMessengerLocation(IEnumerable<HikerLocation> locations, SatelliteMessengerLocation messengerLocation)

@@ -18,7 +18,7 @@ public class LocationController(
     IPhotographyRepository photographyRepository,
     IAddSatelliteMessengerLocationQuery addSatelliteMessengerLocationQuery,
     IOptions<AppSettings> appSettings,
-    ILogger logger) : ControllerBase
+    ILogger<LocationController> logger) : ControllerBase
 {
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpGet]
