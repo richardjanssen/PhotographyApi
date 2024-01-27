@@ -5,6 +5,7 @@ using Business.Entities.Dto;
 using Common.Common.Interfaces;
 using Data.Interfaces;
 using Data.Proxies.GarminExploreMapShare;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -21,6 +22,7 @@ public class AddSatelliteMessengerLocationQueryTest
     private readonly Mock<IGarminExploreMapShareManager> _garminExploreMapShareManagerMock = new();
     private readonly Mock<ISettingsRepository> _settingsRepositoryMock = new();
     private readonly Mock<IAddLocationByCoordinateAndDateQuery> _addLocationByCoordinateAndDateQueryMock = new();
+    private readonly Mock<ILogger<AddSatelliteMessengerLocationQuery>> _loggerMock = new();
 
     private readonly double _someLat = 1.23456;
     private readonly double _someLon = 2.34567;
@@ -39,7 +41,8 @@ public class AddSatelliteMessengerLocationQueryTest
             _dateTimeProviderMock.Object,
             _garminExploreMapShareManagerMock.Object,
             _settingsRepositoryMock.Object,
-            _addLocationByCoordinateAndDateQueryMock.Object);
+            _addLocationByCoordinateAndDateQueryMock.Object,
+            _loggerMock.Object);
 
         await sut.Execute();
 
@@ -48,12 +51,12 @@ public class AddSatelliteMessengerLocationQueryTest
     }
 
     [DataTestMethod]
-    [DataRow(-29.99, false, 0)]
-    [DataRow(-30, false, 1)]
-    [DataRow(-30.01, false, 1)]
-    [DataRow(-29.99, true, 1)]
-    [DataRow(-30, true, 1)]
-    [DataRow(-30.01, true, 1)]
+    [DataRow(-24.99, false, 0)]
+    [DataRow(-25, false, 1)]
+    [DataRow(-25.01, false, 1)]
+    [DataRow(-24.99, true, 1)]
+    [DataRow(-25, true, 1)]
+    [DataRow(-25.01, true, 1)]
     public async Task Execute_ShouldAddALocationIfPreviousLocationsSatisfyConditions(
         double previousLocationOffsetFromNow,
         bool previousLocationIsManual,
@@ -87,7 +90,8 @@ public class AddSatelliteMessengerLocationQueryTest
             _dateTimeProviderMock.Object,
             _garminExploreMapShareManagerMock.Object,
             _settingsRepositoryMock.Object,
-            _addLocationByCoordinateAndDateQueryMock.Object);
+            _addLocationByCoordinateAndDateQueryMock.Object,
+            _loggerMock.Object);
 
         await sut.Execute();
 
@@ -119,7 +123,8 @@ public class AddSatelliteMessengerLocationQueryTest
             _dateTimeProviderMock.Object,
             _garminExploreMapShareManagerMock.Object,
             _settingsRepositoryMock.Object,
-            _addLocationByCoordinateAndDateQueryMock.Object);
+            _addLocationByCoordinateAndDateQueryMock.Object,
+            _loggerMock.Object);
 
         await sut.Execute();
 
@@ -146,7 +151,8 @@ public class AddSatelliteMessengerLocationQueryTest
             _dateTimeProviderMock.Object,
             _garminExploreMapShareManagerMock.Object,
             _settingsRepositoryMock.Object,
-            _addLocationByCoordinateAndDateQueryMock.Object);
+            _addLocationByCoordinateAndDateQueryMock.Object,
+            _loggerMock.Object);
 
         await sut.Execute();
 
@@ -185,7 +191,8 @@ public class AddSatelliteMessengerLocationQueryTest
             _dateTimeProviderMock.Object,
             _garminExploreMapShareManagerMock.Object,
             _settingsRepositoryMock.Object,
-            _addLocationByCoordinateAndDateQueryMock.Object);
+            _addLocationByCoordinateAndDateQueryMock.Object,
+            _loggerMock.Object);
 
         await sut.Execute();
 

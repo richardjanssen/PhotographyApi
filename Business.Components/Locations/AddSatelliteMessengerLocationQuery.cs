@@ -5,6 +5,7 @@ using Business.Interfaces.Locations;
 using Common.Common.Interfaces;
 using Data.Interfaces;
 using Data.Proxies.GarminExploreMapShare;
+using Microsoft.Extensions.Logging;
 
 namespace Business.Components.Locations;
 public class AddSatelliteMessengerLocationQuery(
@@ -12,21 +13,24 @@ public class AddSatelliteMessengerLocationQuery(
     IDateTimeProvider dateTimeProvider,
     IGarminExploreMapShareManager garminExploreMapShareManager,
     ISettingsRepository settingsRepository,
-    IAddLocationByCoordinateAndDateQuery addLocationByCoordinateAndDateQuery) : IAddSatelliteMessengerLocationQuery
+    IAddLocationByCoordinateAndDateQuery addLocationByCoordinateAndDateQuery,
+    ILogger<AddSatelliteMessengerLocationQuery> logger) : IAddSatelliteMessengerLocationQuery
 {
     public async Task Execute()
     {
         // Check if TrackingEnabled setting is enabled.
         if (!(await settingsRepository.GetSettings()).TrackingEnabled)
         {
+            logger.LogInformation("Not adding satellite location because TrackingEnabled is false");
             return;
         }
 
         var locations = await photographyRepository.GetHikerLocations();
 
-        // Check if last location > 30 minutes ago. If not, do nothing. If so, continue.
+        // Check if last location > 25 minutes ago. If not, do nothing. If so, continue.
         if (HasRecentAutomaticLocation(locations, dateTimeProvider.UtcNow))
         {
+            logger.LogInformation("Not adding satellite location because previous automatic location was added <25 minutes ago");
             return;
         }
 
@@ -38,12 +42,19 @@ public class AddSatelliteMessengerLocationQuery(
         {
             // Add location
             await addLocationByCoordinateAndDateQuery.Execute(messengerlocation.Lat, messengerlocation.Lon, messengerlocation.Date);
+            logger.LogInformation(
+                $"Added satellite location add Lat {messengerlocation.Lat}, Lon {messengerlocation.Lon}, Date {messengerlocation.Date}");
+            return;
+        } else
+        {
+            logger.LogInformation(
+                $"Not adding satellite location because location is null or already is the most recent automatic location");
         }
     }
 
     private static bool HasRecentAutomaticLocation(IEnumerable<HikerLocation> locations, DateTime referenceDate)
     {
-        return locations.Any(location => !location.IsManual && referenceDate.Subtract(location.Date).TotalMinutes < 30);
+        return locations.Any(location => !location.IsManual && referenceDate.Subtract(location.Date).TotalMinutes < 25);
     }
 
     private static bool ContainsSatelliteMessengerLocation(IEnumerable<HikerLocation> locations, SatelliteMessengerLocation messengerLocation)

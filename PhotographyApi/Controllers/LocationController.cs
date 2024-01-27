@@ -17,7 +17,8 @@ public class LocationController(
     IDeleteLocationQuery deleteLocationQuery,
     IPhotographyRepository photographyRepository,
     IAddSatelliteMessengerLocationQuery addSatelliteMessengerLocationQuery,
-    IOptions<AppSettings> appSettings) : ControllerBase
+    IOptions<AppSettings> appSettings,
+    ILogger<LocationController> logger) : ControllerBase
 {
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpGet]
@@ -44,6 +45,7 @@ public class LocationController(
             return Unauthorized();
         }
 
+        logger.LogInformation("Starting AddSatelliteMessengerLocation flow");
         await addSatelliteMessengerLocationQuery.Execute();
 
         return Ok();
