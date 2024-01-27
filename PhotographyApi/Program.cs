@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.IdentityModel.Tokens;
 using NLog;
 using NLog.Web;
+using PhotographyApi.Swagger;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -62,7 +63,7 @@ try
     });
 
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(c => c.OperationFilter<RiesjApiKeySwaggerAttribute>());
     builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
     builder.Services.AddDataBindings();
     builder.Services.AddBusinessBindings();
