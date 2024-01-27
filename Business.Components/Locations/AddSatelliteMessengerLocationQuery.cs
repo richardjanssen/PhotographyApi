@@ -30,7 +30,7 @@ public class AddSatelliteMessengerLocationQuery(
         // Check if last location > 25 minutes ago. If not, do nothing. If so, continue.
         if (HasRecentAutomaticLocation(locations, dateTimeProvider.UtcNow))
         {
-            logger.LogInformation("Not adding satellite location because previous automatic location was added <30 minutes ago");
+            logger.LogInformation("Not adding satellite location because previous automatic location was added <25 minutes ago");
             return;
         }
 
