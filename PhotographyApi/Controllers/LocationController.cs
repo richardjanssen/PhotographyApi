@@ -35,7 +35,7 @@ public class LocationController(
         await addManualLocationQuery.Execute(manualLocation.PlaceId);
 
     [HttpPost]
-    public async Task<ActionResult> AddSatelliteMessengerLocation()
+    public async Task<ActionResult<string>> AddSatelliteMessengerLocation()
     {
         // This flow uses API key authorization as it is called from an external program
         var apiKey = HttpContext.Request.Headers["RiesjApiKey"].ToString();
@@ -45,9 +45,9 @@ public class LocationController(
         }
 
         logger.LogInformation("Starting AddSatelliteMessengerLocation flow");
-        await addSatelliteMessengerLocationQuery.Execute();
+        var message = await addSatelliteMessengerLocationQuery.Execute();
 
-        return Ok();
+        return message;
     }
 
     [Authorize(Roles = "PhotographyApi_Admin")]
