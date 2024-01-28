@@ -2,5 +2,5 @@
 
 public interface IAddSatelliteMessengerLocationQuery
 {
-    Task Execute();
+    Task<string> Execute();
 }

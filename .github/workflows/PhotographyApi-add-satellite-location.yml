@@ -17,4 +17,4 @@ jobs:
         customHeaders: '{"Content-Type": "application/json", "RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}"}'
     - name: Show response
       run: |
-        echo ${{ steps.myRequest.outputs.response }}
+        echo ${{ steps.addSatelliteLocationRequest.outputs.response }}

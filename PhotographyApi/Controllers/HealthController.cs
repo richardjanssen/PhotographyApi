@@ -4,11 +4,9 @@ namespace PhotographyApi.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]/[action]")]
-public class HealthController : ControllerBase
+public class HealthController(ILogger<HealthController> logger) : ControllerBase
 {
-    private readonly ILogger<HealthController> _logger;
-
-    public HealthController(ILogger<HealthController> logger) => _logger = logger;
+    private readonly ILogger<HealthController> _logger = logger;
 
     [HttpGet]
     public string Check()
