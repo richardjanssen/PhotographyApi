@@ -2,24 +2,13 @@
 
 namespace Data.Repository.Entities;
 
-public class Place
+public class Place(int id, int? sectionId, PointHighlightType type, string title, double? distance, double lat, double lon)
 {
-    public Place(int id, int? sectionId, PointHighlightType type, string title, double? distance, double lat, double lon)
-    {
-        Id = id;
-        SectionId = sectionId;
-        Type = type;
-        Title = title;
-        Distance = distance;
-        Lat = lat;
-        Lon = lon;
-    }
-
-    public int Id { get; }
-    public int? SectionId { get; }
-    public PointHighlightType Type { get; set; }
-    public string Title { get; }
-    public double? Distance { get; }
-    public double Lat { get; set; }
-    public double Lon { get; set; }
+    public int Id { get; } = id;
+    public int? SectionId { get; } = sectionId;
+    public PointHighlightType Type { get; set; } = type;
+    public string Title { get; } = title;
+    public double? Distance { get; } = distance;
+    public double Lat { get; set; } = lat;
+    public double Lon { get; set; } = lon;
 }

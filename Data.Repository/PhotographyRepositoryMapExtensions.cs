@@ -29,7 +29,7 @@ public static class PhotographyRepositoryMapExtensions
         new(albumDetails.Photos.Select(photo => photo.Map()).ToList());
 
     public static Business.Entities.Dto.Section Map(this Section section) =>
-        new(section.Id, section.Title, section.StartDistance, section.EndDistance);
+        new(section.Id, section.Type, section.Title, section.StartDistance, section.EndDistance);
 
     public static Business.Entities.Dto.Place Map(this Place place) =>
         new(place.Id, place.SectionId, place.Type, place.Title, place.Distance, place.Lat, place.Lon);

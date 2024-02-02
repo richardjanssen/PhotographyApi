@@ -1,18 +1,13 @@
-﻿namespace Business.Entities.Dto;
+﻿using Common.Common.Enums;
 
-public class Section
+namespace Business.Entities.Dto;
+
+public class Section(int id, SectionHighlightType type, string title, double startDistance, double endDistance)
 {
-    public Section(int id, string title, double startDistance, double endDistance)
-    {
-        Id = id;
-        Title = title;
-        StartDistance = startDistance;
-        EndDistance = endDistance;
-    }
-
-    public int Id { get; }
-    public string Title { get; }
-    public double StartDistance { get; }
-    public double EndDistance { get; }
+    public int Id { get; } = id;
+    public SectionHighlightType Type { get; } = type;
+    public string Title { get; } = title;
+    public double StartDistance { get; } = startDistance;
+    public double EndDistance { get; } = endDistance;
 
 }

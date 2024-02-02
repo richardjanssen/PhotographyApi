@@ -18,6 +18,7 @@ internal static class GetHighlightsMapExtensions
     {
         var enterSectionHighlight = children.FirstOrDefault(highlight => highlight.PlaceType == PointHighlightType.enterSection);
         return new(section.Title,
+            section.Type,
             children.Where(highlight => highlight.PlaceType != PointHighlightType.enterSection).ToList(),
             section.StartDistance,
             section.EndDistance,

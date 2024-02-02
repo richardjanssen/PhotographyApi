@@ -4,11 +4,7 @@ using Data.Repository.Interfaces;
 
 namespace Data.Interfaces;
 
-public class PlacesRepository : IPlacesRepository
+public class PlacesRepository(IPhotographyManager photographyManager) : IPlacesRepository
 {
-    private readonly IPhotographyManager _photographyManager;
-
-    public PlacesRepository(IPhotographyManager photographyManager) => _photographyManager = photographyManager;
-
-    public async Task<IEnumerable<Place>> GetPlaces() => (await _photographyManager.GetPlaces()).Select(place => place.Map()).ToList();
+    public async Task<IEnumerable<Place>> GetPlaces() => (await photographyManager.GetPlaces()).Select(place => place.Map()).ToList();
 }
