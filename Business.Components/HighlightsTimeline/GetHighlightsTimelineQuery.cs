@@ -5,21 +5,12 @@ using Data.Interfaces;
 
 namespace Business.Components.HighlightsTimeline;
 
-public class GetHighlightsTimelineQuery : IGetHighlightsTimelineQuery
+public class GetHighlightsTimelineQuery(IPhotographyRepository photographyRepository, IGetPointHighlightsQuery getPointHighlightsQuery) : IGetHighlightsTimelineQuery
 {
-    private readonly IPhotographyRepository _photographyRepository;
-    private readonly IGetPointHighlightsQuery _getPointHighlightsQuery;
-
-    public GetHighlightsTimelineQuery(IPhotographyRepository photographyRepository, IGetPointHighlightsQuery getPointHighlightsQuery)
-    {
-        _photographyRepository = photographyRepository;
-        _getPointHighlightsQuery = getPointHighlightsQuery;
-    }
-
     public async Task<IReadOnlyCollection<Highlight>> Execute()
     {
-        var pointHighlightsTask = _getPointHighlightsQuery.Execute();
-        var sections = (await _photographyRepository.GetSections()).OrderBy(section => section.StartDistance).ToList();
+        var pointHighlightsTask = getPointHighlightsQuery.Execute();
+        var sections = (await photographyRepository.GetSections()).OrderBy(section => section.StartDistance).ToList();
 
         return (await pointHighlightsTask)
             .OrderByDescending(x => x.Point.Date)

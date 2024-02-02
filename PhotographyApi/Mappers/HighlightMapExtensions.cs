@@ -12,6 +12,7 @@ public static class HighlightMapExtensions
 
     private static SectionHighlightViewModel Map(this SectionHighlight section) => new(
         section.Title,
+        section.Type,
         section.StartDistance,
         section.EndDistance,
         section.FirstEntered,

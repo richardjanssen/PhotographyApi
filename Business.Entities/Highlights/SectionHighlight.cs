@@ -1,3 +1,5 @@
-﻿namespace Business.Entities.Highlights;
+﻿using Common.Common.Enums;
 
-public record SectionHighlight(string Title, IReadOnlyCollection<PointHighlight> Children, double StartDistance, double EndDistance, DateTime? FirstEntered);
+namespace Business.Entities.Highlights;
+
+public record SectionHighlight(string Title, SectionHighlightType Type, IReadOnlyCollection<PointHighlight> Children, double StartDistance, double EndDistance, DateTime? FirstEntered);

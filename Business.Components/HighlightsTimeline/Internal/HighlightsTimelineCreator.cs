@@ -18,7 +18,7 @@ internal static class HighlightsTimelineCreator
             if (currentSection?.Id == null)
             {
                 // Create section highlight with consecutivePointsInSameSection as points if Count > 0, append to highlights
-                if (consecutivePointsInSameSection.Any())
+                if (consecutivePointsInSameSection.Count != 0)
                 {
                     if (previousSection != null)
                     {
@@ -27,7 +27,7 @@ internal static class HighlightsTimelineCreator
                 }
 
                 // Create new empty list consecutivePointsInSameSection
-                consecutivePointsInSameSection = new List<PointHighlight>();
+                consecutivePointsInSameSection = [];
 
                 // Create point highlight, append to highlights
                 highlights.Add(currentPoint.Map());
@@ -38,7 +38,7 @@ internal static class HighlightsTimelineCreator
             else if (currentSection?.Id != previousSection?.Id)
             {
                 // Create section highlight with consecutivePointsInSameSection as points if Count > 0, append to highlights
-                if (consecutivePointsInSameSection.Any())
+                if (consecutivePointsInSameSection.Count != 0)
                 {
                     if (previousSection != null)
                     {
@@ -47,7 +47,7 @@ internal static class HighlightsTimelineCreator
                 }
 
                 // Create new list consecutivePointsInSameSection with current point in it
-                consecutivePointsInSameSection = new List<PointHighlight> { currentPoint };
+                consecutivePointsInSameSection = [currentPoint];
 
                 // Set previousSectionId to currentSectionId
                 previousSection = currentSection;
@@ -59,7 +59,7 @@ internal static class HighlightsTimelineCreator
             }
         }
         // Create section highlight with consecutivePointsInSameSection as points if Count > 0, append to highlights
-        if (consecutivePointsInSameSection.Any())
+        if (consecutivePointsInSameSection.Count != 0)
         {
             if (currentSection != null)
             {

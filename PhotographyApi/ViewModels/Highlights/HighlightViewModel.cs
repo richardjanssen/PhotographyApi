@@ -2,19 +2,12 @@
 
 namespace PhotographyApi.ViewModels.Highlights;
 
-public class HighlightViewModel
+public class HighlightViewModel(
+    HighlightType type,
+    SectionHighlightViewModel? sectionHighlight,
+    PointHighlightViewModel? pointHighlight)
 {
-    public HighlightViewModel(
-        HighlightType type,
-        SectionHighlightViewModel? sectionHighlight,
-        PointHighlightViewModel? pointHighlight)
-    {
-        Type = type;
-        SectionHighlight = sectionHighlight;
-        PointHighlight = pointHighlight;
-    }
-
-    public HighlightType Type { get; }
-    public SectionHighlightViewModel? SectionHighlight { get; }
-    public PointHighlightViewModel? PointHighlight { get; }
+    public HighlightType Type { get; } = type;
+    public SectionHighlightViewModel? SectionHighlight { get; } = sectionHighlight;
+    public PointHighlightViewModel? PointHighlight { get; } = pointHighlight;
 }
