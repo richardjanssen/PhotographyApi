@@ -17,7 +17,7 @@ public enum PointHighlightType
     terminus = 13,
     laAqueduct = 14,
     devilsPostpile = 15,
-    castleCrag = 16,
+    castleCrags = 16,
     fiveHundred = 17,
     oneThousand = 18,
     fifteenHundred = 19,
