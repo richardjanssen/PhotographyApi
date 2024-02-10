@@ -10,31 +10,33 @@ namespace PhotographyApi.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]/[action]")]
-public class AlbumController : ControllerBase
+public class AlbumController(IPhotographyRepository photographyRepository) : ControllerBase
 {
-    private readonly IPhotographyRepository _photographyRepository;
-
-    public AlbumController(IPhotographyRepository photographyRepository) =>
-        _photographyRepository = photographyRepository;
-
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
     public async Task AddAlbum(AddAlbumViewModel album)
     {
-        await _photographyRepository.AddAlbum(album.Map());
+        await photographyRepository.AddAlbum(album.Map());
     }
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpGet]
     public async Task<IReadOnlyCollection<AlbumViewModel>> GetAll()
     {
-        return (await _photographyRepository.GetAlbums()).Select(album => album.Map()).ToList();
+        return (await photographyRepository.GetAlbums()).Select(album => album.Map()).ToList();
     }
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpGet]
     public async Task<AlbumDetailsViewModel> GetById(int id)
     {
-        return (await _photographyRepository.GetAlbumById(id)).Map(Constants.PhotosBasePath);
+        return (await photographyRepository.GetAlbumById(id)).Map(Constants.PhotosBasePath);
+    }
+
+    [Authorize(Roles = "PhotographyApi_Admin")]
+    [HttpDelete]
+    public async Task DeletePhoto(DeletePhotoViewModel deletePhoto)
+    {
+        await photographyRepository.DeleteAlbumPhoto(deletePhoto.AlbumId, deletePhoto.PhotoId);
     }
 }

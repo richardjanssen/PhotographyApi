@@ -18,7 +18,6 @@ namespace Infrastructure.Ioc;
 public static class BusinessBindings
 {
     public static IServiceCollection AddBusinessBindings(this IServiceCollection services) => services
-        .AddScoped<IGetPhotosByDateDescendingQuery, GetPhotosByDateDescendingQuery>()
         .AddScoped<IGetHikerUpdateDetailsQuery, GetHikerUpdateDetailsQuery>()
         .AddScoped<IGetHikerUpdatesQuery, GetHikerUpdatesQuery>()
         .AddScoped<ISaveImageToFolderQuery, SaveImageToFolderQuery>()

@@ -1,6 +1,7 @@
 using Business.Entities;
 using Business.Interfaces;
 using Common.Common;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
@@ -10,22 +11,18 @@ namespace PhotographyApi.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]/[action]")]
-public class PhotosController : ControllerBase
+public class PhotosController(
+    IAddPhotoQuery addPhotoQuery,
+    IPhotographyRepository photographyRepository) : ControllerBase
 {
-    private readonly IGetPhotosByDateDescendingQuery _getPhotosByDateDescendingQuery;
-    private readonly IAddPhotoQuery _addPhotoQuery;
-
-    public PhotosController(
-        IGetPhotosByDateDescendingQuery getPhotosByDateDescendingQuery,
-        IAddPhotoQuery addPhotoQuery)
-    {
-        _getPhotosByDateDescendingQuery = getPhotosByDateDescendingQuery;
-        _addPhotoQuery = addPhotoQuery;
-    }
+    private const int _homePageAlbumId = 1;
 
     [HttpGet]
     public async Task<IReadOnlyCollection<PhotoViewModel>> Get() =>
-        (await _getPhotosByDateDescendingQuery.Execute()).Select(photo => photo.Map(Constants.PhotosBasePath)).ToList();
+        (await photographyRepository.GetAlbumById(_homePageAlbumId)).Photos
+            .Select(photo => photo.Map(Constants.PhotosBasePath))
+            .OrderByDescending(photo => photo.Date)
+            .ToList();
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
@@ -36,6 +33,6 @@ public class PhotosController : ControllerBase
 
         int? albumId = formCollection.ContainsKey("albumId") ? int.Parse(formCollection["albumId"]!) : null;
         var addPhoto = new AddPhoto(albumId, file);
-        return (await _addPhotoQuery.Execute(addPhoto)).Map(Constants.PhotosBasePath);
+        return (await addPhotoQuery.Execute(addPhoto)).Map(Constants.PhotosBasePath);
     }
 }

@@ -48,6 +48,17 @@ public class PhotographyJsonRepository(IPhotographyManager photographyManager) :
         return photo;
     }
 
+    public async Task DeleteAlbumPhoto(int albumId, int photoId)
+    {
+        var album = (await photographyManager.GetAlbums()).ToList().FirstOrDefault(album => album.Id == albumId)
+            ?? throw new InvalidOperationException($"Cannot delete photo from album with id {albumId}. Album does not exist");
+
+        var albumDetails = await photographyManager.GetAlbumDetails(album.FileName);
+        albumDetails.Photos = albumDetails.Photos.Where(photo => photo.Id != photoId).ToList();
+
+        await photographyManager.WriteAlbumDetails(album.FileName, albumDetails);
+    }
+
     public async Task<IEnumerable<Album>> GetAlbums() =>
         (await photographyManager.GetAlbums()).Select(album => album.Map()).ToList();
 
