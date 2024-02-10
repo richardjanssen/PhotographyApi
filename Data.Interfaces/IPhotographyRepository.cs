@@ -4,8 +4,6 @@ namespace Data.Interfaces;
 
 public interface IPhotographyRepository
 {
-    Task<IEnumerable<Photo>> GetPhotos();
-    Task<Photo> AddPhoto(Photo photo);
     Task<Photo> AddAlbumPhoto(Photo photo, int albumId);
     Task DeleteAlbumPhoto(int albumId, int photoId);
     Task<Account?> GetAccountByUserName(string userName);

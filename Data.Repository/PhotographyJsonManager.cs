@@ -9,7 +9,6 @@ public class PhotographyJsonManager : IPhotographyManager
 {
     private readonly string _dataBasePath = "data/";
     private readonly string _albumBasePath;
-    private readonly string _photosPath;
     private readonly string _accountsPath;
     private readonly string _albumsPath;
     private readonly string _sectionsPath;
@@ -22,7 +21,6 @@ public class PhotographyJsonManager : IPhotographyManager
     public PhotographyJsonManager(IWebHostEnvironment environment)
     {
         _albumBasePath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}/albums/");
-        _photosPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}photos.json");
         _accountsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}accounts.json");
         _albumsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}albums.json");
         _sectionsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}sections.json");
@@ -31,21 +29,6 @@ public class PhotographyJsonManager : IPhotographyManager
         _hikerLocationsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}hiker_locations.json");
         _settingsPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}settings.json");
         _trailPath = Path.Combine(environment.ContentRootPath, $"{_dataBasePath}trail.json");
-    }
-
-    public async Task<IReadOnlyCollection<Photo>> GetPhotos()
-    {
-        var jsonData = await File.ReadAllTextAsync(_photosPath);
-
-        if (string.IsNullOrWhiteSpace(jsonData)) return new List<Photo>();
-
-        return JsonConvert.DeserializeObject<List<Photo>>(jsonData) ?? new List<Photo>();
-    }
-
-    public async Task WritePhotos(IReadOnlyCollection<Photo> photos)
-    {
-        var jsonData = JsonConvert.SerializeObject(photos);
-        await File.WriteAllTextAsync(_photosPath, jsonData);
     }
 
     public async Task<IReadOnlyCollection<Account>> GetAccounts()

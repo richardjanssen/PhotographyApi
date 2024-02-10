@@ -2,13 +2,8 @@
 
 namespace Business.Entities;
 
-public class AddPhoto
+public class AddPhoto(int albumId, IFormFile image)
 {
-    public AddPhoto(int? albumId, IFormFile image)
-    {
-        AlbumId = albumId;
-        Image = image;
-    }
-    public int? AlbumId { get; }
-    public IFormFile Image { get; }
+    public int AlbumId { get; } = albumId;
+    public IFormFile Image { get; } = image;
 }
