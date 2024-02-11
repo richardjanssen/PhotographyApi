@@ -110,7 +110,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 5
-testRunner.Given("a number of photos in the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+testRunner.Given("there are photos in the homepage album", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 6
 testRunner.When("a request is received to retrieve these photos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

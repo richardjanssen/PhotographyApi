@@ -6,26 +6,6 @@ namespace Data.Repository;
 
 public class PhotographyJsonRepository(IPhotographyManager photographyManager) : IPhotographyRepository
 {
-    public async Task<IEnumerable<Photo>> GetPhotos() =>
-        (await photographyManager.GetPhotos()).Select(photo => photo.Map()).ToList();
-
-    public async Task<Photo> AddPhoto(Photo photo)
-    {
-        if (photo.Id != 0)
-        {
-            throw new ArgumentException("photo.Id should be 0 when creating a new photo");
-        }
-
-        var currentPhotos = (await photographyManager.GetPhotos()).ToList();
-
-        var id = currentPhotos.Count > 0 ? currentPhotos.Select(photo => photo.Id).Max() + 1 : 1;
-        currentPhotos.Add(photo.Map(id));
-
-        await photographyManager.WritePhotos(currentPhotos);
-
-        return photo;
-    }
-
     public async Task<Photo> AddAlbumPhoto(Photo photo, int albumId)
     {
         if (photo.Id != 0)
@@ -46,6 +26,17 @@ public class PhotographyJsonRepository(IPhotographyManager photographyManager) :
         await photographyManager.WriteAlbumDetails(album.FileName, albumDetails);
 
         return photo;
+    }
+
+    public async Task DeleteAlbumPhoto(int albumId, int photoId)
+    {
+        var album = (await photographyManager.GetAlbums()).ToList().FirstOrDefault(album => album.Id == albumId)
+            ?? throw new InvalidOperationException($"Cannot delete photo from album with id {albumId}. Album does not exist");
+
+        var albumDetails = await photographyManager.GetAlbumDetails(album.FileName);
+        albumDetails.Photos = albumDetails.Photos.Where(photo => photo.Id != photoId).ToList();
+
+        await photographyManager.WriteAlbumDetails(album.FileName, albumDetails);
     }
 
     public async Task<IEnumerable<Album>> GetAlbums() =>
