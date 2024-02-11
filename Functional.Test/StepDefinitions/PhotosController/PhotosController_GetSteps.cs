@@ -1,5 +1,4 @@
 using Data.Repository;
-using Data.Repository.Entities;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using PhotographyApi.ViewModels.Photos;
@@ -16,6 +15,8 @@ public sealed class PhotosController_GetSteps
 
     private HttpResponseMessage _response = null!;
 
+    private readonly int _homepageAlbumId = 1;
+    private readonly string _someAlbumFileName = "album_1.json";
     private readonly DateTime _someDateTime = TestConstants.SomeDateTime;
     private readonly DateTime _someLaterDateTime = TestConstants.SomeDateTime.AddSeconds(1);
 
@@ -27,13 +28,13 @@ public sealed class PhotosController_GetSteps
         _fakePhotgraphyManager = fakePhotgraphyManager;
     }
 
-    [Given("a number of photos in the database")]
+    [Given("there are photos in the homepage album")]
     public async Task GivenANumberOfPhotosInTheDatabase()
     {
-        await _fakePhotgraphyManager.WritePhotos(new List<Photo> {
-            new Photo { Id = 1, Date = _someDateTime },
-            new Photo { Id = 2, Date = _someLaterDateTime }
-        });
+        await _fakePhotgraphyManager.WriteAlbums([new() { Id = _homepageAlbumId, Title = "Homepage", FileName = _someAlbumFileName }]);
+        await _fakePhotgraphyManager.WriteAlbumDetails(
+            _someAlbumFileName,
+            new() { Photos = [new() { Id = 1, Date = _someDateTime }, new() { Id = 2, Date = _someLaterDateTime }] });
     }
 
     [When("a request is received to retrieve these photos")]
