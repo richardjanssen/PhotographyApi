@@ -1,6 +1,5 @@
 using Business.Interfaces.Locations;
 using Common.Common;
-using Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -14,8 +13,8 @@ namespace PhotographyApi.Controllers;
 public class LocationController(
     IAddManualLocationQuery addManualLocationQuery,
     IGetLocationsQuery getLocationsQuery,
+    IGetMapLocationsQuery getMapLocationsQuery,
     IDeleteLocationQuery deleteLocationQuery,
-    IPhotographyRepository photographyRepository,
     IAddSatelliteMessengerLocationQuery addSatelliteMessengerLocationQuery,
     IOptions<AppSettings> appSettings,
     ILogger<LocationController> logger) : ControllerBase
@@ -26,8 +25,8 @@ public class LocationController(
         (await getLocationsQuery.Execute()).Select(location => location.Map()).ToList();
 
     [HttpGet]
-    public async Task<CoordinateViewModel?> GetCoordinateById(int id) =>
-        (await photographyRepository.GetHikerLocationById(id))?.MapCoordinate();
+    public async Task<MapLocationsViewModel> GetMapLocationsById(int id) =>
+        (await getMapLocationsQuery.Execute(id)).Map();
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]
