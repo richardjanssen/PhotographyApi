@@ -18,7 +18,7 @@ public class GetMapLocationsQuery(IPhotographyRepository photographyRepository) 
         }
         var earliestHistoricLocationDate = currentLocation.Date.AddHours(-168); // 1 week
         var historicLocations = locations
-            .Where(location => !location.IsManual && location.Date > earliestHistoricLocationDate && location.Date <= currentLocation.Date)
+            .Where(location => location.Date > earliestHistoricLocationDate && location.Date <= currentLocation.Date)
             .OrderByDescending(location => location.Date)
             .ToList();
 
