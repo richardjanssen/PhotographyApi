@@ -2,6 +2,7 @@ using Business.Interfaces.Locations;
 using Common.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using PhotographyApi.Mappers;
 using PhotographyApi.ViewModels.Locations;
@@ -17,7 +18,8 @@ public class LocationController(
     IDeleteLocationQuery deleteLocationQuery,
     IAddSatelliteMessengerLocationQuery addSatelliteMessengerLocationQuery,
     IOptions<AppSettings> appSettings,
-    ILogger<LocationController> logger) : ControllerBase
+    ILogger<LocationController> logger,
+    IMemoryCache memoryCache) : ControllerBase
 {
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpGet]
@@ -25,8 +27,17 @@ public class LocationController(
         (await getLocationsQuery.Execute()).Select(location => location.Map()).ToList();
 
     [HttpGet]
-    public async Task<MapLocationsViewModel> GetMapLocationsById(int id) =>
-        (await getMapLocationsQuery.Execute(id)).Map();
+    public async Task<MapLocationsViewModel> GetMapLocationsById(int id)
+    {
+        var cacheKey = CacheKeys.GetMapLocationCacheKey(id);
+        if (!memoryCache.TryGetValue(cacheKey, out MapLocationsViewModel? cacheValue))
+        {
+            cacheValue = (await getMapLocationsQuery.Execute(id)).Map();
+            memoryCache.Set(cacheKey, cacheValue, TimeSpan.FromMinutes(15));
+        }
+
+        return cacheValue ?? new(null, []);
+    }
 
     [Authorize(Roles = "PhotographyApi_Admin")]
     [HttpPost]

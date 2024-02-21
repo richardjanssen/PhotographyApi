@@ -1,10 +1,11 @@
 ﻿using Business.Entities.Dto;
 using Data.Interfaces;
 using Data.Repository.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Data.Repository;
 
-public class PhotographyJsonRepository(IPhotographyManager photographyManager) : IPhotographyRepository
+public class PhotographyJsonRepository(IPhotographyManager photographyManager, IMemoryCache memoryCache) : IPhotographyRepository
 {
     public async Task<Photo> AddAlbumPhoto(Photo photo, int albumId)
     {
@@ -89,6 +90,8 @@ public class PhotographyJsonRepository(IPhotographyManager photographyManager) :
 
         await photographyManager.WriteHikerUpdates(currentHikerUpdates);
 
+        ClearCache();
+
         return addHikerUpdate;
     }
 
@@ -108,6 +111,8 @@ public class PhotographyJsonRepository(IPhotographyManager photographyManager) :
 
         await photographyManager.WriteHikerUpdates(currentHikerUpdates);
 
+        ClearCache();
+
         return hikerUpdate;
     }
 
@@ -116,6 +121,8 @@ public class PhotographyJsonRepository(IPhotographyManager photographyManager) :
         var currentHikerUpdates = (await photographyManager.GetHikerUpdates()).ToList();
         var newHikerUpdates = currentHikerUpdates.Where(location => location.Id != id).ToList();
         await photographyManager.WriteHikerUpdates(newHikerUpdates);
+
+        ClearCache();
     }
 
     public async Task<HikerLocation> AddHikerLocation(HikerLocation hikerLocation)
@@ -132,22 +139,31 @@ public class PhotographyJsonRepository(IPhotographyManager photographyManager) :
 
         await photographyManager.WriteHikerLocations(currentHikerLocations);
 
+        ClearCache();
+
         return hikerLocation;
     }
 
     public async Task<IEnumerable<HikerLocation>> GetHikerLocations() =>
     (await photographyManager.GetHikerLocations()).Select(hikerLocation => hikerLocation.Map()).ToList();
 
-    public async Task<HikerLocation?> GetHikerLocationById(int id) =>
-        (await photographyManager.GetHikerLocations()).FirstOrDefault(location => location.Id == id)?.Map();
-
     public async Task DeleteLocation(int id)
     {
         var currentHikerLocations = (await photographyManager.GetHikerLocations()).ToList();
         var newHikerLocations = currentHikerLocations.Where(location => location.Id != id).ToList();
         await photographyManager.WriteHikerLocations(newHikerLocations);
+
+        ClearCache();
     }
 
     public async Task<Account?> GetAccountByUserName(string userName) =>
         (await photographyManager.GetAccounts()).SingleOrDefault(account => account.UserName == userName)?.Map();
+
+    private void ClearCache()
+    {
+        if (memoryCache is MemoryCache concreteMemoryCache)
+        {
+            concreteMemoryCache.Clear();
+        }
+    }
 }

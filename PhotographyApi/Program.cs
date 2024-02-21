@@ -65,6 +65,7 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(c => c.OperationFilter<RiesjApiKeySwaggerAttribute>());
     builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
+    builder.Services.AddMemoryCache();
     builder.Services.AddDataBindings();
     builder.Services.AddBusinessBindings();
     builder.Services.AddCommonBindings();
