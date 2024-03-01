@@ -26,5 +26,6 @@ public enum PointHighlightType
     threeThousand = 22,
     thirtyFiveHundred = 23,
     fourThousand = 24,
-    enterSection = 25
+    enterSection = 25,
+    rotterdam = 26
 }
