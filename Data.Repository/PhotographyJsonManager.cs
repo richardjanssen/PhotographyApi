@@ -37,7 +37,7 @@ public class PhotographyJsonManager : IPhotographyManager
 
         if (string.IsNullOrWhiteSpace(jsonData)) throw new Exception();
 
-        return JsonConvert.DeserializeObject<List<Account>>(jsonData) ?? new List<Account>();
+        return JsonConvert.DeserializeObject<List<Account>>(jsonData) ?? [];
     }
 
     public async Task<IReadOnlyCollection<Album>> GetAlbums()
@@ -48,7 +48,7 @@ public class PhotographyJsonManager : IPhotographyManager
 
         if (string.IsNullOrWhiteSpace(jsonData)) return new List<Album>();
 
-        return JsonConvert.DeserializeObject<List<Album>>(jsonData) ?? new List<Album>();
+        return JsonConvert.DeserializeObject<List<Album>>(jsonData) ?? [];
     }
 
     public async Task WriteAlbums(IReadOnlyCollection<Album> albums)
@@ -86,7 +86,7 @@ public class PhotographyJsonManager : IPhotographyManager
 
         if (string.IsNullOrWhiteSpace(jsonData)) return new List<Section>();
 
-        return JsonConvert.DeserializeObject<List<Section>>(jsonData) ?? new List<Section>();
+        return JsonConvert.DeserializeObject<List<Section>>(jsonData) ?? [];
     }
 
     public async Task<IReadOnlyCollection<Place>> GetPlaces()
@@ -97,7 +97,7 @@ public class PhotographyJsonManager : IPhotographyManager
 
         if (string.IsNullOrWhiteSpace(jsonData)) return new List<Place>();
 
-        return JsonConvert.DeserializeObject<List<Place>>(jsonData) ?? new List<Place>();
+        return JsonConvert.DeserializeObject<List<Place>>(jsonData) ?? [];
     }
 
     public async Task<IReadOnlyCollection<HikerUpdate>> GetHikerUpdates()
@@ -108,7 +108,7 @@ public class PhotographyJsonManager : IPhotographyManager
 
         if (string.IsNullOrWhiteSpace(jsonData)) return new List<HikerUpdate>();
 
-        return JsonConvert.DeserializeObject<List<HikerUpdate>>(jsonData) ?? new List<HikerUpdate>();
+        return JsonConvert.DeserializeObject<List<HikerUpdate>>(jsonData) ?? [];
     }
 
     public async Task<IReadOnlyCollection<HikerLocation>> GetHikerLocations()
@@ -119,7 +119,7 @@ public class PhotographyJsonManager : IPhotographyManager
 
         if (string.IsNullOrWhiteSpace(jsonData)) return new List<HikerLocation>();
 
-        return JsonConvert.DeserializeObject<List<HikerLocation>>(jsonData) ?? new List<HikerLocation>();
+        return JsonConvert.DeserializeObject<List<HikerLocation>>(jsonData) ?? [];
     }
     public async Task WriteHikerLocations(IReadOnlyCollection<HikerLocation> hikerLocations)
     {
