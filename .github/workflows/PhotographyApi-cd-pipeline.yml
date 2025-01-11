@@ -1,8 +1,14 @@
 name: PhotographyApi-cd-pipeline
 
 on:
+
   push:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Manual pipeline trigger'
+  
 
 jobs:
   build-test-publish:
