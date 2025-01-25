@@ -12,15 +12,15 @@ namespace Infrastructure.Ioc;
 public static class DataBindings
 {
     public static IServiceCollection AddDataBindings(this IServiceCollection services) => services
-        .AddDbContextFactory<RiesjDbContext>(options => options.UseSqlite("name=ConnectionStrings:RiesjDatabase"))
+        .AddDbContextFactory<RiesjDbContext>(options => options.UseSqlite("name=ConnectionStrings:RiesjDatabase"), ServiceLifetime.Scoped)
         .AddTransient<IRecipeRepository, RecipeRepository>()
-        .AddScoped<IPhotographyRepository, PhotographyJsonRepository>()
-        .AddScoped<IPlacesRepository, PlacesRepository>()
-        .AddScoped<ISettingsRepository, SettingsRepository>()
-        .AddScoped<ITrailRepository, TrailRepository>()
-        .AddScoped<IPhotographyManager, PhotographyJsonManager>()
+        .AddTransient<IPhotographyRepository, PhotographyJsonRepository>()
+        .AddTransient<IPlacesRepository, PlacesRepository>()
+        .AddTransient<ISettingsRepository, SettingsRepository>()
+        .AddTransient<ITrailRepository, TrailRepository>()
+        .AddTransient<IPhotographyManager, PhotographyJsonManager>()
         .AddProxies();
 
     private static IServiceCollection AddProxies(this IServiceCollection services) => services
-        .AddScoped<IGarminExploreMapShareManager, GarminExploreMapShareManager>();
+        .AddTransient<IGarminExploreMapShareManager, GarminExploreMapShareManager>();
 }

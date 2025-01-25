@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Repository.Migrations
 {
     [DbContext(typeof(RiesjDbContext))]
-    [Migration("20241129151839_InitialCreate")]
+    [Migration("20250125200525_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -41,10 +41,9 @@ namespace Data.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<byte[]>("Timestamp")
+                    b.Property<long>("RowVersion")
                         .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

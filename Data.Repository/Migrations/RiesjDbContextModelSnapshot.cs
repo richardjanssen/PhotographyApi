@@ -38,10 +38,9 @@ namespace Data.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<byte[]>("Timestamp")
+                    b.Property<long>("RowVersion")
                         .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("BLOB");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

@@ -20,7 +20,7 @@ namespace Data.Repository.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Ingredients = table.Column<string>(type: "TEXT", nullable: false),
                     Preparation = table.Column<string>(type: "TEXT", nullable: false),
-                    Timestamp = table.Column<byte[]>(type: "BLOB", rowVersion: true, nullable: true),
+                    RowVersion = table.Column<long>(type: "INTEGER", nullable: false),
                     DateModifiedUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>

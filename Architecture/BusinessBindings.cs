@@ -18,26 +18,26 @@ namespace Infrastructure.Ioc;
 public static class BusinessBindings
 {
     public static IServiceCollection AddBusinessBindings(this IServiceCollection services) => services
-        .AddScoped<IGetHikerUpdateDetailsQuery, GetHikerUpdateDetailsQuery>()
-        .AddScoped<IGetHikerUpdatesQuery, GetHikerUpdatesQuery>()
-        .AddScoped<ISaveImageToFolderQuery, SaveImageToFolderQuery>()
-        .AddScoped<IAddPhotoQuery, AddPhotoQuery>()
-        .AddScoped<IAuthenticateAccountQuery, AuthenticateAccountQuery>()
+        .AddTransient<IGetHikerUpdateDetailsQuery, GetHikerUpdateDetailsQuery>()
+        .AddTransient<IGetHikerUpdatesQuery, GetHikerUpdatesQuery>()
+        .AddTransient<ISaveImageToFolderQuery, SaveImageToFolderQuery>()
+        .AddTransient<IAddPhotoQuery, AddPhotoQuery>()
+        .AddTransient<IAuthenticateAccountQuery, AuthenticateAccountQuery>()
         .AddHighlightsTimelineBindings()
-        .AddScoped<IAddManualLocationQuery, AddManualLocationQuery>()
-        .AddScoped<IAddLocationByCoordinateAndDateQuery, AddLocationByCoordinateAndDateQuery>()
-        .AddScoped<IAddSatelliteMessengerLocationQuery, AddSatelliteMessengerLocationQuery>()
-        .AddScoped<IGetDistanceBetweenLocationsQuery,  GetDistanceBetweenLocationsQuery>()
-        .AddScoped<IGetLocationsQuery, GetLocationsQuery>()
-        .AddScoped<IGetMapLocationsQuery, GetMapLocationsQuery>()
-        .AddScoped<IDeleteLocationQuery, DeleteLocationQuery>()
-        .AddScoped<IDeleteHikerUpdateQuery, DeleteHikerUpdateQuery>()
+        .AddTransient<IAddManualLocationQuery, AddManualLocationQuery>()
+        .AddTransient<IAddLocationByCoordinateAndDateQuery, AddLocationByCoordinateAndDateQuery>()
+        .AddTransient<IAddSatelliteMessengerLocationQuery, AddSatelliteMessengerLocationQuery>()
+        .AddTransient<IGetDistanceBetweenLocationsQuery,  GetDistanceBetweenLocationsQuery>()
+        .AddTransient<IGetLocationsQuery, GetLocationsQuery>()
+        .AddTransient<IGetMapLocationsQuery, GetMapLocationsQuery>()
+        .AddTransient<IDeleteLocationQuery, DeleteLocationQuery>()
+        .AddTransient<IDeleteHikerUpdateQuery, DeleteHikerUpdateQuery>()
         ;
 
     private static IServiceCollection AddHighlightsTimelineBindings(this IServiceCollection services) => services
-        .AddScoped<IGetHighlightsTimelineQuery, GetHighlightsTimelineQuery>()
-        .AddScoped<IGetPointHighlightsQuery, GetPointHighlightsQuery>()
-        .AddScoped<IGetTimelineHikerUpdatesQuery, GetTimelineHikerUpdatesQuery>()
-        .AddScoped<IGetTimelineHikerLocationsQuery, GetTimelineHikerLocationsQuery>()
+        .AddTransient<IGetHighlightsTimelineQuery, GetHighlightsTimelineQuery>()
+        .AddTransient<IGetPointHighlightsQuery, GetPointHighlightsQuery>()
+        .AddTransient<IGetTimelineHikerUpdatesQuery, GetTimelineHikerUpdatesQuery>()
+        .AddTransient<IGetTimelineHikerLocationsQuery, GetTimelineHikerLocationsQuery>()
         ;
 }
