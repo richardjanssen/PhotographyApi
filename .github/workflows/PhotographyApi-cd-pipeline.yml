@@ -35,7 +35,7 @@ jobs:
     needs: build-test-publish
     uses: richardjanssen/SharedWorkflows/.github/workflows/linux-vps-deploy-run-v2.yml@main
     with:
-      application-name: PhotographyApi
+      app-name: PhotographyApi
       is-service: true
     secrets:
       host: ${{ secrets.HOST }}
