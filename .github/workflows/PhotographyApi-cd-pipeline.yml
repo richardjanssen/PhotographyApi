@@ -9,7 +9,7 @@ on:
         description: 'Manual trigger'
 
 jobs:
-  apply-secrets:
+  build-test-publish:
     runs-on: ubuntu-latest
 
     steps:
