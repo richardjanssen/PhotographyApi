@@ -18,16 +18,16 @@ jobs:
       - name: Setup APP_SETTINGS_SECRETS
         id: setupAppSettingsSecrets
         run: |
-          echo 'APP_SETTINGS_SECRETS<<EOF' >> $GITHUB_OUTPUT
-          cat .github/workflows/appsettings-parse.json >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
+          echo 'APP_SETTINGS_SECRETS<<EOF' >> $GITHUB_ENV
+          cat .github/workflows/appsettings-parse.json >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
         # run: |
         #   echo 'APP_SETTINGS_SECRETS={ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}", "AppSettings.MapboxPublicToken": "${{ secrets.MAPBOX_PUBLIC_TOKEN }}", "AppSettings.GarminExploreRawKmlFeed": "${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}" }' >> $GITHUB_OUTPUT'
       - uses: microsoft/variable-substitution@v1 
         with:
           files: 'PhotographyApi/appsettings.Production.json'
         env:
-          ${{ fromJson(steps.setupAppSettingsSecrets.outputs.APP_SETTINGS_SECRETS) }}
+          ${{ fromJson(env.APP_SETTINGS_SECRETS) }}
         # env:
         #   AppSettings.RiesjApiKey: ${{ secrets.RIESJ_API_KEY }}
         #   AppSettings.JwtSecret: ${{ secrets.JWT_SECRET_KEY }}
