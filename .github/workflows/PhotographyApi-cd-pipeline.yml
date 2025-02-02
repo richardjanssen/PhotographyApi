@@ -10,15 +10,19 @@ on:
 
 jobs:
   build-test-publish:
-    name: 
+    name: Release build
     runs-on: ubuntu-latest
-
+    
     steps:
       - uses: actions/checkout@v4.1.1
       - name: Setup APP_SETTINGS_SECRETS
         id: setupAppSettingsSecrets
         run: |
-          echo 'APP_SETTINGS_SECRETS={ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}", "AppSettings.MapboxPublicToken": "${{ secrets.MAPBOX_PUBLIC_TOKEN }}", "AppSettings.GarminExploreRawKmlFeed": "${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}" }' >> $GITHUB_OUTPUT
+          echo 'APP_SETTINGS_SECRETS<<EOF' >> $GITHUB_OUTPUT
+          cat ./appsettings-parse.json >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+        # run: |
+        #   echo 'APP_SETTINGS_SECRETS={ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}", "AppSettings.MapboxPublicToken": "${{ secrets.MAPBOX_PUBLIC_TOKEN }}", "AppSettings.GarminExploreRawKmlFeed": "${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}" }' >> $GITHUB_OUTPUT'
       - uses: microsoft/variable-substitution@v1 
         with:
           files: 'PhotographyApi/appsettings.Production.json'
@@ -67,3 +71,7 @@ jobs:
       username: ${{ secrets.USERNAME }}
       ssh-key: ${{ secrets.SSHKEY }}
       ssh-passphrase: ${{ secrets.SSHPASSPHRASE }}
+
+# https://www.kenmuse.com/blog/using-dynamic-environment-variables-with-github/
+# https://lornajane.net/posts/2024/use-multi-line-values-in-github-actions
+# https://stackoverflow.com/questions/67142548/how-to-echo-a-multi-line-variable-in-github-actions
