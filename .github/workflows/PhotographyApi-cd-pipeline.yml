@@ -20,7 +20,7 @@ jobs:
         run: |
           echo "APP_SETTINGS_SECRETS=$(jq -c . < .github/workflows/appsettings-parse.json)" >> $GITHUB_OUTPUT
 
-      - run: echo '${ fromJson(steps.setupAppSettingsSecrets.outputs.APP_SETTINGS_SECRETS) }'
+      - run: echo '${{ fromJson(steps.setupAppSettingsSecrets.outputs.APP_SETTINGS_SECRETS) }}'
       # - name: Setup APP_SETTINGS_SECRETS
       #   id: setupAppSettingsSecrets
       #   run: |
@@ -33,7 +33,7 @@ jobs:
         with:
           files: 'PhotographyApi/appsettings.Production.json'
         env:
-          ${{ fromJson(env.APP_SETTINGS_SECRETS) }}
+          ${{ fromJson(steps.setupAppSettingsSecrets.outputs.APP_SETTINGS_SECRETS) }}
         # env:
         #   ${{ fromJson(steps.myvars.outputs.APP_SETTINGS_SECRETS_2) }}
         # env:
