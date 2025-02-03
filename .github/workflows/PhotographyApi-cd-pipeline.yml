@@ -20,7 +20,7 @@ jobs:
         run: |
           echo "APP_SETTINGS_SECRETS=$(jq -c . < .github/workflows/appsettings-parse.json)" >> $GITHUB_OUTPUT
       - run: |
-          echo "APP_SETTINGS_SECRETS_3=${{ steps.setupAppSettingsSecrets.outputs.APP_SETTINGS_SECRETS }}" >> $GITHUB_OUTPUT
+          echo 'APP_SETTINGS_SECRETS_3=${{ steps.setupAppSettingsSecrets.outputs.APP_SETTINGS_SECRETS }}' >> $GITHUB_OUTPUT
       - run: echo '${{ fromJson(steps.setupAppSettingsSecrets.outputs.APP_SETTINGS_SECRETS_3) }}'
       # - name: Setup APP_SETTINGS_SECRETS
       #   id: setupAppSettingsSecrets
