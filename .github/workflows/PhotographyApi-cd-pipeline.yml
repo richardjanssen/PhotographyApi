@@ -21,9 +21,13 @@ jobs:
           echo "APP_SETTINGS_SECRETS=$(jq -c . < .github/workflows/appsettings-parse.json)" >> $GITHUB_ENV
 
       - run: echo '${ fromJson(env.APP_SETTINGS_SECRETS) }'
+      # - name: Setup APP_SETTINGS_SECRETS
+      #   id: setupAppSettingsSecrets
+      #   run: |
+      #     echo 'APP_SETTINGS_SECRETS={ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}", "AppSettings.MapboxPublicToken": "${{ secrets.MAPBOX_PUBLIC_TOKEN }}", "AppSettings.GarminExploreRawKmlFeed": "${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}" }' >> $GITHUB_OUTPUT
       - id: myvars
         run: |
-          echo 'APP_SETTINGS_SECRETS_2={ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}", "AppSettings.MapboxPublicToken": "${{ secrets.MAPBOX_PUBLIC_TOKEN }}", "AppSettings.GarminExploreRawKmlFeed": "${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}" }' >> $GITHUB_OUTPUT'
+          echo 'APP_SETTINGS_SECRETS_2={ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}", "AppSettings.MapboxPublicToken": "${{ secrets.MAPBOX_PUBLIC_TOKEN }}", "AppSettings.GarminExploreRawKmlFeed": "${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}" }' >> $GITHUB_OUTPUT
       - run: echo '${{ fromJSON(steps.myvars.outputs.APP_SETTINGS_SECRETS_2) }}'
       - uses: microsoft/variable-substitution@v1 
         with:
