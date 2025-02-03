@@ -35,7 +35,7 @@ jobs:
         # env:
         #   ${{ fromJson(env.APP_SETTINGS_SECRETS) }}
         env:
-          ${{ fromJson(steps.myvars.outputs.APP_SETTINGS_SECRETS) }}
+          ${{ fromJson(steps.myvars.outputs.APP_SETTINGS_SECRETS_2) }}
         # env:
         #   AppSettings.RiesjApiKey: ${{ secrets.RIESJ_API_KEY }}
         #   AppSettings.JwtSecret: ${{ secrets.JWT_SECRET_KEY }}
