@@ -32,8 +32,10 @@ jobs:
       - uses: microsoft/variable-substitution@v1 
         with:
           files: 'PhotographyApi/appsettings.Production.json'
+        # env:
+        #   ${{ fromJson(env.APP_SETTINGS_SECRETS) }}
         env:
-          ${{ fromJson(env.APP_SETTINGS_SECRETS) }}
+          ${{ fromJson(steps.myvars.outputs.APP_SETTINGS_SECRETS) }}
         # env:
         #   AppSettings.RiesjApiKey: ${{ secrets.RIESJ_API_KEY }}
         #   AppSettings.JwtSecret: ${{ secrets.JWT_SECRET_KEY }}
