@@ -18,9 +18,9 @@ jobs:
       - name: Setup APP_SETTINGS_SECRETS
         id: setupAppSettingsSecrets
         run: |
-          echo 'APP_SETTINGS_SECRETS=$(jq -c . < .github/workflows/appsettings-parse.json)' >> $GITHUB_ENV
+          echo "APP_SETTINGS_SECRETS=$(jq -c . < .github/workflows/appsettings-parse.json)" >> $GITHUB_OUTPUT
 
-      - run: echo '${ fromJson(env.APP_SETTINGS_SECRETS) }'
+      - run: echo '${ fromJson(steps.setupAppSettingsSecrets.outputs.APP_SETTINGS_SECRETS) }'
       # - name: Setup APP_SETTINGS_SECRETS
       #   id: setupAppSettingsSecrets
       #   run: |
