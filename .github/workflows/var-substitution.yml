@@ -15,6 +15,10 @@ jobs:
       run: |
         echo 'APP_SETTINGS_SECRETS_2={ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}", "AppSettings.MapboxPublicToken": "${{ secrets.MAPBOX_PUBLIC_TOKEN }}", "AppSettings.GarminExploreRawKmlFeed": "${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}" }' >> $GITHUB_OUTPUT
     - run: echo '${{ fromJSON(steps.myvars.outputs.APP_SETTINGS_SECRETS_2) }}'
+    - name: Setup APP_SETTINGS_SECRETS
+      id: setupAppSettingsSecrets
+      run: |
+        echo "APP_SETTINGS_SECRETS=$(jq -c . < .github/workflows/appsettings-parse.json)" >> $GITHUB_ENV
     # - id: myvars
     #   run: |
     #     echo 'APP_SETTINGS_SECRETS_2=${{ inputs.variablesubstitutions }}' >> $GITHUB_OUTPUT
@@ -23,7 +27,7 @@ jobs:
       with:
         files: 'PhotographyApi/appsettings.Production.json'
       env:
-        ${{ fromJson(steps.myvars.outputs.APP_SETTINGS_SECRETS_2) }}
+        ${{ fromJson(env.APP_SETTINGS_SECRETS) }}
         # env:
         #   AppSettings.RiesjApiKey: ${{ secrets.RIESJ_API_KEY }}
         #   AppSettings.JwtSecret: ${{ secrets.JWT_SECRET_KEY }}
