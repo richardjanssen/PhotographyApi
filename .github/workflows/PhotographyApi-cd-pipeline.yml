@@ -8,21 +8,18 @@ on:
       tags:
         description: 'Manual trigger'
 
-env:
-  APP_NAME: 'PhotographyApi'
-
 jobs:
   dotnet-build:
     uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-build.yml@main
     with:
-      app-name: ${{env.APP_NAME}}
+      app-name: 'PhotographyApi'
       release-build: true
       
   deploy:
     needs: dotnet-build
     uses: richardjanssen/SharedWorkflows/.github/workflows/ubuntu-vps-deploy.yml@main
     with:
-      app-name: ${{env.APP_NAME}}
+      app-name: 'PhotographyApi'
       is-service: true
     secrets:
       host: ${{ secrets.HOST }}
