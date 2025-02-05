@@ -2,10 +2,10 @@ name: var-substitution
 
 on:
   workflow_call:
-    # inputs:
-    #   variablesubstitutions:
-    #     required: true
-    #     type: string
+    inputs:
+      variablesubstitutions:
+        required: true
+        type: string
     secrets:
       variablesubs:
         description: 'A JSON formatted string containing all secrets that need parsing'
@@ -20,13 +20,13 @@ jobs:
     - uses: actions/checkout@v4.1.1
     - id: myvars
       run: |
-        echo 'APP_SETTINGS_SECRETS_2=${{ secrets.variablesubs }}' >> $GITHUB_OUTPUT
-    - run: echo '${{ fromJSON(secrets.variablesubs) }}'
+        echo 'APP_SETTINGS_SECRETS_2=${{ inputs.variablesubstitutions }}' >> $GITHUB_OUTPUT
+    - run: echo '${{ fromJSON(inputs.variablesubstitutions) }}'
     - uses: microsoft/variable-substitution@v1 
       with:
         files: 'PhotographyApi/appsettings.Production.json'
       env:
-        ${{ fromJson(secrets.variablesubs) }}
+        ${{ fromJson(inputs.variablesubstitutions) }}
         # env:
         #   AppSettings.RiesjApiKey: ${{ secrets.RIESJ_API_KEY }}
         #   AppSettings.JwtSecret: ${{ secrets.JWT_SECRET_KEY }}
