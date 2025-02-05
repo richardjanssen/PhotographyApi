@@ -8,5 +8,5 @@ jobs:
   build-test-publish:
     uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-build.yml@main
     with:
-      api-name: PhotographyApi
+      app-name: PhotographyApi
       release-build: false
