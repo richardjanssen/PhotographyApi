@@ -12,10 +12,11 @@ jobs:
 
   bla:
     uses: richardjanssen/PhotographyApi/.github/workflows/var-substitution.yml@develop
-    with:
-      variablesubstitutions: '${{ toJson({ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}" }) }}'
-    secrets:
-      variablesubs: '{ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}" }'
+    # with:
+    #   variablesubstitutions: ${{ toJson({ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}" }) }}
+    # secrets:
+    #   variablesubs: '{ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}" }'
+    secrets: inherit
   build-test-publish:
     name: Release build
     runs-on: ubuntu-latest

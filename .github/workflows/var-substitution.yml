@@ -17,16 +17,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
     - uses: actions/checkout@v4.1.1
     - id: myvars
       run: |
-        echo 'APP_SETTINGS_SECRETS_2=${{ inputs.variablesubstitutions }}' >> $GITHUB_OUTPUT
-    - run: echo '${{ fromJSON(inputs.variablesubstitutions) }}'
+        echo 'APP_SETTINGS_SECRETS_2={ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}", "AppSettings.MapboxPublicToken": "${{ secrets.MAPBOX_PUBLIC_TOKEN }}", "AppSettings.GarminExploreRawKmlFeed": "${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}" }' >> $GITHUB_OUTPUT
+    - run: echo '${{ fromJSON(steps.myvars.outputs.APP_SETTINGS_SECRETS_2) }}'
+    # - id: myvars
+    #   run: |
+    #     echo 'APP_SETTINGS_SECRETS_2=${{ inputs.variablesubstitutions }}' >> $GITHUB_OUTPUT
+    # - run: echo '${{ fromJSON(inputs.variablesubstitutions) }}'
     - uses: microsoft/variable-substitution@v1 
       with:
         files: 'PhotographyApi/appsettings.Production.json'
       env:
-        ${{ fromJson(inputs.variablesubstitutions) }}
+        ${{ fromJson(steps.myvars.outputs.APP_SETTINGS_SECRETS_2) }}
         # env:
         #   AppSettings.RiesjApiKey: ${{ secrets.RIESJ_API_KEY }}
         #   AppSettings.JwtSecret: ${{ secrets.JWT_SECRET_KEY }}
