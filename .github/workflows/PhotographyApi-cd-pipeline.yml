@@ -13,7 +13,7 @@ jobs:
   bla:
     uses: richardjanssen/PhotographyApi/.github/workflows/var-substitution.yml@develop
     secrets:
-      variablesubs: '{ \"AppSettings.RiesjApiKey\": \"${{ secrets.RIESJ_API_KEY }}\", \"AppSettings.JwtSecret\": \"${{ secrets.JWT_SECRET_KEY }}\" }'
+      variablesubs: '{ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}" }'
   build-test-publish:
     name: Release build
     runs-on: ubuntu-latest
