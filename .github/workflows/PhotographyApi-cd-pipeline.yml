@@ -1,4 +1,4 @@
-name: PhotographyApi-cd-pipeline
+name: PhotographyApi CD-pipeline
 
 on:
   push:
@@ -8,74 +8,24 @@ on:
       tags:
         description: 'Manual trigger'
 
+env:
+  APP_NAME: 'PhotographyApi'
+
 jobs:
-
-  bla:
-    uses: richardjanssen/PhotographyApi/.github/workflows/var-substitution.yml@develop
-    # with:
-    #   variablesubstitutions: ${{ toJson({ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}" }) }}
-    # secrets:
-    #   variablesubs: '{ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}" }'
-    secrets: inherit
-  build-test-publish:
-    name: Release build
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v4.1.1
-      - id: myvars
-        run: |
-          echo 'APP_SETTINGS_SECRETS_2={ "AppSettings.RiesjApiKey": "${{ secrets.RIESJ_API_KEY }}", "AppSettings.JwtSecret": "${{ secrets.JWT_SECRET_KEY }}", "AppSettings.MapboxPublicToken": "${{ secrets.MAPBOX_PUBLIC_TOKEN }}", "AppSettings.GarminExploreRawKmlFeed": "${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}" }' >> $GITHUB_OUTPUT
-      - run: echo '${{ fromJSON(steps.myvars.outputs.APP_SETTINGS_SECRETS_2) }}'
-      - uses: microsoft/variable-substitution@v1 
-        with:
-          files: 'PhotographyApi/appsettings.Production.json'
-        env:
-          ${{ fromJson(steps.myvars.outputs.APP_SETTINGS_SECRETS_2) }}
-        # env:
-        #   AppSettings.RiesjApiKey: ${{ secrets.RIESJ_API_KEY }}
-        #   AppSettings.JwtSecret: ${{ secrets.JWT_SECRET_KEY }}
-        #   AppSettings.MapboxPublicToken: ${{ secrets.MAPBOX_PUBLIC_TOKEN }}
-        #   AppSettings.GarminExploreRawKmlFeed: ${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 8.0.x
-      - name: Restore dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --no-restore
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
-      - name: Publish
-        run: dotnet publish PhotographyApi/PhotographyApi.csproj -c Release -o dist
-      - name: Upload a Build Artifact
-        if: ${{ success() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: PhotographyApi
-          path: dist/**
-          if-no-files-found: error
-
-  # build-test-publish:
-  #   needs: apply-secrets
-  #   uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-api-build-test-publish.yml@main
-  #   with:
-  #     api-name: PhotographyApi
-  #     do-checkout: false
-      
-  deploy-run:
-    needs: build-test-publish
-    uses: richardjanssen/SharedWorkflows/.github/workflows/linux-vps-deploy-run-v2.yml@main
+  dotnet-build:
+    uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-build.yml@main
     with:
-      app-name: PhotographyApi
+      app-name: ${{env.APP_NAME}}
+      release-build: true
+      
+  deploy:
+    needs: dotnet-build
+    uses: richardjanssen/SharedWorkflows/.github/workflows/ubuntu-vps-deploy.yml@main
+    with:
+      app-name: ${{env.APP_NAME}}
       is-service: true
     secrets:
       host: ${{ secrets.HOST }}
       username: ${{ secrets.USERNAME }}
       ssh-key: ${{ secrets.SSHKEY }}
       ssh-passphrase: ${{ secrets.SSHPASSPHRASE }}
-
-# https://www.kenmuse.com/blog/using-dynamic-environment-variables-with-github/
-# https://lornajane.net/posts/2024/use-multi-line-values-in-github-actions
-# https://stackoverflow.com/questions/67142548/how-to-echo-a-multi-line-variable-in-github-actions
