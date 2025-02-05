@@ -22,7 +22,7 @@ jobs:
     - name: fdsfsd
       id: thisisit
       run: |
-        echo "THIS_IS_IT='${{ env.APP_SETTINGS_SECRETS }}"' >> $GITHUB_OUTPUT
+        echo 'THIS_IS_IT=${{ env.APP_SETTINGS_SECRETS }}' >> $GITHUB_OUTPUT
     # - id: myvars
     #   run: |
     #     echo 'APP_SETTINGS_SECRETS_2=${{ inputs.variablesubstitutions }}' >> $GITHUB_OUTPUT
