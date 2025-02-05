@@ -2,14 +2,6 @@ name: var-substitution
 
 on:
   workflow_call:
-    inputs:
-      variablesubstitutions:
-        required: true
-        type: string
-    secrets:
-      variablesubs:
-        description: 'A JSON formatted string containing all secrets that need parsing'
-        required: true
 
 jobs:
   build-test-publish:
