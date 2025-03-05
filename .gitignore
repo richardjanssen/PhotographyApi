@@ -284,6 +284,9 @@ node_modules/
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
 
+# Visual Studio Code configurations
+.vs/
+
 # Paket dependency manager
 .paket/paket.exe
 paket-files/
