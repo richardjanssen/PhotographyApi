@@ -345,3 +345,6 @@ healthchecksdb
 # Database files
 PhotographyApi/data
 PhotographyApi/data
+
+# Published files
+dist/

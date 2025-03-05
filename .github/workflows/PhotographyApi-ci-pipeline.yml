@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-test-publish:
-    uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-build.yml@main
+    uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-build.yml@db-deploy
     with:
       app-name: PhotographyApi
       release-build: false

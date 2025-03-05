@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="Test.Helpers" />
-      <InternalsVisibleTo Include="Functional.Test" />
+    <InternalsVisibleTo Include="Functional.Test" />
   </ItemGroup>
 
 </Project>

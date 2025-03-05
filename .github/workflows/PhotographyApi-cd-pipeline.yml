@@ -10,7 +10,7 @@ on:
 
 jobs:
   dotnet-build:
-    uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-build.yml@main
+    uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-build.yml@db-deploy
     with:
       app-name: 'PhotographyApi'
       release-build: true
@@ -18,7 +18,7 @@ jobs:
       
   deploy:
     needs: dotnet-build
-    uses: richardjanssen/SharedWorkflows/.github/workflows/ubuntu-vps-deploy.yml@main
+    uses: richardjanssen/SharedWorkflows/.github/workflows/ubuntu-vps-deploy.yml@db-deploy
     with:
       app-name: 'PhotographyApi'
       is-service: true
