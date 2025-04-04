@@ -342,3 +342,6 @@ healthchecksdb
 # Database files
 PhotographyApi/data/
 PhotographyApi/data
+
+# Dotnet publish
+dist/
