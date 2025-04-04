@@ -1,4 +1,4 @@
-name: PhotographyApi-cd-pipeline
+name: PhotographyApi CD-pipeline
 
 on:
   push:
@@ -6,24 +6,22 @@ on:
   workflow_dispatch:
     inputs:
       tags:
-        description: 'Manual trigger' 
+        description: 'Manual trigger'
 
 jobs:
-  build-test-publish:
-    uses: ./.github/workflows/dotnet-api-build-test-publish.yml
+  dotnet-build:
+    uses: richardjanssen/SharedWorkflows/.github/workflows/dotnet-build.yml@main
     with:
-      api-name: PhotographyApi
-    secrets:
-      riesj-api-key: ${{ secrets.RIESJ_API_KEY }}
-      jwt-secret-key: ${{ secrets.JWT_SECRET_KEY }}
-      mapbox-public-token: ${{ secrets.MAPBOX_PUBLIC_TOKEN }}
-      garmin-explore-raw-kml-feed: ${{ secrets.GARMIN_EXPLORE_RAW_KML_FEED }}
+      app-name: 'PhotographyApi'
+      release-build: true
+    secrets: inherit
       
-  deploy-run:
-    needs: build-test-publish
-    uses: richardjanssen/SharedWorkflows/.github/workflows/linux-vps-deploy-run.yml@main
+  deploy:
+    needs: dotnet-build
+    uses: richardjanssen/SharedWorkflows/.github/workflows/ubuntu-vps-deploy.yml@main
     with:
-      application-name: PhotographyApi
+      app-name: 'PhotographyApi'
+      is-service: true
     secrets:
       host: ${{ secrets.HOST }}
       username: ${{ secrets.USERNAME }}
