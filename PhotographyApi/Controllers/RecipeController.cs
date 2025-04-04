@@ -22,7 +22,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
     public async Task<RecipeViewModel> Add(RecipeViewModel recipe) => (await recipeRepository.AddRecipe(recipe.Map())).Map();
 
     [HttpPost]
-    //[Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin")]
     public async Task UpdateConcurrent()
     {
         // TODO: This should be tested in a unit test
