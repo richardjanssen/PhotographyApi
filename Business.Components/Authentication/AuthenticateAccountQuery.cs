@@ -9,18 +9,12 @@ using System.Text;
 
 namespace Business.Components.Authentication;
 
-public class AuthenticateAccountQuery : IAuthenticateAccountQuery
+public class AuthenticateAccountQuery(
+    IPhotographyRepository photographyRepository,
+    IOptions<AppSettings> appSettings) : IAuthenticateAccountQuery
 {
-    private readonly IPhotographyRepository _photographyRepository;
-    private readonly AppSettings _appSettings;
-
-    public AuthenticateAccountQuery(
-        IPhotographyRepository photographyRepository,
-        IOptions<AppSettings> appSettings)
-    {
-        _photographyRepository = photographyRepository;
-        _appSettings = appSettings.Value;
-    }
+    private readonly IPhotographyRepository _photographyRepository = photographyRepository;
+    private readonly AppSettings _appSettings = appSettings.Value;
 
     public async Task<string?> Execute(string userName, string password)
     {

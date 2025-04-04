@@ -340,5 +340,5 @@ ASALocalRun/
 healthchecksdb
 
 # Database files
-PhotographyApi/data
+PhotographyApi/data/
 PhotographyApi/data

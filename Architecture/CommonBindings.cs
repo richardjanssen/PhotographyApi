@@ -7,5 +7,5 @@ namespace Infrastructure.Ioc;
 public static class CommonBindings
 {
     public static IServiceCollection AddCommonBindings(this IServiceCollection services) => services
-        .AddScoped<IDateTimeProvider, DateTimeProvider>();
+        .AddTransient<IDateTimeProvider, DateTimeProvider>();
 }
