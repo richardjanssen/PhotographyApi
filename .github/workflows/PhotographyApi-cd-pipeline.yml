@@ -29,3 +29,4 @@ jobs:
       username: ${{ secrets.USERNAME }}
       ssh-key: ${{ secrets.SSHKEY }}
       ssh-passphrase: ${{ secrets.SSHPASSPHRASE }}
+      connection-string: ${{ secrets.CONNECTION_STRING }}
