@@ -22,6 +22,7 @@ jobs:
     with:
       app-name: 'PhotographyApi'
       is-service: true
+      has-database: true
     secrets:
       host: ${{ secrets.HOST }}
       username: ${{ secrets.USERNAME }}
