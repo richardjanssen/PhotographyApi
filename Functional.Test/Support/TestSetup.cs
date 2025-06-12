@@ -10,13 +10,9 @@ public sealed class TestSetup(IObjectContainer objectContainer)
     [BeforeScenario(Order = 1)]
     public void BeforeScenario()
     {
-        var httpResponseMessage = new HttpResponseMessage();
-        var fakeDateTimeProvider = new FakeDateTimeProvider();
-
-        // PhotographyWebApplicationFactory and MockedDependencies are created in BaseTest,
+        // PhotographyWebApplicationFactory and MockedDependencies are created in BaseTest.cs,
         // and are therefore not required in the object container.
-        objectContainer.RegisterInstanceAs(httpResponseMessage, typeof(HttpResponseMessage));
-        objectContainer.RegisterInstanceAs(fakeDateTimeProvider, typeof(FakeDateTimeProvider));
+        objectContainer.RegisterInstanceAs(new FakeDateTimeProvider(), typeof(FakeDateTimeProvider));
 
         
     }
