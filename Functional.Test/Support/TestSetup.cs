@@ -1,34 +1,23 @@
 ﻿using BoDi;
-using Data.Repository;
+using Functional.Test.Support.Mocks;
 using TechTalk.SpecFlow;
-using Test.Helpers;
 
-namespace Functional.Test.Helpers;
+namespace Functional.Test.Support;
 
 [Binding]
-public sealed class TestSetup
+public sealed class TestSetup(IObjectContainer objectContainer)
 {
-    private readonly IObjectContainer _objectContainer;
-
-    public TestSetup(IObjectContainer objectContainer) => _objectContainer = objectContainer;
-
     [BeforeScenario(Order = 1)]
     public void BeforeScenario()
     {
         var httpResponseMessage = new HttpResponseMessage();
         var fakeDateTimeProvider = new FakeDateTimeProvider();
-        var fakeWebHostEnvironment = new FakeWebHostEnvironment();
-        var fakePhotographyManager = new FakePhotographyManager();
 
-        // Register webApplicationFactory so SUT can be built
-        var webApplicationFactory = new PhotographyWebApplicationFactory(
-            fakeDateTimeProvider, fakeWebHostEnvironment, fakePhotographyManager);
+        // PhotographyWebApplicationFactory and MockedDependencies are created in BaseTest,
+        // and are therefore not required in the object container.
+        objectContainer.RegisterInstanceAs(httpResponseMessage, typeof(HttpResponseMessage));
+        objectContainer.RegisterInstanceAs(fakeDateTimeProvider, typeof(FakeDateTimeProvider));
 
-        // register in _objectContainer so fakes can be found and edited in tests
-        _objectContainer.RegisterInstanceAs(webApplicationFactory, typeof(PhotographyWebApplicationFactory));
-        _objectContainer.RegisterInstanceAs(httpResponseMessage, typeof(HttpResponseMessage));
-        _objectContainer.RegisterInstanceAs(fakePhotographyManager, typeof(FakePhotographyManager));
-        _objectContainer.RegisterInstanceAs(fakeDateTimeProvider, typeof(FakeDateTimeProvider));
-        _objectContainer.RegisterInstanceAs(fakeWebHostEnvironment, typeof(FakeWebHostEnvironment));
+        
     }
 }

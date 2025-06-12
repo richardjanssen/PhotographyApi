@@ -11,7 +11,7 @@ public class PhotographyJsonRepository(IPhotographyManager photographyManager, I
     {
         if (photo.Id != 0)
         {
-            throw new ArgumentException("photo.Id should be 0 when creating a new photo");
+            throw new ArgumentException("Photo.Id should be 0 when creating a new photo", nameof(photo));
         }
 
         var album = (await photographyManager.GetAlbums()).ToList().FirstOrDefault(album => album.Id == albumId)
@@ -53,7 +53,7 @@ public class PhotographyJsonRepository(IPhotographyManager photographyManager, I
     {
         if (album.Id != 0)
         {
-            throw new ArgumentException("album.Id should be 0 when creating a new album");
+            throw new ArgumentException("Album.Id should be 0 when creating a new album", nameof(album));
         }
 
         var currentAlbums = (await photographyManager.GetAlbums()).ToList();
@@ -80,7 +80,7 @@ public class PhotographyJsonRepository(IPhotographyManager photographyManager, I
     {
         if (addHikerUpdate.Id != 0)
         {
-            throw new ArgumentException("addHikerUpdate.Id should be 0 when creating a new hiker update");
+            throw new ArgumentException("HikerUpdate.Id should be 0 when creating a new hiker update", nameof(addHikerUpdate));
         }
 
         var currentHikerUpdates = (await photographyManager.GetHikerUpdates()).ToList();
@@ -129,7 +129,7 @@ public class PhotographyJsonRepository(IPhotographyManager photographyManager, I
     {
         if (hikerLocation.Id != 0)
         {
-            throw new ArgumentException("hikerLocation.Id should be 0 when creating a new hiker update");
+            throw new ArgumentException("HikerLocation.Id should be 0 when creating a new hiker location", nameof(hikerLocation));
         }
 
         var currentHikerLocations = (await photographyManager.GetHikerLocations()).ToList();

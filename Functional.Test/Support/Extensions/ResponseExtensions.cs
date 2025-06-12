@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Test.Helpers;
+namespace Functional.Test.Support.Extensions;
 
 public static class ResponseExtensions
 {
