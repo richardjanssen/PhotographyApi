@@ -14,14 +14,14 @@ public class RiesjDbContext(DbContextOptions<RiesjDbContext> options, IDateTimeP
         base.OnModelCreating(modelBuilder);
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<EntityBase>() ?? [])
         {
             entry.Property(e => e.DateModifiedUtc).CurrentValue = dateTimeProvider.UtcNow;
             entry.Property(e => e.RowVersion).CurrentValue += 1;
         }
-        return base.SaveChangesAsync(cancellationToken);
+        return await base.SaveChangesAsync(cancellationToken);
     }
 
     public override int SaveChanges()

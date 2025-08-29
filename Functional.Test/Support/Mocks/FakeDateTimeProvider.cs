@@ -1,6 +1,7 @@
 ﻿using Common.Common.Interfaces;
+using Test.Helpers;
 
-namespace Test.Helpers;
+namespace Functional.Test.Support.Mocks;
 
 public class FakeDateTimeProvider : IDateTimeProvider
 {
@@ -8,7 +9,7 @@ public class FakeDateTimeProvider : IDateTimeProvider
 
     public FakeDateTimeProvider() => _mockedDateTime = TestConstants.FakeDateTimeToday;
 
-    public FakeDateTimeProvider(DateTime now) => _mockedDateTime = now;
+    public FakeDateTimeProvider(DateTime dateTime) => _mockedDateTime = dateTime;
 
     public FakeDateTimeProvider(int year, int month, int date) => _mockedDateTime = new DateTime(year, month, date);
 

@@ -2,7 +2,7 @@
 using FluentAssertions.Primitives;
 using System.Net;
 
-namespace Test.Helpers;
+namespace Functional.Test.Support.Extensions;
 
 public static class ObjectAssertionExtensions
 {

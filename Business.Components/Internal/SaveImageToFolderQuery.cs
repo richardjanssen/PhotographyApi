@@ -9,14 +9,14 @@ namespace Business.Components.Internal;
 
 public class SaveImageToFolderQuery : ISaveImageToFolderQuery
 {
-    private readonly string _folderPath;
     private readonly Configuration _configuration;
+    private readonly IWebHostEnvironment _environment;
 
     public SaveImageToFolderQuery(IWebHostEnvironment environment)
     {
-        _folderPath = Path.Combine(environment.WebRootPath, "Images");
         _configuration = Configuration.Default;
         _configuration.MaxDegreeOfParallelism = 1;
+        _environment = environment;
     }
 
     public IReadOnlyCollection<Image> Execute(IFormFile file, IReadOnlyCollection<Entities.Size> maxDimensions)
@@ -33,8 +33,9 @@ public class SaveImageToFolderQuery : ISaveImageToFolderQuery
 
                     if (scaleFactor > 1) { return null; } // No upscaling
 
-                    var guid = Guid.NewGuid();    
-                    var fullPath = Path.Combine(_folderPath, guid.ToString() + extension);
+                    var guid = Guid.NewGuid();
+                    var folderPath = Path.Combine(_environment.WebRootPath, "Images");
+                    var fullPath = Path.Combine(folderPath, guid.ToString() + extension);
 
                     using SharpImage scaledImage = sharpImage.Clone(
                         ctx => ctx.Resize((int)(sharpImage.Width * scaleFactor), (int)(sharpImage.Height * scaleFactor)));
