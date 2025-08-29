@@ -345,3 +345,6 @@ PhotographyApi/data
 
 # Dotnet publish
 dist/
+
+# Reqnroll
+*.feature.cs

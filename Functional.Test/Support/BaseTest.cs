@@ -1,4 +1,5 @@
 ﻿using Functional.Test.Support.Mocks;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Functional.Test.Support;
 
@@ -10,6 +11,12 @@ public class BaseTest
     public BaseTest()
     {
         MockedDependencies = new MockedDependencies();
+
+        var dbContext = FakeDbContextManager.GetDbContext();
+        dbContext.Database.EnsureDeleted();
+        dbContext.Database.EnsureCreated();
+        //dbContext.SaveChangesAsync().Wait();
+
         _webApplicationFactory = new PhotographyWebApplicationFactory(MockedDependencies);
     }
 

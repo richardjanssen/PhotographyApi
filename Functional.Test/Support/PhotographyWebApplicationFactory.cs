@@ -1,4 +1,5 @@
 ﻿using Common.Common.Interfaces;
+using Data.Repository.Database;
 using Functional.Test.Support.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
@@ -25,8 +26,6 @@ public class PhotographyWebApplicationFactory(MockedDependencies mockedDependenc
 
         builder.ConfigureServices(services =>
         {
-            services.AddTransient<IDateTimeProvider>(_ => new FakeDateTimeProvider());
-
             foreach ((var interfaceType, var serviceMock) in mockedDependencies.GetMockedDependencies())
             {
                 var serviceDescriptor = services.SingleOrDefault(d => d.ServiceType == interfaceType);
@@ -37,6 +36,10 @@ public class PhotographyWebApplicationFactory(MockedDependencies mockedDependenc
 
                 services.AddSingleton(interfaceType, serviceMock);
             }
+
+            services.AddTransient<IDateTimeProvider>(_ => new FakeDateTimeProvider());
+            services.AddSingleton(FakeDbContextManager.GetOptionsBuilder().Options);
+            services.AddDbContextFactory<RiesjDbContext>((_) => FakeDbContextManager.GetOptionsBuilder(), ServiceLifetime.Scoped);
         });
 
         return base.CreateHost(builder);
