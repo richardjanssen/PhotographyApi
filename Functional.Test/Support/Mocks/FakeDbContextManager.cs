@@ -12,6 +12,6 @@ public class FakeDbContextManager
 
     public static DbContextOptionsBuilder<RiesjDbContext> GetOptionsBuilder()
     {
-        return new DbContextOptionsBuilder<RiesjDbContext>().UseSqlite("Data Source=Data/Riesj_AT.db");
+        return new DbContextOptionsBuilder<RiesjDbContext>().UseSqlite("Data Source=Riesj_AT.db");
     }
 }
