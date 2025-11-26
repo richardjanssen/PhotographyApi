@@ -1,7 +1,7 @@
 ﻿using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace PhotographyApi.Swagger;
+namespace PhotographyApi.Startup;
 
 public class RiesjApiKeySwaggerAttribute : IOperationFilter
 {
