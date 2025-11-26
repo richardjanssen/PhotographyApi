@@ -25,7 +25,7 @@ public class AuthenticateAccountQuery(
             return null;
         }
 
-        return VerifyPasswordAgainstHash(password, account.PasswordHash, account.Salt) ? GenerateJwtToken(account.UserName) : GenerateJwtToken(account.UserName);
+        return VerifyPasswordAgainstHash(password, account.PasswordHash, account.Salt) ? GenerateJwtToken(account.UserName) : null;
     }
 
     private string GenerateJwtToken(string userName)
