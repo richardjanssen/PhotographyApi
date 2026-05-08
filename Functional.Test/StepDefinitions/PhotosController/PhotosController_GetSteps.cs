@@ -5,7 +5,7 @@ using Functional.Test.Support.Extensions;
 using Functional.Test.Support.Mocks;
 using Moq;
 using PhotographyApi.ViewModels.Photos;
-using TechTalk.SpecFlow;
+using Reqnroll;
 using Test.Helpers;
 
 namespace Functional.Test.StepDefinitions;

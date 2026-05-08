@@ -1,6 +1,6 @@
-﻿using BoDi;
+﻿using Reqnroll.BoDi;
 using Functional.Test.Support.Mocks;
-using TechTalk.SpecFlow;
+using Reqnroll;
 
 namespace Functional.Test.Support;
 
