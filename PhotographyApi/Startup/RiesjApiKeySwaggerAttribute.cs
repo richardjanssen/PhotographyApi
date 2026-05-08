@@ -1,4 +1,4 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace PhotographyApi.Startup;
@@ -8,7 +8,7 @@ public class RiesjApiKeySwaggerAttribute : IOperationFilter
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
         if (operation.Parameters == null)
-            operation.Parameters = new List<OpenApiParameter>();
+            operation.Parameters = [];
 
         operation.Parameters.Add(new OpenApiParameter
         {
@@ -16,7 +16,7 @@ public class RiesjApiKeySwaggerAttribute : IOperationFilter
             In = ParameterLocation.Header,
             Schema = new OpenApiSchema
             {
-                Type = "string"
+                Type = JsonSchemaType.String
             }
         });
     }

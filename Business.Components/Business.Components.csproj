@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -12,10 +12,9 @@
   </ItemGroup>
 
     <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.1" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.1.2" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.11" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.1.2" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.18.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.13" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.18.0" />
   </ItemGroup>
 
   <ItemGroup>

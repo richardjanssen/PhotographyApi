@@ -2,14 +2,11 @@ using Common.Common;
 using Infrastructure.Ioc;
 using NLog;
 using NLog.Web;
-using OpenTelemetry.Logs;
-using OpenTelemetry.Resources;
 using PhotographyApi.Startup;
 
 var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
 
-//ILogger? logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger("Program");
 var corsPolicyName = "PhotographyClient";
 
 try
@@ -26,7 +23,6 @@ try
     builder.Host.UseNLog();
 
     builder.Services
-        //.AddRiesjTelemetry(environment.ApplicationName)
         .ConfigureRiesjForwardedHttpHeader()
         .AddRiesjCors(configuration, corsPolicyName)
         .AddRiesjAuthentication(configuration).AddRiesjControllers()
@@ -36,7 +32,6 @@ try
         .AddRiesjApiBindings();
 
     var app = builder.Build();
-    //logger = app.Services.GetRequiredService<ILogger<Program>>();
 
     app
         .UseForwardedHeaders()
@@ -53,7 +48,6 @@ try
 catch (Exception exception)
 {
     logger.Error(exception, "Stopped program because of exception");
-    //logger?.LogError(exception, "Stopped program because of exception");
     throw;
 }
 

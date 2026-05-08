@@ -55,8 +55,9 @@ public class AuthenticateAccountQuery(
     {
         var passwordBytes = Encoding.UTF8.GetBytes(password);
         var saltBytes = Encoding.UTF8.GetBytes(salt);
-        var byteResult = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 10000, HashAlgorithmName.SHA1);
-        return Convert.ToBase64String(byteResult.GetBytes(24));
+        byte[] derivedKey = Rfc2898DeriveBytes.Pbkdf2(passwordBytes, saltBytes, 10000, HashAlgorithmName.SHA1, 24);
+
+        return Convert.ToBase64String(derivedKey);
     }
 
     private static bool VerifyPasswordAgainstHash(string password, string hashedPassword, string salt) =>

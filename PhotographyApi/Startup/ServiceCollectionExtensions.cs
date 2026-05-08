@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.IdentityModel.Tokens;
-using OpenTelemetry.Logs;
-using OpenTelemetry.Resources;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -11,16 +9,6 @@ namespace PhotographyApi.Startup;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddRiesjTelemetry(this IServiceCollection services, string applicationName)
-    {
-        services.AddOpenTelemetry()
-            .ConfigureResource(r => r.AddService(applicationName))
-            .WithLogging(logging => logging
-                .AddOtlpExporter());
-
-        return services;
-    }
-
     public static IServiceCollection ConfigureRiesjForwardedHttpHeader(this IServiceCollection services) =>
         services.Configure<ForwardedHeadersOptions>(options => { options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto; });
 
