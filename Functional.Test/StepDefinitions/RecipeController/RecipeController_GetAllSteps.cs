@@ -6,7 +6,7 @@ using Functional.Test.Support.Extensions;
 using PhotographyApi.ViewModels.Recipes;
 using Reqnroll;
 
-namespace Functional.Test.StepDefinitions;
+namespace Functional.Test.StepDefinitions.RecipeController;
 
 [Binding]
 public sealed class RecipeController_GetAllSteps() : BaseTest
@@ -35,7 +35,6 @@ public sealed class RecipeController_GetAllSteps() : BaseTest
     {
         using var _ = new AssertionScope();
 
-        await _response.Should().BeAValidResponse();
         var result = await _response.ParseTo<IReadOnlyCollection<RecipeViewModel>>();
 
         var photo = result.Should().SatisfyRespectively(

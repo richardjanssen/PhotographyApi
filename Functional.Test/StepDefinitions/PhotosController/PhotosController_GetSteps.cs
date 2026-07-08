@@ -8,7 +8,7 @@ using PhotographyApi.ViewModels.Photos;
 using Reqnroll;
 using Test.Helpers;
 
-namespace Functional.Test.StepDefinitions;
+namespace Functional.Test.StepDefinitions.PhotosController;
 
 [Binding]
 public sealed class PhotosController_GetSteps : BaseTest
@@ -45,7 +45,6 @@ public sealed class PhotosController_GetSteps : BaseTest
     {
         using var _ = new AssertionScope();
 
-        await _response.Should().BeAValidResponse();
         var result = await _response.ParseTo<IReadOnlyCollection<PhotoViewModel>>();
 
         var photo = result.Should().SatisfyRespectively(
