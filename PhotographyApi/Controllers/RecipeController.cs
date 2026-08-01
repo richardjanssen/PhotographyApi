@@ -35,7 +35,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
             var concurrentRecipe = await concurrentDb.Recipes.FirstOrDefaultAsync(r => r.Id == 1);
             if (concurrentRecipe != null)
             {
-                concurrentRecipe.Name = "An updated recipe name";
+                concurrentRecipe.UpdateRecipe("An updated recipe name", concurrentRecipe.Ingredients, concurrentRecipe.Preparation);
             }
             await concurrentDb.SaveChangesAsync();
         }
@@ -43,7 +43,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
         // Throws DbUpdateConcurrencyException
         if (recipe != null)
         {
-            recipe.Name = "Hoi";
+            recipe.UpdateRecipe("Hoi", recipe.Ingredients, recipe.Preparation); ;
         }
         await db.SaveChangesAsync();
     }
