@@ -1,3 +1,3 @@
 ﻿namespace PhotographyApi.ViewModels.Recipes;
 
-public record RecipeViewModel(string Name, string Ingredients, string Preparation);
+public record RecipeViewModel(string Name, IngredientViewModel[] Ingredients, string Preparation);

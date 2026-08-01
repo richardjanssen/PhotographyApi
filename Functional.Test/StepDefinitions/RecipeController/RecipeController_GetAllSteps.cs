@@ -12,8 +12,8 @@ namespace Functional.Test.StepDefinitions.RecipeController;
 public sealed class RecipeController_GetAllSteps() : BaseTest
 {
     private HttpResponseMessage _response = null!;
-    private readonly Recipe _firstRecipe = new("First recipe", "Some ingredients", "Some preparation");
-    private readonly Recipe _secondRecipe = new("Second recipe", "Some other ingredients", "Some other preparation");
+    private readonly Recipe _firstRecipe = new("First recipe", [], "Some preparation");
+    private readonly Recipe _secondRecipe = new("Second recipe", [], "Some other preparation");
 
     [Given("there are recipes")]
     public async Task GivenANumberOfPhotosInTheDatabase()
@@ -41,13 +41,13 @@ public sealed class RecipeController_GetAllSteps() : BaseTest
             first =>
             {
                 first.Name.Should().Be(_firstRecipe.Name);
-                first.Ingredients.Should().Be(_firstRecipe.Ingredients);
+                first.Ingredients.Should().Contain([]);
                 first.Preparation.Should().Be(_firstRecipe.Preparation);
             },
             second =>
             {
                 second.Name.Should().Be(_secondRecipe.Name);
-                second.Ingredients.Should().Be(_secondRecipe.Ingredients);
+                second.Ingredients.Should().Contain([]);
                 second.Preparation.Should().Be(_secondRecipe.Preparation);
             });
     }
