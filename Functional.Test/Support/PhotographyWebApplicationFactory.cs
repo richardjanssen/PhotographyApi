@@ -20,7 +20,9 @@ public class PhotographyWebApplicationFactory(MockedDependencies mockedDependenc
             config.AddInMemoryCollection(new[]
             {
                 new KeyValuePair<string, string?>("AppSettings:JwtIssuer", "AFakeJwtIssuerForTestingPurposes"),
-                new KeyValuePair<string, string?>("AppSettings:JwtSecret", "AFakeJwtSecretForTestingPurposes")
+                new KeyValuePair<string, string?>("AppSettings:JwtSecret", "AFakeJwtSecretForTestingPurposes"),
+                new KeyValuePair<string, string?>("AppSettings:AccessTokenExpirationMinutes", "30"),
+                new KeyValuePair<string, string?>("AppSettings:RefreshTokenExpirationDays", "60")
             });
         });
 

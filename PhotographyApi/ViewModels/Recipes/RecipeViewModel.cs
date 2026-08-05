@@ -1,3 +1,9 @@
 ﻿namespace PhotographyApi.ViewModels.Recipes;
 
-public record RecipeViewModel(string Name, IngredientViewModel[] Ingredients, string Preparation);
+public record RecipeViewModel(
+    long? Id,
+    long? RowVersion,
+    string Name,
+    IngredientViewModel[] SingleIngredients,
+    IngredientGroupViewModel[] IngredientGroups,
+    string Preparation);

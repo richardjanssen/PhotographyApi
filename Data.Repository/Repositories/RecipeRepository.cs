@@ -11,7 +11,7 @@ public class RecipeRepository(IDbContextFactory<RiesjDbContext> dbContextFactory
     public async Task<IReadOnlyCollection<Recipe>> GetRecipes() {
         var dbContext = await _dbContextFactory.CreateDbContextAsync();
 
-        return dbContext.Recipes.ToList();
+        return [.. dbContext.Recipes];
     }
 
     public async Task<Recipe> AddRecipe(Recipe recipe)
@@ -21,5 +21,12 @@ public class RecipeRepository(IDbContextFactory<RiesjDbContext> dbContextFactory
         await dbContext.SaveChangesAsync();
 
         return recipe;
+    }
+
+    public async Task<Recipe?>GetById (int id)
+    {
+        var dbContext = await _dbContextFactory.CreateDbContextAsync();
+
+        return dbContext.Recipes.Include(r => r.Ingredients).FirstOrDefault(r => r.Id == id);
     }
 }

@@ -35,20 +35,18 @@ public sealed class RecipeController_GetAllSteps() : BaseTest
     {
         using var _ = new AssertionScope();
 
-        var result = await _response.ParseTo<IReadOnlyCollection<RecipeViewModel>>();
+        var result = await _response.ParseTo<IReadOnlyCollection<RecipeOverviewViewModel>>();
 
         var photo = result.Should().SatisfyRespectively(
             first =>
             {
                 first.Name.Should().Be(_firstRecipe.Name);
-                first.Ingredients.Should().BeEmpty();
-                first.Preparation.Should().Be(_firstRecipe.Preparation);
+
             },
             second =>
             {
                 second.Name.Should().Be(_secondRecipe.Name);
-                second.Ingredients.Should().BeEmpty();
-                second.Preparation.Should().Be(_secondRecipe.Preparation);
+
             });
     }
 }

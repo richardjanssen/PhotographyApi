@@ -25,7 +25,9 @@ try
     builder.Services
         .ConfigureRiesjForwardedHttpHeader()
         .AddRiesjCors(configuration, corsPolicyName)
-        .AddRiesjAuthentication(configuration).AddRiesjControllers()
+        .AddRiesjAuthentication(configuration)
+        .AddAuthorization()
+        .AddRiesjControllers()
         .AddSwaggerGen(c => c.OperationFilter<RiesjApiKeySwaggerAttribute>())
         .Configure<AppSettings>(configuration.GetSection("AppSettings"))
         .AddMemoryCache()

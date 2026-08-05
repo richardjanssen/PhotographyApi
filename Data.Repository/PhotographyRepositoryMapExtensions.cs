@@ -90,9 +90,6 @@ public static class PhotographyRepositoryMapExtensions
 
     public static Business.Entities.Dto.DistanceMarker Map(this DistanceMarker marker) => new(marker.Lat, marker.Lon, marker.Distance);
 
-    public static Business.Entities.Dto.Account Map(this Account account) =>
-        new(account.UserName, account.PasswordHash, account.Salt);
-
     private static Business.Entities.Dto.Image Map(this Image image) =>
         new(image.WidthPx, image.HeightPx, image.Guid, image.Extension);
 
