@@ -19,7 +19,7 @@ public class SettingsController : ControllerBase
         (await _settingsRepository.GetSettings()).Map();
 
     [HttpPut]
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
     public async Task<SettingsViewModel> Update(SettingsViewModel settings) =>
         (await _settingsRepository.UpdateSettings(settings.Map())).Map();
 }

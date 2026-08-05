@@ -12,28 +12,28 @@ namespace PhotographyApi.Controllers;
 [Route("api/v1/[controller]/[action]")]
 public class AlbumController(IPhotographyRepository photographyRepository) : ControllerBase
 {
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
     [HttpPost]
     public async Task AddAlbum(AddAlbumViewModel album)
     {
         await photographyRepository.AddAlbum(album.Map());
     }
 
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
     [HttpGet]
     public async Task<IReadOnlyCollection<AlbumViewModel>> GetAll()
     {
         return (await photographyRepository.GetAlbums()).Select(album => album.Map()).ToList();
     }
 
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
     [HttpGet]
     public async Task<AlbumDetailsViewModel> GetById(int id)
     {
         return (await photographyRepository.GetAlbumById(id)).Map(Constants.PhotosBasePath);
     }
 
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
     [HttpDelete]
     public async Task DeletePhoto(DeletePhotoViewModel deletePhoto)
     {

@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Common.Common\Common.Common.csproj" />
     <ProjectReference Include="..\Data.Interfaces\Data.Interfaces.csproj" />
     <ProjectReference Include="..\Data.Proxies\Data.Proxies.csproj" />
+    <ProjectReference Include="..\Data.Repository\Data.Repository.csproj" />
   </ItemGroup>
 
 </Project>

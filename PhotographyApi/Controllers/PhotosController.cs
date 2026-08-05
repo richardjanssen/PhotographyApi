@@ -24,7 +24,7 @@ public class PhotosController(
             .OrderByDescending(photo => photo.Date)
             .ToList();
 
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
     [HttpPost]
     public async Task<PhotoViewModel> UploadPhoto()
     {

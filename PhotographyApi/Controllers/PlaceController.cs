@@ -18,7 +18,7 @@ public class PlaceController : ControllerBase
         _placesRepository = placesRepository;
     }
 
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
     [HttpGet]
     public async Task<IReadOnlyCollection<PlaceViewModel>> GetAll()
     {

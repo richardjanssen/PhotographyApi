@@ -6,7 +6,6 @@ public interface IPhotographyRepository
 {
     Task<Photo> AddAlbumPhoto(Photo photo, int albumId);
     Task DeleteAlbumPhoto(int albumId, int photoId);
-    Task<Account?> GetAccountByUserName(string userName);
     Task<IEnumerable<Album>> GetAlbums();
     Task<AlbumDetails> GetAlbumById(int id);
     Task<Album> AddAlbum(Album album);

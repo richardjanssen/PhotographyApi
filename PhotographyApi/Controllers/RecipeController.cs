@@ -3,7 +3,6 @@ using Data.Repository.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using PhotographyApi.Mappers;
 using PhotographyApi.Mappers.Recipes;
 using PhotographyApi.ViewModels.Recipes;
@@ -15,14 +14,18 @@ namespace PhotographyApi.Controllers;
 public class RecipeController(IRecipeRepository recipeRepository, IDbContextFactory<RiesjDbContext> dbContextFactory) : ControllerBase
 {
     [HttpGet]
-    public async Task<IReadOnlyCollection<RecipeViewModel>> GetAll() => (await recipeRepository.GetRecipes()).Select(recipe => recipe.Map()).ToList();
+    public async Task<IReadOnlyCollection<RecipeOverviewViewModel>> GetAll() => [.. (await recipeRepository.GetRecipes()).Select(recipe => recipe.MapToOverview())];
 
     [HttpPost]
-    [Authorize(Roles = "PhotographyApi_Admin")]
-    public async Task<RecipeViewModel> Add(RecipeViewModel recipe) => (await recipeRepository.AddRecipe(recipe.Map())).Map();
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
+    public async Task<RecipeViewModel> Add(RecipeViewModel recipeViewModel)
+    {
+        var recipe = recipeViewModel.Map();
+        return (await recipeRepository.AddRecipe(recipe)).Map();
+    }
 
     [HttpPost]
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
     public async Task UpdateConcurrent()
     {
         // TODO: This should be tested in a unit test
@@ -46,5 +49,12 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
             recipe.UpdateRecipe("Hoi", recipe.Ingredients, recipe.Preparation); ;
         }
         await db.SaveChangesAsync();
+    }
+
+    [HttpGet]
+    public async Task<RecipeViewModel?> GetById(int id)
+    {
+        var recipe = await recipeRepository.GetById(id);
+        return recipe?.Map();
     }
 }

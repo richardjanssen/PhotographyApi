@@ -156,9 +156,6 @@ public class PhotographyJsonRepository(IPhotographyManager photographyManager, I
         ClearCache();
     }
 
-    public async Task<Account?> GetAccountByUserName(string userName) =>
-        (await photographyManager.GetAccounts()).SingleOrDefault(account => account.UserName == userName)?.Map();
-
     private void ClearCache()
     {
         if (memoryCache is MemoryCache concreteMemoryCache)

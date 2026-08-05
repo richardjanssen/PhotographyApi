@@ -21,7 +21,7 @@ public class LocationController(
     ILogger<LocationController> logger,
     IMemoryCache memoryCache) : ControllerBase
 {
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
     [HttpGet]
     public async Task<IReadOnlyCollection<LocationViewModel>> GetAll() =>
         (await getLocationsQuery.Execute()).Select(location => location.Map()).ToList();
@@ -39,9 +39,9 @@ public class LocationController(
         return cacheValue ?? new(null, []);
     }
 
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
     [HttpPost]
-    public async Task AddManual(ManualLocationViewModel manualLocation) => 
+    public async Task AddManual(ManualLocationViewModel manualLocation) =>
         await addManualLocationQuery.Execute(manualLocation.PlaceId);
 
     [HttpPost]
@@ -60,7 +60,7 @@ public class LocationController(
         return message;
     }
 
-    [Authorize(Roles = "PhotographyApi_Admin")]
+    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
     [HttpDelete]
     public async Task Delete(int id) =>
         await deleteLocationQuery.Execute(id);

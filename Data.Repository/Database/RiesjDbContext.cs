@@ -1,5 +1,6 @@
 ﻿using Business.Entities.Models;
 using Business.Entities.Recipes;
+using Business.Entities.Users;
 using Common.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,9 @@ public class RiesjDbContext(DbContextOptions<RiesjDbContext> options, IDateTimeP
 {
     public DbSet<Recipe> Recipes { get; set; }
     public DbSet<Ingredient> Ingredients { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

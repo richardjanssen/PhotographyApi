@@ -41,13 +41,13 @@ public sealed class RecipeController_GetAllSteps() : BaseTest
             first =>
             {
                 first.Name.Should().Be(_firstRecipe.Name);
-                first.Ingredients.Should().BeEmpty();
+                first.SingleIngredients.Should().BeEmpty();
                 first.Preparation.Should().Be(_firstRecipe.Preparation);
             },
             second =>
             {
                 second.Name.Should().Be(_secondRecipe.Name);
-                second.Ingredients.Should().BeEmpty();
+                second.SingleIngredients.Should().BeEmpty();
                 second.Preparation.Should().Be(_secondRecipe.Preparation);
             });
     }
