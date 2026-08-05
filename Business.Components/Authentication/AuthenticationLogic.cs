@@ -12,24 +12,6 @@ public class AuthenticationLogic(RiesjDbContext context, IAccessTokenLogic acces
 {
     public async Task<AuthResponse> Login(string username, string password)
     {
-        var users = await context.Users.ToListAsync();
-
-        if (users.Count == 0)
-        {
-            var salt = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
-            var hashedPassword = ComputeHash(password, salt);
-
-            // Determine roles for user
-            string[] roles = [ApplicationRoles.Riesj_Admin, ApplicationRoles.Riesj_RecipeEdit, ApplicationRoles.Riesj_ShoppingListEdit];
-            var userRoles = roles.Select(n => new Role(n)).ToList();
-
-            // Create user
-            var newUser = new User(username, hashedPassword, salt, userRoles, []);
-
-            context.Users.Add(newUser);
-            await context.SaveChangesAsync();
-        }
-
         var user = await context.Users
             .Include(u => u.Roles)
             .Include(u => u.RefreshTokens)
