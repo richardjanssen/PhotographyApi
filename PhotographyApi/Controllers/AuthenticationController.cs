@@ -1,4 +1,5 @@
 ﻿using Business.Components.Authentication;
+using Common.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
@@ -66,7 +67,7 @@ public class AuthenticationController(IAuthenticationLogic authenticationLogic) 
         return Ok(new { message = "Logout successful" });
     }
 
-    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
+    [Authorize(Roles = ApplicationRoles.Riesj_Admin)]
     [HttpGet]
     public IActionResult GetProfile()
     {

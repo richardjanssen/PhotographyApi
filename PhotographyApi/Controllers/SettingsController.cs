@@ -1,4 +1,5 @@
-﻿using Data.Interfaces;
+﻿using Common.Common;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
@@ -19,7 +20,7 @@ public class SettingsController : ControllerBase
         (await _settingsRepository.GetSettings()).Map();
 
     [HttpPut]
-    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
+    [Authorize(Roles = ApplicationRoles.Riesj_Admin)]
     public async Task<SettingsViewModel> Update(SettingsViewModel settings) =>
         (await _settingsRepository.UpdateSettings(settings.Map())).Map();
 }

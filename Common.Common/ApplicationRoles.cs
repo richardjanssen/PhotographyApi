@@ -2,13 +2,13 @@
 
 public class ApplicationRoles
 {
-    public const string PhotographyApi_Admin = "PhotographyApi_Admin";
-    public const string RiesjApi_Admin = "RiesjApi_Admin";
-    public const string RiesjApi_RecipeEditor = "RiesjApi_RecipeEditor";
+    public const string Riesj_Admin = "Riesj_Admin";
+    public const string Riesj_RecipeEdit = "Riesj_RecipeEdit";
+    public const string Riesj_ShoppingListEdit = "Riesj_ShoppingListEdit";
 
     public static readonly string[] AllRoles = [
-        PhotographyApi_Admin,
-        RiesjApi_Admin,
-        RiesjApi_RecipeEditor
+        Riesj_Admin,
+        Riesj_RecipeEdit,
+        Riesj_ShoppingListEdit
     ];
 }
