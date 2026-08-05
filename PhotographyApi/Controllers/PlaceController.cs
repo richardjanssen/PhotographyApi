@@ -1,4 +1,5 @@
-﻿using Data.Interfaces;
+﻿using Common.Common;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyApi.Mappers;
@@ -18,7 +19,7 @@ public class PlaceController : ControllerBase
         _placesRepository = placesRepository;
     }
 
-    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
+    [Authorize(Roles = ApplicationRoles.Riesj_Admin)]
     [HttpGet]
     public async Task<IReadOnlyCollection<PlaceViewModel>> GetAll()
     {

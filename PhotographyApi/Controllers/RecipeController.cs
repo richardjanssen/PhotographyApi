@@ -1,3 +1,4 @@
+using Common.Common;
 using Data.Interfaces;
 using Data.Repository.Database;
 using Microsoft.AspNetCore.Authorization;
@@ -17,7 +18,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
     public async Task<IReadOnlyCollection<RecipeOverviewViewModel>> GetAll() => [.. (await recipeRepository.GetRecipes()).Select(recipe => recipe.MapToOverview())];
 
     [HttpPost]
-    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
+    [Authorize(Roles = ApplicationRoles.Riesj_Admin)]
     public async Task<RecipeViewModel> Add(RecipeViewModel recipeViewModel)
     {
         var recipe = recipeViewModel.Map();
@@ -25,7 +26,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
     }
 
     [HttpPost]
-    [Authorize(Roles = "PhotographyApi_Admin,RiesjApi_Admin")]
+    [Authorize(Roles = ApplicationRoles.Riesj_Admin)]
     public async Task UpdateConcurrent()
     {
         // TODO: This should be tested in a unit test
