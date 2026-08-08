@@ -90,7 +90,7 @@ public class AuthenticationController(IAuthenticationLogic authenticationLogic) 
         await Task.Delay(1000);
         return Unauthorized();
 
-        //if (request.Password != "TijdelijkWachtwoord")
+        //if (request.Password != "TijdelijkWachtwoord") 
         //{
         //    return Unauthorized();
         //}
