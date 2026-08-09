@@ -5,7 +5,7 @@ namespace PhotographyApi.Mappers.Recipes;
 
 public static class RecipeMapExtensions
 {
-    public static RecipeOverviewViewModel MapToOverview(this Recipe recipe) => new(recipe.Name);
+    public static RecipeOverviewViewModel MapToOverview(this Recipe recipe) => new(recipe.Id, recipe.Name);
     public static RecipeViewModel Map(this Recipe recipe)
     {
         var singleIngredients = recipe.Ingredients.Where(i => i.Subgroup == null);
