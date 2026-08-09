@@ -10,6 +10,8 @@ namespace Data.Repository.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("DELETE FROM \"RefreshTokens\"");
+
             migrationBuilder.DropForeignKey(
                 name: "FK_RefreshTokens_Users_UserId",
                 table: "RefreshTokens");
