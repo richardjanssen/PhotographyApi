@@ -6,4 +6,4 @@ public record RecipeViewModel(
     string Name,
     IngredientViewModel[] SingleIngredients,
     IngredientGroupViewModel[] IngredientGroups,
-    string Preparation);
+    string? Preparation);

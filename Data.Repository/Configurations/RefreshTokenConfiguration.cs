@@ -7,6 +7,5 @@ public class RefreshTokenConfiguration : EntityBaseConfiguration<RefreshToken>
 {
     protected override void ConfigureEntity(EntityTypeBuilder<RefreshToken> builder)
     {
-
     }
 }

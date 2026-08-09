@@ -5,20 +5,18 @@
 namespace Data.Repository.Migrations
 {
     /// <inheritdoc />
-    public partial class UsersPart2 : Migration
+    public partial class RolesFK : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("DELETE FROM \"RefreshTokens\"");
-
             migrationBuilder.DropForeignKey(
-                name: "FK_RefreshTokens_Users_UserId",
-                table: "RefreshTokens");
+                name: "FK_Roles_Users_UserId",
+                table: "Roles");
 
             migrationBuilder.AlterColumn<long>(
                 name: "UserId",
-                table: "RefreshTokens",
+                table: "Roles",
                 type: "INTEGER",
                 nullable: false,
                 defaultValue: 0L,
@@ -27,8 +25,8 @@ namespace Data.Repository.Migrations
                 oldNullable: true);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_RefreshTokens_Users_UserId",
-                table: "RefreshTokens",
+                name: "FK_Roles_Users_UserId",
+                table: "Roles",
                 column: "UserId",
                 principalTable: "Users",
                 principalColumn: "Id",
@@ -39,20 +37,20 @@ namespace Data.Repository.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_RefreshTokens_Users_UserId",
-                table: "RefreshTokens");
+                name: "FK_Roles_Users_UserId",
+                table: "Roles");
 
             migrationBuilder.AlterColumn<long>(
                 name: "UserId",
-                table: "RefreshTokens",
+                table: "Roles",
                 type: "INTEGER",
                 nullable: true,
                 oldClrType: typeof(long),
                 oldType: "INTEGER");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_RefreshTokens_Users_UserId",
-                table: "RefreshTokens",
+                name: "FK_Roles_Users_UserId",
+                table: "Roles",
                 column: "UserId",
                 principalTable: "Users",
                 principalColumn: "Id");

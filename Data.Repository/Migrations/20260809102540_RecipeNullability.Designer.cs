@@ -3,6 +3,7 @@ using System;
 using Data.Repository.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Repository.Migrations
 {
     [DbContext(typeof(RiesjDbContext))]
-    partial class RiesjDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260809102540_RecipeNullability")]
+    partial class RecipeNullability
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.9");
@@ -128,7 +131,7 @@ namespace Data.Repository.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("UserId")
+                    b.Property<long?>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -190,9 +193,7 @@ namespace Data.Repository.Migrations
                 {
                     b.HasOne("Business.Entities.Users.User", null)
                         .WithMany("Roles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Business.Entities.Recipes.Recipe", b =>

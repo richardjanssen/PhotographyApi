@@ -15,4 +15,6 @@ public class Role : EntityBase
     }
 
     public string Name { get; private set; }
+
+    public long UserId { get; private set; }
 }
