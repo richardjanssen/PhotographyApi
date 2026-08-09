@@ -18,6 +18,7 @@ public static class RecipeMapExtensions
             recipe.Id,
             recipe.RowVersion,
             recipe.Name,
+            recipe.NumberOfPortions,
             [.. singleIngredients.Select(i => i.Map())],
             [.. ingredientGroups.Select(ig => ig.Map())],
             recipe.Preparation);
@@ -25,6 +26,7 @@ public static class RecipeMapExtensions
 
     public static Recipe Map(this RecipeViewModel recipeViewModel) => new(
             recipeViewModel.Name,
+            recipeViewModel.NumberOfPortions,
             [.. recipeViewModel.SingleIngredients.Select(i => i.Map()), .. recipeViewModel.IngredientGroups.SelectMany(ig => ig.Ingredients.Select(i => i.Map()))],
             recipeViewModel.Preparation)
     {

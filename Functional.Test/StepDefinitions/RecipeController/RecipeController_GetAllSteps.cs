@@ -12,8 +12,8 @@ namespace Functional.Test.StepDefinitions.RecipeController;
 public sealed class RecipeController_GetAllSteps() : BaseTest
 {
     private HttpResponseMessage _response = null!;
-    private readonly Recipe _firstRecipe = new("First recipe", [], "Some preparation");
-    private readonly Recipe _secondRecipe = new("Second recipe", [], "Some other preparation");
+    private readonly Recipe _firstRecipe = new("First recipe", 2, [], "Some preparation");
+    private readonly Recipe _secondRecipe = new("Second recipe", 2, [], "Some other preparation");
 
     [Given("there are recipes")]
     public async Task GivenANumberOfPhotosInTheDatabase()
