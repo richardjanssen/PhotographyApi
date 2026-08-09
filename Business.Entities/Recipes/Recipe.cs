@@ -12,10 +12,17 @@ public class Recipe(string name, int? numberOfPortions, List<Ingredient> ingredi
     // Parameterless constructor for EF Core
     public Recipe() : this(string.Empty, null, [], null) { }
 
-    public void UpdateRecipe(string name, List<Ingredient> ingredients, string? preparation)
+    public void UpdateRecipeTest(string name, List<Ingredient> ingredients, string? preparation)
     {
         Name = name;
         Ingredients = ingredients;
+        Preparation = preparation;
+    }
+
+    public void UpdateRecipe(string name, int? numberOfPortions, string? preparation)
+    {
+        Name = name;
+        NumberOfPortions = numberOfPortions;
         Preparation = preparation;
     }
 }

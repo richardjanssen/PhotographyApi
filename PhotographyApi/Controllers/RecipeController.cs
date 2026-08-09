@@ -22,7 +22,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
     public async Task<RecipeViewModel> Add(RecipeViewModel recipeViewModel)
     {
         var recipe = recipeViewModel.Map();
-        return (await recipeRepository.AddRecipe(recipe)).Map();
+        return (await recipeRepository.SaveRecipe(recipe)).Map();
     }
 
     [HttpPost]
@@ -39,7 +39,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
             var concurrentRecipe = await concurrentDb.Recipes.FirstOrDefaultAsync(r => r.Id == 1);
             if (concurrentRecipe != null)
             {
-                concurrentRecipe.UpdateRecipe("An updated recipe name", concurrentRecipe.Ingredients, concurrentRecipe.Preparation);
+                concurrentRecipe.UpdateRecipeTest("An updated recipe name", concurrentRecipe.Ingredients, concurrentRecipe.Preparation);
             }
             await concurrentDb.SaveChangesAsync();
         }
@@ -47,7 +47,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
         // Throws DbUpdateConcurrencyException
         if (recipe != null)
         {
-            recipe.UpdateRecipe("Hoi", recipe.Ingredients, recipe.Preparation); ;
+            recipe.UpdateRecipeTest("Hoi", recipe.Ingredients, recipe.Preparation); ;
         }
         await db.SaveChangesAsync();
     }
