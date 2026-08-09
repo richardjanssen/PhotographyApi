@@ -11,4 +11,12 @@ public class Ingredient(string name, string? quantity, string? unit, string? sub
 
     // Parameterless constructor for EF Core
     public Ingredient() : this(string.Empty, null, null, null) { }
+
+    public void UpdateIngredient(string name, string? quantity, string? unit, string? subgroup)
+    {
+        Name = name;
+        Quantity = quantity;
+        Unit = unit;
+        Subgroup = subgroup;
+    }
 }
