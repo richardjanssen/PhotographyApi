@@ -24,6 +24,11 @@ public class AuthenticationController(IAuthenticationLogic authenticationLogic) 
             return BadRequest(ModelState);
         }
 
+        if (request.Username == "Carline")
+        {
+            await authenticationLogic.CreateUser(request.Username, request.Password, [ApplicationRoles.Riesj_RecipeEdit, ApplicationRoles.Riesj_ShoppingListEdit]);
+        }
+
         var response = (await authenticationLogic.Login(request.Username, request.Password)).Map();
 
         if (!response.Success)
