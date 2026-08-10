@@ -18,7 +18,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
     public async Task<IReadOnlyCollection<RecipeOverviewViewModel>> GetAll() => [.. (await recipeRepository.GetRecipes()).Select(recipe => recipe.MapToOverview())];
 
     [HttpPost]
-    [Authorize(Roles = ApplicationRoles.Riesj_Admin)]
+    [Authorize(Roles = ApplicationRoles.Riesj_RecipeEdit)]
     public async Task<RecipeViewModel> Add(RecipeViewModel recipeViewModel)
     {
         var recipe = recipeViewModel.Map();
@@ -26,7 +26,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
     }
 
     [HttpPost]
-    [Authorize(Roles = ApplicationRoles.Riesj_Admin)]
+    [Authorize(Roles = ApplicationRoles.Riesj_RecipeEdit)]
     public async Task UpdateConcurrent()
     {
         // TODO: This should be tested in a unit test
@@ -53,6 +53,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
     }
 
     [HttpGet]
+    [Authorize(Roles = ApplicationRoles.Riesj_RecipeEdit)]
     public async Task<RecipeViewModel?> GetById(int id)
     {
         var recipe = await recipeRepository.GetById(id);

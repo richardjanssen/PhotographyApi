@@ -27,7 +27,7 @@ public static class RecipeMapExtensions
     public static Recipe Map(this RecipeViewModel recipeViewModel) => new(
             recipeViewModel.Name,
             recipeViewModel.NumberOfPortions,
-            [.. recipeViewModel.SingleIngredients.Select(i => i.Map()), .. recipeViewModel.IngredientGroups.SelectMany(ig => ig.Ingredients.Select(i => i.Map()))],
+            [.. recipeViewModel.SingleIngredients.Select(i => i.Map()), .. recipeViewModel.IngredientGroups.SelectMany(ig => ig.Ingredients.Select(i => i.Map(ig.Name)))],
             recipeViewModel.Preparation)
     {
         Id = recipeViewModel.Id ?? 0,
@@ -35,7 +35,7 @@ public static class RecipeMapExtensions
     };
 
     private static IngredientViewModel Map(this Ingredient ingredient) => new(ingredient.Id, ingredient.RowVersion, ingredient.Name, ingredient.Quantity, ingredient.Unit, ingredient.Subgroup);
-    private static Ingredient Map(this IngredientViewModel ingredientViewModel) => new(ingredientViewModel.Name, ingredientViewModel.Quantity, ingredientViewModel.Unit, ingredientViewModel.Subgroup)
+    private static Ingredient Map(this IngredientViewModel ingredientViewModel, string? subgroupName = null) => new(ingredientViewModel.Name, ingredientViewModel.Quantity, ingredientViewModel.Unit, subgroupName)
     {
         Id = ingredientViewModel.Id ?? 0,
         RowVersion = ingredientViewModel.RowVersion ?? 0
