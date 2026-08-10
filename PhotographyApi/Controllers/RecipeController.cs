@@ -15,7 +15,6 @@ namespace PhotographyApi.Controllers;
 public class RecipeController(IRecipeRepository recipeRepository, IDbContextFactory<RiesjDbContext> dbContextFactory) : ControllerBase
 {
     [HttpGet]
-    [Authorize(Roles = ApplicationRoles.Riesj_RecipeEdit)]
     public async Task<IReadOnlyCollection<RecipeOverviewViewModel>> GetAll() => [.. (await recipeRepository.GetRecipes()).Select(recipe => recipe.MapToOverview())];
 
     [HttpPost]
