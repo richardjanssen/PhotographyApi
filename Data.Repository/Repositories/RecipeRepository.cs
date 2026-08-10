@@ -22,7 +22,6 @@ public class RecipeRepository(IDbContextFactory<RiesjDbContext> dbContextFactory
         if (recipe.Id == 0)
         {
             await dbContext.Recipes.AddAsync(recipe);
-
         }
         else
         {
@@ -34,7 +33,7 @@ public class RecipeRepository(IDbContextFactory<RiesjDbContext> dbContextFactory
                 var ingredient = recipe.Ingredients[i];
                 if (ingredient.Id == 0)
                 {
-                    await dbContext.Ingredients.AddAsync(ingredient);
+                    dbRecipe.Ingredients.Add(ingredient);
                 }
                 else
                 {
