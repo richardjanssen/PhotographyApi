@@ -1,4 +1,5 @@
 using Common.Common;
+using Data.Repository.Database;
 using Infrastructure.Ioc;
 using NLog;
 using NLog.Web;
@@ -20,6 +21,8 @@ try
     var environment = builder.Environment;
 
     builder.Logging.ClearProviders();
+    builder.Logging.AddConfiguration(configuration.GetSection("Logging"));
+    builder.Logging.AddEntityFramework<RiesjDbContext>();
     builder.Host.UseNLog();
 
     builder.Services
