@@ -1,4 +1,5 @@
-﻿using Business.Entities.Models;
+﻿using Business.Entities.Groceries;
+using Business.Entities.Models;
 using Business.Entities.Recipes;
 using Business.Entities.Users;
 using Common.Common.Interfaces;
@@ -12,6 +13,8 @@ public class RiesjDbContext(DbContextOptions<RiesjDbContext> options, IDateTimeP
     public DbSet<Log> Logs { get; set; }
     public DbSet<Recipe> Recipes { get; set; }
     public DbSet<Ingredient> Ingredients { get; set; }
+    public DbSet<GroceryListProduct> GroceryListProducts { get; set; }
+    public DbSet<GroceryListRecurringProduct> GroceryListRecurringProducts { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }

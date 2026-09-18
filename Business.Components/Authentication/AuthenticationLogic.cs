@@ -51,7 +51,11 @@ public class AuthenticationLogic(RiesjDbContext context, IAccessTokenLogic acces
             return new AuthResponse(false, "Invalid or expired refresh token");
         }
 
-        var user = await context.Users.SingleOrDefaultAsync(u => u.Id == refreshTokenEntity.UserId);
+        var user = await context.Users
+            .Include(u => u.Roles)
+            .Include(u => u.RefreshTokens)
+            .SingleOrDefaultAsync(u => u.Id == refreshTokenEntity.UserId);
+
         if (user == null)
         {
             return new AuthResponse(false, "Invalid or expired refresh token");

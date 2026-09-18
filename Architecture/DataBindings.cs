@@ -14,6 +14,7 @@ public static class DataBindings
     public static IServiceCollection AddDataBindings(this IServiceCollection services) => services
         .AddDbContextFactory<RiesjDbContext>(options => options.UseSqlite("name=ConnectionStrings:RiesjDatabase"), ServiceLifetime.Scoped)
         .AddTransient<IRecipeRepository, RecipeRepository>()
+        .AddTransient<IGroceryRepository, GroceryRepository>()
         .AddTransient<IPhotographyRepository, PhotographyJsonRepository>()
         .AddTransient<IPlacesRepository, PlacesRepository>()
         .AddTransient<ISettingsRepository, SettingsRepository>()
