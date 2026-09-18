@@ -10,6 +10,8 @@ public abstract class EntityBaseConfiguration<T> : IEntityTypeConfiguration<T> w
     {
         builder.Property(x => x.RowVersion).IsConcurrencyToken();
         builder.Property(x => x.DateModifiedUtc).HasConversion(new UtcDateTimeConverter());
+
+        ConfigureEntity(builder);
     }
 
     protected abstract void ConfigureEntity(EntityTypeBuilder<T> builder);

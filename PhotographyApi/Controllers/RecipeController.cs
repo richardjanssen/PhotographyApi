@@ -19,7 +19,7 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
 
     [HttpPost]
     [Authorize(Roles = ApplicationRoles.Riesj_RecipeEdit)]
-    public async Task<RecipeViewModel> Add(RecipeViewModel recipeViewModel)
+    public async Task<RecipeViewModel> AddOrUpdate(RecipeViewModel recipeViewModel)
     {
         var recipe = recipeViewModel.Map();
         return (await recipeRepository.SaveRecipe(recipe)).Map();

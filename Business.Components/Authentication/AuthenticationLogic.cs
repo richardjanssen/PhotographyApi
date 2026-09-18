@@ -32,8 +32,9 @@ public class AuthenticationLogic(RiesjDbContext context, IAccessTokenLogic acces
         var refreshToken = accessTokenLogic.GenerateRefreshToken();
 
         // Save refresh token
-        var refreshTokenEntity = new RefreshToken(refreshToken, DateTime.UtcNow.AddDays(appSettings.Value.RefreshTokenExpirationDays), false, user);
-        context.RefreshTokens.Add(refreshTokenEntity);
+        var refreshTokenEntity = new RefreshToken(refreshToken, DateTime.UtcNow.AddDays(appSettings.Value.RefreshTokenExpirationDays), false);
+        user.RefreshTokens.Add(refreshTokenEntity);
+        //context.RefreshTokens.Add(refreshTokenEntity);
 
         await context.SaveChangesAsync();
 
@@ -43,8 +44,6 @@ public class AuthenticationLogic(RiesjDbContext context, IAccessTokenLogic acces
     public async Task<AuthResponse> RefreshToken(string refreshToken)
     {
         var refreshTokenEntity = await context.RefreshTokens
-            .Include(rt => rt.User)
-            .ThenInclude(u => u.Roles)
             .FirstOrDefaultAsync(rt => rt.Token == refreshToken && !rt.IsRevoked);
 
         if (refreshTokenEntity == null || refreshTokenEntity.ExpiryDate < DateTime.UtcNow)
@@ -52,15 +51,25 @@ public class AuthenticationLogic(RiesjDbContext context, IAccessTokenLogic acces
             return new AuthResponse(false, "Invalid or expired refresh token");
         }
 
-        var user = refreshTokenEntity.User;
+        var user = await context.Users
+            .Include(u => u.Roles)
+            .Include(u => u.RefreshTokens)
+            .SingleOrDefaultAsync(u => u.Id == refreshTokenEntity.UserId);
+
+        if (user == null)
+        {
+            return new AuthResponse(false, "Invalid or expired refresh token");
+        }
+
         var accessToken = accessTokenLogic.GenerateAccessToken(user);
         var newRefreshToken = accessTokenLogic.GenerateRefreshToken();
 
         // Revoke old token and create new one
         refreshTokenEntity.Revoke();
 
-        var newRefreshTokenEntity = new RefreshToken(newRefreshToken, DateTime.UtcNow.AddDays(appSettings.Value.RefreshTokenExpirationDays), false, user);
-        context.RefreshTokens.Add(newRefreshTokenEntity);
+        var newRefreshTokenEntity = new RefreshToken(newRefreshToken, DateTime.UtcNow.AddDays(appSettings.Value.RefreshTokenExpirationDays), false);
+        user.RefreshTokens.Add(newRefreshTokenEntity);
+        //context.RefreshTokens.Add(newRefreshTokenEntity);
 
         await context.SaveChangesAsync();
 
@@ -79,17 +88,17 @@ public class AuthenticationLogic(RiesjDbContext context, IAccessTokenLogic acces
         }
     }
 
-    public async Task<bool> ValidateRefreshToken(int userId, string refreshToken)
-    {
-        var token = await context.RefreshTokens
-            .FirstOrDefaultAsync(rt =>
-                rt.UserId == userId &&
-                rt.Token == refreshToken &&
-                !rt.IsRevoked &&
-                rt.ExpiryDate > DateTime.UtcNow);
+    //public async Task<bool> ValidateRefreshToken(int userId, string refreshToken)
+    //{
+    //    var token = await context.RefreshTokens
+    //        .FirstOrDefaultAsync(rt =>
+    //            rt.UserId == userId &&
+    //            rt.Token == refreshToken &&
+    //            !rt.IsRevoked &&
+    //            rt.ExpiryDate > DateTime.UtcNow);
 
-        return token != null;
-    }
+    //    return token != null;
+    //}
 
     public async Task CreateUser(string username, string password, string[] roleNames)
     {

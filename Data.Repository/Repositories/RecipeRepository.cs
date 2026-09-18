@@ -26,8 +26,14 @@ public class RecipeRepository(IDbContextFactory<RiesjDbContext> dbContextFactory
         else
         {
             var dbRecipe = await dbContext.Recipes.Include(r => r.Ingredients).SingleAsync(r => r.Id == recipe.Id);
+
+            // Recept eigenschappen aanpassen
             dbRecipe.UpdateRecipe(recipe.Name, recipe.NumberOfPortions, recipe.Preparation);
 
+            // Verwijderde ingredienten verwijderen uit DB
+            dbRecipe.Ingredients.RemoveAll(dbIngredient => !recipe.Ingredients.Select(i => i.Id).Contains(dbIngredient.Id));
+
+            // Ingredienten toevoegen of aanpassen
             for (var i = 0; i < recipe.Ingredients.Count; i++)
             {
                 var ingredient = recipe.Ingredients[i];

@@ -14,13 +14,11 @@ public class UserConfiguration : EntityBaseConfiguration<User>
 
         builder.HasMany(rt => rt.RefreshTokens)
             .WithOne()
-            .HasForeignKey(rt => rt.UserId)
             .IsRequired(true)  // Required
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasMany(rt => rt.Roles)
             .WithOne()
-            .HasForeignKey(rt => rt.UserId)
             .IsRequired(true)  // Required
             .OnDelete(DeleteBehavior.Cascade);
     }
