@@ -1,3 +1,3 @@
 ﻿namespace PhotographyApi.ViewModels.Groceries;
 
-public record GroceryListRecurringProductViewModel(long Id, string Name, int Order);
+public record GroceryListRecurringProductViewModel(long? Id, long? RowVersion, string Name, int Order);

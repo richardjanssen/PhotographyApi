@@ -13,7 +13,7 @@ public class RecipeRepository(IDbContextFactory<RiesjDbContext> dbContextFactory
     {
         var dbContext = await _dbContextFactory.CreateDbContextAsync();
 
-        return [.. dbContext.Recipes];
+        return [.. dbContext.Recipes.AsNoTracking()];
     }
 
     public async Task<Recipe> SaveRecipe(Recipe recipe)
@@ -58,6 +58,6 @@ public class RecipeRepository(IDbContextFactory<RiesjDbContext> dbContextFactory
     {
         var dbContext = await _dbContextFactory.CreateDbContextAsync();
 
-        return dbContext.Recipes.Include(r => r.Ingredients).FirstOrDefault(r => r.Id == id);
+        return dbContext.Recipes.Include(r => r.Ingredients).AsNoTracking().FirstOrDefault(r => r.Id == id);
     }
 }
