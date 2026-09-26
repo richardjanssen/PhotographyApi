@@ -13,7 +13,7 @@ public class GroceryRepository(IDbContextFactory<RiesjDbContext> dbContextFactor
     {
         var dbContext = await _dbContextFactory.CreateDbContextAsync();
 
-        return (dbContext.GroceryListProducts.AsNoTracking().ToList(), dbContext.GroceryListRecurringProducts.AsNoTracking().ToList());
+        return (dbContext.GroceryListProducts.AsNoTracking().OrderBy(p => p.Order).ToList(), dbContext.GroceryListRecurringProducts.AsNoTracking().OrderBy(rp => rp.Order).ToList());
     }
 
     public async Task UpdateGroceries(IList<GroceryListProduct> products, IList<GroceryListRecurringProduct> recurringProducts)
@@ -34,7 +34,7 @@ public class GroceryRepository(IDbContextFactory<RiesjDbContext> dbContextFactor
             else
             {
                 var dbProduct = dbContext.GroceryListProducts.Single(p => p.Id == product.Id);
-                dbProduct.Update(product.Name, product.Order, product.RecurringProduct, product.Sale);
+                dbProduct.Update(product.Name, product.Order, product.RecurringProduct, product.Sale, product.AlbertHeijn);
             }
         }
 
