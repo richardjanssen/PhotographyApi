@@ -9,4 +9,10 @@ public class GroceryListRecurringProduct(string name, int order) : EntityBase
 
     // Parameterless constructor for EF Core
     public GroceryListRecurringProduct() : this(string.Empty, 0) { }
+
+    public void Update(string name, int order)
+    {
+        Name = name;
+        Order = order;
+    }
 }

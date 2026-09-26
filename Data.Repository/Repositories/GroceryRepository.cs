@@ -13,6 +13,52 @@ public class GroceryRepository(IDbContextFactory<RiesjDbContext> dbContextFactor
     {
         var dbContext = await _dbContextFactory.CreateDbContextAsync();
 
-        return (dbContext.GroceryListProducts.ToList(), dbContext.GroceryListRecurringProducts.ToList());
+        return (dbContext.GroceryListProducts.AsNoTracking().ToList(), dbContext.GroceryListRecurringProducts.AsNoTracking().ToList());
+    }
+
+    public async Task UpdateGroceries(IList<GroceryListProduct> products, IList<GroceryListRecurringProduct> recurringProducts)
+    {
+        var dbContext = await _dbContextFactory.CreateDbContextAsync();
+        // Producten verwijderen die wel in DB staan maar niet meer in products
+        var productsToDelete = await dbContext.GroceryListProducts.Where(dbProduct => !products.Select(p => p.Id).Contains(dbProduct.Id)).ToListAsync();
+        dbContext.GroceryListProducts.RemoveRange(productsToDelete);
+
+        // Producten toevoegen of aanpassen
+        for (var i = 0; i < products.Count; i++)
+        {
+            var product = products[i];
+            if (product.Id == 0)
+            {
+                dbContext.GroceryListProducts.Add(product);
+            }
+            else
+            {
+                var dbProduct = dbContext.GroceryListProducts.Single(p => p.Id == product.Id);
+                dbProduct.Update(product.Name, product.Order, product.RecurringProduct, product.Sale);
+            }
+        }
+
+        // Recurring producten verwijderen die wel in DB staan maar niet meer in recurringProducts
+        //dbRecurringProducts.RemoveAll(dbRecurringProduct => !recurringProducts.Select(p => p.Id).Contains(dbRecurringProduct.Id));
+        var recurringProductsToDelete = await dbContext.GroceryListRecurringProducts.Where(dbProduct => !recurringProducts.Select(p => p.Id).Contains(dbProduct.Id)).ToListAsync();
+        dbContext.GroceryListRecurringProducts.RemoveRange(recurringProductsToDelete);
+
+        // Recurring producten toevoegen of aanpassen
+        for (var i = 0; i < recurringProducts.Count; i++)
+        {
+            var recurringProduct = recurringProducts[i];
+            if (recurringProduct.Id == 0)
+            {
+                dbContext.GroceryListRecurringProducts.Add(recurringProduct);
+            }
+            else
+            {
+                var dbRecurringProduct = dbContext.GroceryListRecurringProducts.Single(p => p.Id == recurringProduct.Id);
+                dbRecurringProduct.Update(recurringProduct.Name, recurringProduct.Order);
+            }
+        }
+
+
+        await dbContext.SaveChangesAsync();
     }
 }

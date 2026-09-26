@@ -11,4 +11,12 @@ public class GroceryListProduct(string name, int order, bool recurringProduct, b
 
     // Parameterless constructor for EF Core
     public GroceryListProduct() : this(string.Empty, 0, false, false) { }
+
+    public void Update(string name, int order, bool recurringProduct, bool sale)
+    {
+        Name = name;
+        Order = order;
+        RecurringProduct = recurringProduct;
+        Sale = sale;
+    }
 }
