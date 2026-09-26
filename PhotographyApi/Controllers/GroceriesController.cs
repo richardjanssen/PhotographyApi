@@ -35,7 +35,7 @@ public class GroceriesController(IGroceryRepository groceryRepository) : Control
 
 
         // Echte data
-        return new GroceriesViewModel([.. products.Select(p => p.Map())], [.. recurringProducts.Select(p => p.Map())]);
+        return new GroceriesViewModel([.. products.Select(p => p.Map())], [.. recurringProducts.Select(p => p.Map()).OrderBy(p => p.Order)]);
     }
 
     [HttpPost]
