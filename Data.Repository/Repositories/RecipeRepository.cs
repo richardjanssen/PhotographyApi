@@ -60,4 +60,15 @@ public class RecipeRepository(IDbContextFactory<RiesjDbContext> dbContextFactory
 
         return dbContext.Recipes.Include(r => r.Ingredients).AsNoTracking().FirstOrDefault(r => r.Id == id);
     }
+
+    public async Task Delete(int id)
+    {
+        var dbContext = await _dbContextFactory.CreateDbContextAsync();
+        var recipe = await dbContext.Recipes.SingleOrDefaultAsync(r => r.Id == id);
+        if (recipe != null)
+        {
+            dbContext.Recipes.Remove(recipe);
+            await dbContext.SaveChangesAsync();
+        }
+    }
 }
