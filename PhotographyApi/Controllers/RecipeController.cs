@@ -59,4 +59,8 @@ public class RecipeController(IRecipeRepository recipeRepository, IDbContextFact
         var recipe = await recipeRepository.GetById(id);
         return recipe?.Map();
     }
+
+    [HttpDelete]
+    [Authorize(Roles = ApplicationRoles.Riesj_RecipeEdit)]
+    public async Task Delete(int id) => await recipeRepository.Delete(id);
 }
