@@ -1,5 +1,6 @@
 ﻿using Business.Components;
 using Business.Components.Authentication;
+using Business.Components.Groceries;
 using Business.Components.HighlightsTimeline;
 using Business.Components.HighlightsTimeline.Internal;
 using Business.Components.HikerUpdates;
@@ -7,6 +8,7 @@ using Business.Components.Internal;
 using Business.Components.Locations;
 using Business.Components.Locations.Internal;
 using Business.Interfaces;
+using Business.Interfaces.Groceries;
 using Business.Interfaces.HighlightsTimeline;
 using Business.Interfaces.HikerUpdates;
 using Business.Interfaces.Locations;
@@ -30,7 +32,8 @@ public static class BusinessBindings
         .AddTransient<IGetLocationsQuery, GetLocationsQuery>()
         .AddTransient<IGetMapLocationsQuery, GetMapLocationsQuery>()
         .AddTransient<IDeleteLocationQuery, DeleteLocationQuery>()
-        .AddTransient<IDeleteHikerUpdateQuery, DeleteHikerUpdateQuery>();
+        .AddTransient<IDeleteHikerUpdateQuery, DeleteHikerUpdateQuery>()
+        .AddTransient<IAddProductsLogic, AddProductsLogic>();
 
     private static IServiceCollection AddAuthenticationBindings(this IServiceCollection services) => services
         .AddTransient<IAccessTokenLogic, AccessTokenLogic>()

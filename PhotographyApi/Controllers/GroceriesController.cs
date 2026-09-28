@@ -1,3 +1,4 @@
+using Business.Interfaces.Groceries;
 using Common.Common;
 using Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -9,29 +10,13 @@ namespace PhotographyApi.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]/[action]")]
-public class GroceriesController(IGroceryRepository groceryRepository) : ControllerBase
+public class GroceriesController(IGroceryRepository groceryRepository, IAddProductsLogic addProductsLogic) : ControllerBase
 {
     [HttpGet]
     [Authorize(Roles = ApplicationRoles.Riesj_ShoppingListEdit)]
     public async Task<GroceriesViewModel> Get()
     {
         (var products, var recurringProducts) = await groceryRepository.GetGroceries();
-
-        // Mock data
-        //return new GroceriesViewModel(
-        //    [
-        //        new GroceryListProductViewModel(1, "Eerste product", false, false),
-        //        new GroceryListProductViewModel(2, "Tweede product", false, false),
-        //        new GroceryListProductViewModel(3, "Derde product (terugkerend)", true, false),
-        //        new GroceryListProductViewModel(4, "Vierde product", false, true),
-        //        new GroceryListProductViewModel(5, "Vijfde product (terugkerend)", true, true),
-        //    ],
-        //    [
-        //        new GroceryListRecurringProductViewModel(1, "Derde product (terugkerend)", 1),
-        //        new GroceryListRecurringProductViewModel(2, "Vijfde product (terugkerend)", 2),
-        //        new GroceryListRecurringProductViewModel(3, "Zesde product (terugkerend)", 3),
-        //        new GroceryListRecurringProductViewModel(4, "Zevende product (terugkerend)", 4),
-        //        ]);
 
 
         // Echte data
@@ -48,4 +33,8 @@ public class GroceriesController(IGroceryRepository groceryRepository) : Control
         var recurringProducts = groceries.RecurringProducts.Select(recurringProduct => recurringProduct.Map()).ToList();
         await groceryRepository.UpdateGroceries(products, recurringProducts);
     }
+
+    [HttpPost]
+    [Authorize(Roles = ApplicationRoles.Riesj_ShoppingListEdit)]
+    public async Task AddProducts(string[] names) => await addProductsLogic.AddProducts(names);
 }

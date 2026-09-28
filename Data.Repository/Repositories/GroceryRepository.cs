@@ -16,6 +16,12 @@ public class GroceryRepository(IDbContextFactory<RiesjDbContext> dbContextFactor
         return (dbContext.GroceryListProducts.AsNoTracking().OrderBy(p => p.Order).ToList(), dbContext.GroceryListRecurringProducts.AsNoTracking().OrderBy(rp => rp.Order).ToList());
     }
 
+    public async Task<int> GetCurrentMaximumProductOrder()
+    {
+        var dbContext = await _dbContextFactory.CreateDbContextAsync();
+        return dbContext.GroceryListProducts.AsNoTracking().Max(p => p.Order);
+    }
+
     public async Task UpdateGroceries(IList<GroceryListProduct> products, IList<GroceryListRecurringProduct> recurringProducts)
     {
         var dbContext = await _dbContextFactory.CreateDbContextAsync();
@@ -58,7 +64,13 @@ public class GroceryRepository(IDbContextFactory<RiesjDbContext> dbContextFactor
             }
         }
 
+        await dbContext.SaveChangesAsync();
+    }
 
+    public async Task AddProducts(IList<GroceryListProduct> products)
+    {
+        var dbContext = await _dbContextFactory.CreateDbContextAsync();
+        await dbContext.GroceryListProducts.AddRangeAsync(products);
         await dbContext.SaveChangesAsync();
     }
 }
