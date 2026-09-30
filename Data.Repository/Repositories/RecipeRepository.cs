@@ -44,7 +44,7 @@ public class RecipeRepository(IDbContextFactory<RiesjDbContext> dbContextFactory
                 else
                 {
                     var dbIngredient = dbRecipe.Ingredients.Single(ig => ig.Id == ingredient.Id);
-                    dbIngredient.UpdateIngredient(ingredient.Name, ingredient.Quantity, ingredient.Unit, ingredient.Subgroup);
+                    dbIngredient.UpdateIngredient(ingredient.Name, ingredient.Quantity, ingredient.Unit, ingredient.Subgroup, ingredient.AddToGroceries);
                 }
             }
         }
