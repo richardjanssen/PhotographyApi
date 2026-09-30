@@ -18,8 +18,6 @@ public class GroceriesController(IGroceryRepository groceryRepository, IAddProdu
     {
         (var products, var recurringProducts) = await groceryRepository.GetGroceries();
 
-
-        // Echte data
         return new GroceriesViewModel([.. products.Select(p => p.Map())], [.. recurringProducts.Select(p => p.Map())]);
     }
 
