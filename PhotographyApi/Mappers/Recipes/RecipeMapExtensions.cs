@@ -34,12 +34,27 @@ public static class RecipeMapExtensions
         RowVersion = recipeViewModel.RowVersion ?? 0
     };
 
-    private static IngredientViewModel Map(this Ingredient ingredient) => new(ingredient.Id, ingredient.RowVersion, ingredient.Name, ingredient.Quantity, ingredient.Unit, ingredient.Subgroup);
-    private static Ingredient Map(this IngredientViewModel ingredientViewModel, string? subgroupName = null) => new(ingredientViewModel.Name, ingredientViewModel.Quantity, ingredientViewModel.Unit, subgroupName)
+    private static IngredientViewModel Map(this Ingredient ingredient) => new(
+        ingredient.Id,
+        ingredient.RowVersion,
+        ingredient.Name,
+        ingredient.Quantity,
+        ingredient.Unit,
+        ingredient.Subgroup,
+        ingredient.AddToGroceries);
+
+    private static Ingredient Map(this IngredientViewModel ingredientViewModel, string? subgroupName = null) => new(
+        ingredientViewModel.Name,
+        ingredientViewModel.Quantity,
+        ingredientViewModel.Unit,
+        subgroupName,
+        ingredientViewModel.AddToGroceries)
     {
         Id = ingredientViewModel.Id ?? 0,
         RowVersion = ingredientViewModel.RowVersion ?? 0
     };
 
-    private static IngredientGroupViewModel Map(this IngredientGroup ingredientGroup) => new(ingredientGroup.Name, [.. ingredientGroup.Ingredients.Select(i => i.Map())]);
+    private static IngredientGroupViewModel Map(this IngredientGroup ingredientGroup) => new(
+        ingredientGroup.Name,
+        [.. ingredientGroup.Ingredients.Select(i => i.Map())]);
 }
