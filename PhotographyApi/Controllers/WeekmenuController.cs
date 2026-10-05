@@ -1,34 +1,30 @@
 using Common.Common;
+using Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PhotographyApi.Mappers.Weekmenu;
 using PhotographyApi.ViewModels.Weekmenu;
 
 namespace PhotographyApi.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]/[action]")]
-public class WeekmenuController() : ControllerBase
+public class WeekmenuController(IWeekmenuDayRepository weekmenuDayRepository) : ControllerBase
 {
     [HttpGet]
     [Authorize(Roles = ApplicationRoles.Riesj_ShoppingListEdit)]
-    public async Task<WeekmenuDayViewModel[]> Get()
+    public async Task<IReadOnlyCollection<WeekmenuDayViewModel>> Get()
     {
-        // Mock data
-        return [
-            new WeekmenuDayViewModel(3, 1, WeekdayViewModel.Wednesday, "Pasta zalm"),
-            new WeekmenuDayViewModel(4, 1, WeekdayViewModel.Thursday, "Nasi"),
-            new WeekmenuDayViewModel(5, 1, WeekdayViewModel.Friday, "Kipwraps"),
-            new WeekmenuDayViewModel(6, 1, WeekdayViewModel.Saturday, "Kliekje"),
-            new WeekmenuDayViewModel(7, 1, WeekdayViewModel.Sunday, "Lasagne"),
-            new WeekmenuDayViewModel(8, 1, WeekdayViewModel.Monday, "Kliekje R"),
-            new WeekmenuDayViewModel(9, 1, WeekdayViewModel.Tuesday, "Indonesische aubergine")
-            ];
+        return [.. (await weekmenuDayRepository.GetWeekmenuDays()).Select(weekmenuDay => weekmenuDay.Map())];
     }
 
     [HttpPost]
     [Authorize(Roles = ApplicationRoles.Riesj_ShoppingListEdit)]
-    public async Task Save()
+    public async Task Save(WeekmenuDayViewModel[] weekmenuDayViewModels)
     {
-        throw new NotImplementedException();
+        // Base weekmenu order on order of weekmenu days in request
+        var weekmenuDays = weekmenuDayViewModels.Select((weekmenuDay, i) => weekmenuDay.Map(i + 1)).ToList();
+
+        await weekmenuDayRepository.UpdateWeekmenuDays(weekmenuDays);
     }
 }
