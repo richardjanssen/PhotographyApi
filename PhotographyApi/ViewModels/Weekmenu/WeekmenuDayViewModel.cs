@@ -1,3 +1,3 @@
 ﻿namespace PhotographyApi.ViewModels.Weekmenu;
 
-public record WeekmenuDayViewModel(int Id, int RowVersion, WeekdayViewModel Weekday, string Name);
+public record WeekmenuDayViewModel(long? Id, long? RowVersion, WeekdayViewModel Weekday, string Name);

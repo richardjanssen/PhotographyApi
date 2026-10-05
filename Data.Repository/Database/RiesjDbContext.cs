@@ -2,6 +2,7 @@
 using Business.Entities.Models;
 using Business.Entities.Recipes;
 using Business.Entities.Users;
+using Business.Entities.Weekmenu;
 using Common.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using ZNetCS.AspNetCore.Logging.EntityFrameworkCore;
@@ -15,6 +16,7 @@ public class RiesjDbContext(DbContextOptions<RiesjDbContext> options, IDateTimeP
     public DbSet<Ingredient> Ingredients { get; set; }
     public DbSet<GroceryListProduct> GroceryListProducts { get; set; }
     public DbSet<GroceryListRecurringProduct> GroceryListRecurringProducts { get; set; }
+    public DbSet<WeekmenuDay> WeekmenuDays { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
