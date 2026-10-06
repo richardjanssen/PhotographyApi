@@ -23,4 +23,18 @@ public class SettingsController : ControllerBase
     [Authorize(Roles = ApplicationRoles.Riesj_Admin)]
     public async Task<SettingsViewModel> Update(SettingsViewModel settings) =>
         (await _settingsRepository.UpdateSettings(settings.Map())).Map();
+
+    [HttpGet]
+    [Authorize(Roles = ApplicationRoles.Riesj_RecipeEdit)]
+    public async Task<string> GetWeekmenuIdeas() =>
+    (await _settingsRepository.GetSettings()).WeekmenuIdeas ?? string.Empty;
+
+    [Authorize(Roles = ApplicationRoles.Riesj_RecipeEdit)]
+    [HttpPut]
+    public async Task UpdateWeekmenuIdeas(UpdateWeekmenuIdeasViewModel vm)
+    {
+        var currentSettings = await _settingsRepository.GetSettings();
+        var newSettings = currentSettings with { WeekmenuIdeas = vm.WeekmenuIdeas };
+        await _settingsRepository.UpdateSettings(newSettings);
+    }
 }

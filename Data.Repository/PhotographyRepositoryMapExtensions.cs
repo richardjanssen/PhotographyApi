@@ -80,12 +80,13 @@ public static class PhotographyRepositoryMapExtensions
             hikerLocation.PlaceId,
             hikerLocation.SectionId);
 
-    public static Business.Entities.Dto.Settings Map(this Settings settings) => new(settings.TrackingEnabled, settings.MapboxEnabled);
+    public static Business.Entities.Dto.Settings Map(this Settings settings) => new(settings.TrackingEnabled, settings.MapboxEnabled, settings.WeekmenuIdeas);
 
     public static Settings Map(this Business.Entities.Dto.Settings settings) => new()
     {
         TrackingEnabled = settings.TrackingEnabled,
-        MapboxEnabled = settings.MapboxEnabled
+        MapboxEnabled = settings.MapboxEnabled,
+        WeekmenuIdeas = settings.WeekmenuIdeas
     };
 
     public static Business.Entities.Dto.DistanceMarker Map(this DistanceMarker marker) => new(marker.Lat, marker.Lon, marker.Distance);

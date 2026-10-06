@@ -5,8 +5,8 @@ namespace PhotographyApi.Mappers;
 
 public static class SettingsMapExtensions
 {
-    public static SettingsViewModel Map(this Settings settings) => new(settings.TrackingEnabled, settings.MapboxEnabled);
+    public static SettingsViewModel Map(this Settings settings) => new(settings.TrackingEnabled, settings.MapboxEnabled, settings.WeekmenuIdeas ?? string.Empty);
 
-    public static Settings Map(this SettingsViewModel settings) => new(settings.TrackingEnabled, settings.MapboxEnabled);
+    public static Settings Map(this SettingsViewModel settings) => new(settings.TrackingEnabled, settings.MapboxEnabled, settings.WeekmenuIdeas);
 
 }
