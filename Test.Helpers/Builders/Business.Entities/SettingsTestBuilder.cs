@@ -15,5 +15,5 @@ public class SettingsTestBuilder
 
     public SettingsTestBuilder WithMapboxEnabled(bool mapboxEnabled) => this.With(() => _mapboxEnabled = mapboxEnabled);
 
-    public Settings Build() => new(_trackingEnabled, _mapboxEnabled);
+    public Settings Build() => new(_trackingEnabled, _mapboxEnabled, string.Empty);
 }
